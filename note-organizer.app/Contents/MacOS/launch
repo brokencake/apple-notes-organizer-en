@@ -1,0 +1,27 @@
+#!/bin/bash
+# Locate the program next to this app, in the saved choice, or via Finder.
+# Keep the Terminal launcher as the single place that starts the server.
+HERE="$(cd "$(dirname "$0")" && pwd)" || exit 1
+NEAR="$(cd "$HERE/../../.." && pwd)" || exit 1
+CONF="$HOME/Library/Application Support/NoteOrganizer/folder"
+DIR=""
+valid_folder() {
+  [ -f "$1/server.py" ] && [ -f "$1/note-organizer.command" ]
+}
+if valid_folder "$NEAR"; then
+  DIR="$NEAR"
+elif [ -f "$CONF" ]; then
+  SAVED="$(cat "$CONF")"
+  valid_folder "$SAVED" && DIR="$SAVED"
+fi
+if [ -z "$DIR" ]; then
+  DIR="$(osascript -e 'POSIX path of (choose folder with prompt "Choose the Notes Organizer program folder / 选择备忘录整理器的程序文件夹")' 2>/dev/null)" || exit 0
+  if ! valid_folder "$DIR"; then
+    osascript -e 'display alert "Notes Organizer" message "Choose the extracted program folder containing server.py and note-organizer.command. / 请选择含有 server.py 和 note-organizer.command 的解压后程序文件夹。"' >/dev/null 2>&1
+    exit 1
+  fi
+  mkdir -p "$(dirname "$CONF")" || exit 1
+  printf '%s' "$DIR" > "$CONF" || exit 1
+fi
+# Finder launches .command files in Terminal; paths remain separate arguments.
+exec open -a Terminal "$DIR/note-organizer.command"

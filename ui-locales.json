@@ -1,0 +1,3266 @@
+{
+  "u53e31203e1a7": {"kind":"html","zh":"以下备忘录正文读取失败，未导入；保留选中以便重试：","en":"These note bodies could not be read. They were not imported and remain selected for retry:"},
+  "u9e21d4548a23": {"kind":"html","zh":"重试失败条目","en":"Retry failed notes"},
+  "u4cae18dbf072": {"kind":"literal","zh":"正文读取结果不完整，请重试","en":"The note body response is incomplete. Please retry."},
+  "u20ba0b28621c": {"kind":"html","zh":"🏁 结束本次使用","en":"🏁 Finish this session"},
+  "u8712b7e48d11": {"kind":"html","zh":"本次运行的改动与移动。刷新网页不会重置本次记录。","en":"Changes and moves in this server session. Refreshing the page does not reset them."},
+  "u873fe013f1ab": {"kind":"html","zh":"搜索标题、原文件夹、目标文件夹","en":"Search title, source folder, or destination folder"},
+  "uf764c7d76c03": {"kind":"html","zh":"现在同步到手机","en":"Sync to phone now"},
+  "u41d1e82228a1": {"kind":"html","zh":"本次不同步，继续结束","en":"Skip sync and finish"},
+  "u008701b76b87": {"kind":"html","zh":"在访达打开使用记录","en":"Reveal session log in Finder"},
+  "u9fc173e4041e": {"kind":"html","zh":"可以关闭页面；服务器会在约 12 秒后退出，终端即可关闭。","en":"You can close this page. The server will exit after about 12 seconds, then you can close Terminal."},
+  "u637ac24cf382": {"kind":"html","zh":"移动这一条备忘录","en":"Move this note"},
+  "u70dd271e3b21": {"kind":"html","zh":"目标文件夹","en":"Destination folder"},
+  "u59c8b73a1072": {"kind":"html","zh":"确认移动","en":"Confirm move"},
+  "ue501b02199c0": {"kind":"literal","zh":"新建的条目","en":"Created entries"},
+  "u4c720a7fc741": {"kind":"literal","zh":"改了正文或标题","en":"Body or title edited"},
+  "u275a6cd35ac3": {"kind":"literal","zh":"改了分类","en":"Category changed"},
+  "u21a663823e70": {"kind":"literal","zh":"删掉的条目","en":"Deleted entries"},
+  "u4eaeb0c1a77e": {"kind":"literal","zh":"已移动的条目","en":"Moved notes"},
+  "u579cd7bd2ec0": {"kind":"literal","zh":"正在读取本次记录…","en":"Loading this session…"},
+  "u0a2207828879": {"kind":"literal","zh":"本次记录格式不可用。","en":"The session report is unavailable."},
+  "u49591daf82ec": {"kind":"literal","zh":"使用记录尚未生成","en":"The session log has not been created"},
+  "u07f08c915be2": {"kind":"template","zh":"自己移动","en":"Move this note"},
+  "u9f1b90c7e235": {"kind":"template","zh":"找到 ","en":"Found "},
+  "u7b09185e5e81": {"kind":"template","zh":" 条","en":" entries"},
+  "u3f282e54b234": {"kind":"literal","zh":"没找到","en":"No matches"},
+  "u8897303d6132": {"kind":"literal","zh":"正在核对手机同步状态…","en":"Checking phone sync status…"},
+  "ub2ccfcfa1e76": {"kind":"literal","zh":"无法确认这条备忘录的当前位置或账户。","en":"The note's current folder or account could not be verified."},
+  "u01a9e345de89": {"kind":"template","zh":"还有 ","en":"There are "},
+  "u16f9260336a2": {"kind":"template","zh":" 条未同步到手机。要现在同步吗？","en":" notes not synced to your phone. Sync now?"},
+  "u6f044662732e": {"kind":"literal","zh":"没有待同步的条目。","en":"No notes are waiting to sync."},
+  "u113063b9df98": {"kind":"template","zh":"确认把「","en":"Move “"},
+  "u8a2a76a9a2a6": {"kind":"template","zh":"」从 ","en":"” from "},
+  "u48c6b589f0ce": {"kind":"template","zh":"？","en":"?"},
+  "ua031ae5fc743": {"kind":"literal","zh":"请先选择目标文件夹。","en":"Choose a destination folder first."},
+  "u0e218103153d": {"kind":"html","zh":"选择文件夹…","en":"Choose a folder…"},
+  "u9b3e801e4a28": {"kind":"literal","zh":"整理log 单条移动","en":"Tidy-up log single-note move"},
+  "u222e1bc021aa": {"kind":"literal","zh":"移动未获确认，请检查备忘录当前位置。","en":"The move was not confirmed. Check the note's current folder."},
+  "u41ac972780ab": {"kind":"html","zh":"设置","en":"Settings"},
+  "u009247eda138": {"kind":"html","zh":"文件与记录","en":"Files and logs"},
+  "u3892e7c50c28": {"kind":"html","zh":"打开历史移动记录文件夹","en":"Open movement history folder"},
+  "u9d2445a9d001": {"kind":"html","zh":"输入“删除”以确认","en":"Type “DELETE” to confirm"},
+  "u6ba00e0a8811": {"kind":"html","zh":"彻底删除","en":"Delete permanently"},
+  "u457b9f209d11": {"kind":"literal","zh":"❗️彻底删除这条备忘录","en":"❗️Permanently delete this note"},
+  "u8457eb0a93c4": {"kind":"literal","zh":"❗️彻底删除这个版本","en":"❗️Permanently delete this version"},
+  "u241a2c83381a": {"kind":"template","zh":" 个版本","en":" versions"},
+  "u257f54a09e19": {"kind":"template","zh":"全部版本会从整理器彻底删除，关联的文本镜像（txt 或 md）在保存时也会删除。找不回来。手机备忘录里的原笔记不受影响。","en":"All versions will be permanently removed from the organizer. Their text mirrors will be removed when saved. They cannot be recovered here. The original note in Apple Notes is unaffected."},
+  "u41d936e100dc": {"kind":"template","zh":"这一版会从整理器彻底删除，关联的文本镜像（txt 或 md）在保存时也会删除。找不回来。","en":"This version will be permanently removed from the organizer. Its text mirror will be removed when saved. It cannot be recovered here."},
+  "u3e28e5ea82b2": {"kind":"literal","zh":"（空正文）","en":"(Empty body)"},
+  "u75516ef4499b": {"kind":"literal","zh":"删除","en":"DELETE"},
+  "u0f4e42a58a90": {
+    "kind": "html",
+    "zh": "整理log",
+    "en": "Tidy-up log"
+  },
+  "ua499b9057b1e": {
+    "kind": "template",
+    "zh": "请求失败（",
+    "en": "Request failed ("
+  },
+  "u0993fbc3e620": {
+    "kind": "template",
+    "zh": "还有 ",
+    "en": "There are still "
+  },
+  "u7c058fd5524b": {
+    "kind": "template",
+    "zh": " 条的分类只改在整理器里，备忘录那边还没动。点「📱 反向同步手机备忘录」预览并确认后才会搬。",
+    "en": " category changes saved only in the organizer. Notes have not moved yet. Open “📱 Sync back to phone” to preview and confirm the moves."
+  },
+  "ua7b85ef40779": {
+    "kind": "literal",
+    "zh": "暂时没能核对备忘录；点上方同步按钮可重试。",
+    "en": "Notes could not be checked. Use the sync button above to retry."
+  },
+  "u0196c09efa1e": {
+    "kind": "literal",
+    "zh": "正在核对备忘录里的文件夹…",
+    "en": "Checking folders in Notes…"
+  },
+  "uc9e8faf9544d": {
+    "kind": "literal",
+    "zh": "上次核对的结果：",
+    "en": "Last check: "
+  },
+  "uae2dfe9d4874": {
+    "kind": "literal",
+    "zh": "尚不能确认是否还有分类没搬过去。",
+    "en": "Pending category moves could not be verified."
+  },
+  "u4d9aa5d6d491": {
+    "kind": "literal",
+    "zh": "备忘录列表格式不正确",
+    "en": "Invalid Notes list format"
+  },
+  "u483c6fa32e64": {
+    "kind": "literal",
+    "zh": "有别的窗口改过库了，这个窗口是旧版本。分类和挑回的条目已在本机暂存，请刷新后再操作；其他未提交内容可先下载副本。",
+    "en": "The library changed in another window. This window has an older version. Category changes and recovered entries are stored locally; refresh before continuing. Other unsaved content can be downloaded as a copy."
+  },
+  "u8ac72ee9408d": {
+    "kind": "literal",
+    "zh": "有别的窗口改过，请刷新（分类已暂存）",
+    "en": "Changed in another window; refresh (category changes are stored locally)"
+  },
+  "u6f7dddeca3de": {
+    "kind": "literal",
+    "zh": "改动",
+    "en": "Changes"
+  },
+  "ue0095dbdd81c": {
+    "kind": "literal",
+    "zh": "浏览器不支持安全的多窗口暂存，请使用本机 Chrome 页面",
+    "en": "This browser does not support safe local drafts across windows. Open the local page in Chrome."
+  },
+  "u3395552ba7b7": {
+    "kind": "literal",
+    "zh": "无法取得本窗口暂存位置",
+    "en": "Local draft storage for this window is unavailable"
+  },
+  "u8cd43d12c173": {
+    "kind": "literal",
+    "zh": "分类暂存记录格式不正确",
+    "en": "Invalid category draft format"
+  },
+  "u50773771241c": {
+    "kind": "literal",
+    "zh": "分类暂存尚未就绪",
+    "en": "Category draft storage is not ready"
+  },
+  "uc315da49401d": {
+    "kind": "literal",
+    "zh": "条目已被删除，已跳过：",
+    "en": "Entry already deleted; skipped: "
+  },
+  "u8d48f19f7849": {
+    "kind": "literal",
+    "zh": "暂存分类或挑回的条目与新版库有不同，已暂停保存。请下载未提交副本核对；可保留新版并放弃这批分类暂存，再重新操作。",
+    "en": "Locally stored category changes or recovered entries conflict with the newer library. Saving is paused. Download the unsaved copy for comparison, or keep the newer library and discard these category drafts before trying again."
+  },
+  "uc40912299115": {
+    "kind": "literal",
+    "zh": "本机保留了上次未提交的完整副本。分类和挑回的条目按明确操作回放；其他内容不会自动覆盖新版，请下载副本核对。",
+    "en": "A complete unsaved copy from the previous session is stored locally. Explicit category and recovery actions will be replayed. Other content will not overwrite the newer library automatically; download the copy for comparison."
+  },
+  "u9fcd5fa9d539": {
+    "kind": "literal",
+    "zh": "分类待保存（本机已暂存）",
+    "en": "Category changes pending (stored locally)"
+  },
+  "u592b6822c635": {
+    "kind": "literal",
+    "zh": "本机副本未写入",
+    "en": "Local copy was not written"
+  },
+  "u0c9e9a76206b": {
+    "kind": "literal",
+    "zh": "本机暂存失败，请勿关闭页面",
+    "en": "Local draft storage failed; keep this page open"
+  },
+  "u9bcc488a6e27": {
+    "kind": "literal",
+    "zh": "服务端尚未启用版本保护。分类已暂存，请存好各窗口改动、关闭所有整理器窗口后重启服务，再刷新。当前不会提交整库。",
+    "en": "Revision protection is not enabled on the server. Category changes are stored locally. Save changes from all windows, close all organizer windows, restart the server, then refresh. The full library will not be submitted yet."
+  },
+  "u588d582847ce": {
+    "kind": "literal",
+    "zh": "分类保存中…",
+    "en": "Saving category changes…"
+  },
+  "u9b931c5c846f": {
+    "kind": "literal",
+    "zh": "服务端尚未启用版本保护，请先重启服务；本机副本已保留",
+    "en": "Revision protection is not enabled on the server. Restart the server first; the local copy has been retained."
+  },
+  "u5e4ee373036c": {
+    "kind": "literal",
+    "zh": "分类已保存",
+    "en": "Category changes saved"
+  },
+  "uaf238549c080": {
+    "kind": "literal",
+    "zh": "保存失败；本机暂存已保留，请重试",
+    "en": "Save failed; the local draft has been retained. Retry saving."
+  },
+  "ub297cd68d5e0": {
+    "kind": "literal",
+    "zh": "未提交副本，仅供核对。不要整份覆盖当前库。",
+    "en": "Unsaved copy for comparison only. Do not replace the current library with this entire file."
+  },
+  "ue6cfa939000b": {
+    "kind": "literal",
+    "zh": "整理器未提交改动.json",
+    "en": "Organizer Unsaved Changes.json"
+  },
+  "u15d8786ced7f": {
+    "kind": "literal",
+    "zh": "保留服务器新版，放弃本窗口这批分类暂存？其他未提交副本仍会保留供下载。",
+    "en": "Keep the newer server library and discard this window’s category drafts? Other unsaved copies will remain available for download."
+  },
+  "u65ed8e92f3e1": {
+    "kind": "literal",
+    "zh": "<option value=\"\">未分类</option>",
+    "en": "<option value=\"\">Unassigned</option>"
+  },
+  "ucf19d99bfe3c": {
+    "kind": "literal",
+    "zh": "正在处理数据，请稍后再改分类",
+    "en": "Data is being processed. Wait before changing categories."
+  },
+  "ud10d6838824e": {
+    "kind": "literal",
+    "zh": "⚠️ 本机暂存不可用，本次分类未更改；请检查浏览器存储空间",
+    "en": "⚠️ Local draft storage is unavailable. No category changes were made; check browser storage."
+  },
+  "ud99e864e03f0": {
+    "kind": "template",
+    "zh": "改分类 · ",
+    "en": "Change category · "
+  },
+  "ucf11dc176a9b": {
+    "kind": "template",
+    "zh": " 条",
+    "en": " notes"
+  },
+  "ue50eae40aeaf": {
+    "kind": "template",
+    "zh": "已标记 ",
+    "en": "Marked "
+  },
+  "u275f2601a901": {
+    "kind": "template",
+    "zh": " 条为「",
+    "en": " entries as “"
+  },
+  "u881b630609fc": {
+    "kind": "literal",
+    "zh": "未分类",
+    "en": "Unassigned"
+  },
+  "u7048d14b81d8": {
+    "kind": "template",
+    "zh": "<span role=\"button\" tabindex=\"0\" data-tip=\"在访达里打开这个分类的文件夹\" aria-label=\"在访达里打开这个分类的文件夹\">📂</span>",
+    "en": "<span role=\"button\" tabindex=\"0\" data-tip=\"Open this category folder in Finder\" aria-label=\"Open this category folder in Finder\">📂</span>"
+  },
+  "u6111cf192e74": {
+    "kind": "template",
+    "zh": "<span role=\"button\" tabindex=\"0\" data-tip=\"复制文件夹路径\" aria-label=\"复制文件夹路径\">📋</span>",
+    "en": "<span role=\"button\" tabindex=\"0\" data-tip=\"Copy folder path\" aria-label=\"Copy folder path\">📋</span>"
+  },
+  "u931cdc5a8665": {
+    "kind": "template",
+    "zh": "<span role=\"button\" tabindex=\"0\" data-tip=\"给这个分类改名\" aria-label=\"给这个分类改名\">✎</span><span class=\"op-delete\" role=\"button\" tabindex=\"0\" data-tip=\"删除这个分类\" aria-label=\"删除这个分类\">✕</span>",
+    "en": "<span role=\"button\" tabindex=\"0\" data-tip=\"Rename this category\" aria-label=\"Rename this category\">✎</span><span class=\"op-delete\" role=\"button\" tabindex=\"0\" data-tip=\"Delete this category\" aria-label=\"Delete this category\">✕</span>"
+  },
+  "u5c417bfb14c9": {
+    "kind": "literal",
+    "zh": "全部",
+    "en": "All notes"
+  },
+  "uce1c9a454708": {
+    "kind": "literal",
+    "zh": "✅ 已标记",
+    "en": "✅ Assigned"
+  },
+  "u5a81ebb85900": {
+    "kind": "literal",
+    "zh": "⬜️ 未标记",
+    "en": "⬜️ Unassigned"
+  },
+  "u8d6b57a5f58d": {
+    "kind": "literal",
+    "zh": "＋ 新建分类",
+    "en": "＋ New category"
+  },
+  "u8f55213a2328": {
+    "kind": "literal",
+    "zh": "分类名称：",
+    "en": "Category name:"
+  },
+  "u61504bc702fe": {
+    "kind": "template",
+    "zh": "镜像文件\n    <select id=\"mirrorExt\" style=\"font-size:12px;padding:1px 2px\">\n      <option value=\".txt\">.txt</option>\n      <option value=\".md\">.md（markdown）</option>\n    </select>",
+    "en": "Mirror files\n    <select id=\"mirrorExt\" style=\"font-size:12px;padding:1px 2px\">\n      <option value=\".txt\">.txt</option>\n      <option value=\".md\">.md (Markdown)</option>\n    </select>"
+  },
+  "u40e8b082a91d": {
+    "kind": "literal",
+    "zh": "访达里那些文件用什么扩展名。笔记里写了 # 标题、**加粗**、列表的，用 .md 打开就是排好版的。",
+    "en": "File extension for mirror files in Finder. Open notes containing # headings, **bold**, or lists as .md to display Markdown formatting."
+  },
+  "u7a0a6160f503": {
+    "kind": "template",
+    "zh": "镜像文件已改成 ",
+    "en": "Mirror files now use "
+  },
+  "u1f1159bd57cf": {
+    "kind": "template",
+    "zh": "，旧的那批会自动清掉",
+    "en": "; old mirror files will be removed automatically"
+  },
+  "ucecb9d8aea1b": {
+    "kind": "literal",
+    "zh": "本机暂存不可用，分类未新建",
+    "en": "Local draft storage is unavailable; category was not created"
+  },
+  "u9ecd3a8e458d": {
+    "kind": "literal",
+    "zh": "新名称：",
+    "en": "New name: "
+  },
+  "uab653b586cdb": {
+    "kind": "literal",
+    "zh": "这个分类已存在，请换个名字",
+    "en": "This category already exists. Choose another name."
+  },
+  "u46252fda7541": {
+    "kind": "literal",
+    "zh": "本机暂存不可用，分类未改名",
+    "en": "Local draft storage is unavailable; category was not renamed"
+  },
+  "ue5c7594a1fa9": {
+    "kind": "template",
+    "zh": "删除分类「",
+    "en": "Delete category “"
+  },
+  "ubd270b947ded": {
+    "kind": "template",
+    "zh": "」？其中 ",
+    "en": "”? Its "
+  },
+  "u578f90d7fb10": {
+    "kind": "template",
+    "zh": " 条备忘录会移到「未分类」，内容不会丢。",
+    "en": " notes will become unassigned. Their content will be kept."
+  },
+  "u08a3db7f5fa7": {
+    "kind": "literal",
+    "zh": "本机暂存不可用，分类未删除",
+    "en": "Local draft storage is unavailable; category was not deleted"
+  },
+  "u749d2623c70c": {
+    "kind": "template",
+    "zh": "备忘录里的修改时间 ",
+    "en": "Modified in Notes: "
+  },
+  "u2a611daa8d1b": {
+    "kind": "template",
+    "zh": "　|　整理器改动 ",
+    "en": " | Edited in Organizer: "
+  },
+  "ua7e9356f055c": {
+    "kind": "template",
+    "zh": "整理器改动 ",
+    "en": "Edited in Organizer: "
+  },
+  "uf366fde33fdf": {
+    "kind": "template",
+    "zh": "（这条没有备忘录日期）",
+    "en": " (no original Notes date)"
+  },
+  "u755fd1b498c5": {
+    "kind": "template",
+    "zh": "正在从备忘录补 ",
+    "en": "Fetching dates for "
+  },
+  "uc90ffbb56270": {
+    "kind": "template",
+    "zh": " 条日期…",
+    "en": " notes…"
+  },
+  "u9ef605a2c4b8": {
+    "kind": "template",
+    "zh": "已补上 ",
+    "en": "Added dates for "
+  },
+  "ub549b8e06fbe": {
+    "kind": "template",
+    "zh": " 条备忘录日期",
+    "en": " notes"
+  },
+  "u640355642a25": {
+    "kind": "literal",
+    "zh": "⚠️ 读取备忘录日期失败：",
+    "en": "⚠️ Could not read note dates: "
+  },
+  "ufca265107d6f": {
+    "kind": "template",
+    "zh": "<select class=\"card-category\" aria-label=\"分类：",
+    "en": "<select class=\"card-category\" aria-label=\"Category: "
+  },
+  "u162e50f958fe": {
+    "kind": "template",
+    "zh": "\" title=\"只改这一条的分类；批量修改请用批量栏或拖动已选条目\">",
+    "en": "\" title=\"Change only this entry’s category. Use the bulk bar or drag selected entries for bulk changes.\">"
+  },
+  "u5351856efdfe": {
+    "kind": "literal",
+    "zh": "版",
+    "en": " versions"
+  },
+  "ubfabf8e45a06": {
+    "kind": "template",
+    "zh": "<span class=\"vbadge\">当前 v",
+    "en": "<span class=\"vbadge\">Current: v"
+  },
+  "u6330ff107bb5": {
+    "kind": "template",
+    "zh": " · 共",
+    "en": " · "
+  },
+  "ud382f03668ae": {
+    "kind": "template",
+    "zh": "版</span></div>\n        <div class=\"prev\">",
+    "en": " versions</span></div>\n        <div class=\"prev\">"
+  },
+  "u4790df414318": {
+    "kind": "template",
+    "zh": " 条，继续往下滚动",
+    "en": " more notes. Scroll to load them."
+  },
+  "u9abfd8981a52": {
+    "kind": "template",
+    "zh": "已选 ",
+    "en": "Selected: "
+  },
+  "u86fa140c0f05": {
+    "kind": "template",
+    "zh": " 条 · 当前筛选 ",
+    "en": " notes · Current filter: "
+  },
+  "u42162b04484b": {
+    "kind": "literal",
+    "zh": "☑️ 批量选择中",
+    "en": "☑️ Selecting notes"
+  },
+  "u0951a87c76ff": {
+    "kind": "literal",
+    "zh": "☑️ 批量选择",
+    "en": "☑️ Bulk select"
+  },
+  "u375fa5f4661e": {
+    "kind": "literal",
+    "zh": "已取消选择",
+    "en": "Selection cleared"
+  },
+  "u4231f1b1ac12": {
+    "kind": "template",
+    "zh": "已选中当前筛选的 ",
+    "en": "Selected all "
+  },
+  "u74ad4dc5f872": {
+    "kind": "template",
+    "zh": "共 ",
+    "en": "Total: "
+  },
+  "u5af0a313a4b6": {
+    "kind": "template",
+    "zh": " 条　·　导出于 ",
+    "en": " entries · Exported on "
+  },
+  "u90acebd1765c": {
+    "kind": "template",
+    "zh": "分类：",
+    "en": "Category: "
+  },
+  "u5d337c32c69b": {
+    "kind": "literal",
+    "zh": "（无标题）",
+    "en": "(Untitled)"
+  },
+  "uc112d426c3a2": {
+    "kind": "template",
+    "zh": "　备忘录日期 ",
+    "en": " · Note date "
+  },
+  "ua34ef124f4ca": {
+    "kind": "template",
+    "zh": "　当前 v",
+    "en": " · Current v"
+  },
+  "uf96e01a23c74": {
+    "kind": "literal",
+    "zh": "多个分类",
+    "en": "Multiple categories"
+  },
+  "uf11da9913aeb": {
+    "kind": "template",
+    "zh": "条_",
+    "en": "entries_"
+  },
+  "u748eafd4d79a": {
+    "kind": "literal",
+    "zh": "选存储位置…",
+    "en": "Choose save location…"
+  },
+  "u0c4a20f01980": {
+    "kind": "literal",
+    "zh": "已取消，没有导出",
+    "en": "Canceled; nothing exported"
+  },
+  "u5b0a489323b9": {
+    "kind": "template",
+    "zh": "已导出 ",
+    "en": "Exported "
+  },
+  "ue380698e3747": {
+    "kind": "template",
+    "zh": " 条到 ",
+    "en": " entries to "
+  },
+  "u864741453173": {
+    "kind": "template",
+    "zh": "恢复上次批量移动的 ",
+    "en": "Restore the original categories of the last "
+  },
+  "u4800947717bd": {
+    "kind": "template",
+    "zh": " 条各自原分类；刷新后失效",
+    "en": " entries moved in bulk; unavailable after refresh"
+  },
+  "ub51aee2b767a": {
+    "kind": "literal",
+    "zh": "暂无可撤销的批量移动（刷新后清空）",
+    "en": "No bulk move available to undo (cleared on refresh)"
+  },
+  "ub7fc357a6820": {
+    "kind": "template",
+    "zh": " 条 · 目标「",
+    "en": " entries · Target “"
+  },
+  "u1f0131292c54": {
+    "kind": "template",
+    "zh": "」 · 将移动 ",
+    "en": "” · To move: "
+  },
+  "uf2254d6becc5": {
+    "kind": "template",
+    "zh": " 条 · 无需更改 ",
+    "en": " entries · Unchanged: "
+  },
+  "ucc87713be65b": {
+    "kind": "template",
+    "zh": " 条）</h3>",
+    "en": " entries)</h3>"
+  },
+  "uf3d17806a555": {
+    "kind": "literal",
+    "zh": "将移动",
+    "en": "To move"
+  },
+  "u4f75583e539d": {
+    "kind": "literal",
+    "zh": "本来就在目标分类，这些不会变",
+    "en": "Already in the target category; unchanged"
+  },
+  "ud4eb59b5a03e": {
+    "kind": "literal",
+    "zh": "只更改整理器里的分类标记，不移动 Apple 备忘录的文件夹。",
+    "en": "Changes category labels in the organizer only. Apple Notes folders are not moved."
+  },
+  "u96dbed2ea888": {
+    "kind": "literal",
+    "zh": "⚠️ 本机暂存不可用，本次分类未更改",
+    "en": "⚠️ Local draft storage is unavailable; no category changes were made"
+  },
+  "u11036d78b187": {
+    "kind": "literal",
+    "zh": "选择已变化，请重新选择后预览",
+    "en": "Selection changed. Select entries again and reopen the preview."
+  },
+  "u157311504005": {
+    "kind": "literal",
+    "zh": "选择或分类已变化，清单已更新；请重新核对后确认。",
+    "en": "Selection or categories changed. The list has been updated; review it again before confirming."
+  },
+  "u4d5f260970c1": {
+    "kind": "literal",
+    "zh": "正在保存分类…",
+    "en": "Saving category changes…"
+  },
+  "u5f8567240b5c": {
+    "kind": "template",
+    "zh": "已把 ",
+    "en": "Moved "
+  },
+  "u3c0a157bdf22": {
+    "kind": "template",
+    "zh": " 条移动到「",
+    "en": " notes to “"
+  },
+  "u5b0e2c229f28": {
+    "kind": "template",
+    "zh": "」，可撤销上次批量移动",
+    "en": "”; the last bulk move can be undone"
+  },
+  "u82e00bbdf076": {
+    "kind": "literal",
+    "zh": "分类已暂存但保存失败；可重试保存或撤销上次批量移动",
+    "en": "Category changes are stored locally, but saving failed. Retry saving or undo the last bulk move."
+  },
+  "u17ebf00082a5": {
+    "kind": "literal",
+    "zh": "部分条目已改分类或已删除，不能整批撤销；请逐条核对",
+    "en": "Some entries were recategorized or deleted. The batch cannot be undone; review each entry."
+  },
+  "u4ac8f63a1fec": {
+    "kind": "template",
+    "zh": "已撤销上次批量移动，",
+    "en": "Last bulk move undone; "
+  },
+  "u5e46f9a5164e": {
+    "kind": "template",
+    "zh": " 条恢复各自原分类",
+    "en": " entries restored to their original categories"
+  },
+  "ud06f28c8e703": {
+    "kind": "literal",
+    "zh": "已恢复各自原分类并暂存；保存失败，请重试保存",
+    "en": "Original categories restored and stored locally. Saving failed; retry saving."
+  },
+  "uafbce369a7ef": {
+    "kind": "template",
+    "zh": "删除所选 ",
+    "en": "Delete "
+  },
+  "u1ff7a5b3f2a3": {
+    "kind": "template",
+    "zh": " 条备忘录（共 ",
+    "en": " selected notes ("
+  },
+  "ua2c1cbb0fcfc": {
+    "kind": "template",
+    "zh": " 个版本）？\\n\\n备忘录里的原文不受影响。删之前会自动在 Notes Library/Snapshots/ 里存一份完整存档，删错了可以从那里捞回来。",
+    "en": " versions)?\\n\\nThe original Notes content is unchanged. A complete snapshot is saved in Notes Library/Snapshots/ before deletion for recovery."
+  },
+  "u197a9fe19efc": {
+    "kind": "template",
+    "zh": "已删除 ",
+    "en": "Deleted "
+  },
+  "ud70284f4e911": {
+    "kind": "template",
+    "zh": "<option value=\"\">未分类</option>",
+    "en": "<option value=\"\">Unassigned</option>"
+  },
+  "u5f9e14e1bfb3": {
+    "kind": "template",
+    "zh": "\">选择分类…</option><option value=\"\">未分类</option>",
+    "en": "\">Choose category…</option><option value=\"\">Unfiled</option>"
+  },
+  "ufac082993277": {
+    "kind": "template",
+    "zh": "选中 ",
+    "en": "Selected: "
+  },
+  "u40288a0a876c": {
+    "kind": "template",
+    "zh": " 字",
+    "en": " characters"
+  },
+  "uc3415068e028": {
+    "kind": "template",
+    "zh": " 字 · ",
+    "en": " characters · "
+  },
+  "u3538c13147b5": {
+    "kind": "template",
+    "zh": " 行",
+    "en": " lines"
+  },
+  "u99d46864324a": {
+    "kind": "literal",
+    "zh": " <span class=\"star\">★当前</span>",
+    "en": " <span class=\"star\">★ Current</span>"
+  },
+  "u2c86d2099678": {
+    "kind": "template",
+    "zh": "此版保存于 ",
+    "en": "Version saved: "
+  },
+  "ucef95e0062f6": {
+    "kind": "template",
+    "zh": " · 上次推送备忘录 ",
+    "en": " · Last sent to Notes: "
+  },
+  "u1d20187d62d5": {
+    "kind": "literal",
+    "zh": "当前修改还没保存，直接丢弃吗？",
+    "en": "Discard unsaved changes?"
+  },
+  "u2717a3c82c36": {
+    "kind": "literal",
+    "zh": "未命名",
+    "en": "Untitled"
+  },
+  "u0d48bb741280": {
+    "kind": "template",
+    "zh": "已保存到 v",
+    "en": "Saved v"
+  },
+  "ufa37512bc0ff": {
+    "kind": "template",
+    "zh": "已存为 v",
+    "en": "Saved as v"
+  },
+  "u008f62e736fb": {
+    "kind": "template",
+    "zh": " 并设为当前",
+    "en": " and set as current"
+  },
+  "udd0ce1b5beea": {
+    "kind": "template",
+    "zh": " 已设为当前",
+    "en": " is now current"
+  },
+  "u2789fb78b5b8": {
+    "kind": "literal",
+    "zh": "有未保存的修改，先保存一下再看 txt",
+    "en": "Save changes before opening the text file."
+  },
+  "uf233f8ff13c6": {
+    "kind": "literal",
+    "zh": "已在访达里选中：",
+    "en": "Selected in Finder: "
+  },
+  "u6117eb199a89": {
+    "kind": "literal",
+    "zh": "已复制整段内容",
+    "en": "Copied the full text"
+  },
+  "u04d8eb6adad2": {
+    "kind": "literal",
+    "zh": "只剩一版了，要删就删整个 Prompt",
+    "en": "This is the only version. Use Delete note to remove the entry."
+  },
+  "u36bc2437863f": {
+    "kind": "template",
+    "zh": "删除 v",
+    "en": "Delete v"
+  },
+  "u012420eb7c41": {
+    "kind": "template",
+    "zh": "？不可恢复。",
+    "en": "? This cannot be undone."
+  },
+  "u331ea698c5bc": {
+    "kind": "template",
+    "zh": "从整理器里删除「",
+    "en": "Delete “"
+  },
+  "u9d281ab2d0c5": {
+    "kind": "template",
+    "zh": "」全部 ",
+    "en": "” and all "
+  },
+  "ub24d55e8d4d2": {
+    "kind": "template",
+    "zh": " 个版本？\\n\\n手机/备忘录 App 里的原笔记不受影响。",
+    "en": " versions from the Organizer?\\n\\nThe original note in Apple Notes is unchanged."
+  },
+  "u614249310040": {
+    "kind": "literal",
+    "zh": "新备忘录",
+    "en": "New note"
+  },
+  "u007be36a8333": {
+    "kind": "template",
+    "zh": "挑回来：按备忘录里的「",
+    "en": "Recover into the organizer from “"
+  },
+  "uf3b9713119ef": {
+    "kind": "template",
+    "zh": "」重新收进整理器，这条就不移进需删除了",
+    "en": "” in Notes. This note will no longer be moved to To delete."
+  },
+  "ufbc789ff0260": {
+    "kind": "literal",
+    "zh": "未读到正文，请在备忘录中核对后重试",
+    "en": "Note body could not be read. Check the note in Notes and retry."
+  },
+  "u34e2a0ed7028": {
+    "kind": "literal",
+    "zh": "这条笔记已在整理器里，本次没有重复导入",
+    "en": "This note is already in the organizer; no duplicate was imported"
+  },
+  "u0751a7301928": {
+    "kind": "literal",
+    "zh": "分类暂存失败，未挑回条目",
+    "en": "Category draft storage failed; entry was not recovered"
+  },
+  "u6489f4366d95": {
+    "kind": "literal",
+    "zh": "改动待保存（本机已暂存）",
+    "en": "Changes pending (stored locally)"
+  },
+  "uf4b338cd8385": {
+    "kind": "template",
+    "zh": "已挑回来：",
+    "en": "Recovered: "
+  },
+  "u5c95664788a6": {
+    "kind": "template",
+    "zh": "，新记录 v1。未移动笔记。",
+    "en": ", as a new v1 record. No note was moved."
+  },
+  "ue4c766f04441": {
+    "kind": "literal",
+    "zh": "这条记录已被后续操作修改或删除，未覆盖；请先核对当前条目。",
+    "en": "This record was changed or deleted by a later action. Nothing was overwritten; review the current entry first."
+  },
+  "uf49ecb522129": {
+    "kind": "literal",
+    "zh": "本机暂存失败，未撤销挑回来，请重试。",
+    "en": "Local draft storage failed. Recovery was not undone; retry."
+  },
+  "ub02ab9853950": {
+    "kind": "template",
+    "zh": "已撤销挑回来：",
+    "en": "Recovery undone: "
+  },
+  "u5938bc0836b0": {
+    "kind": "template",
+    "zh": "。未移动笔记。",
+    "en": ". No note was moved."
+  },
+  "u90aba50d1612": {
+    "kind": "template",
+    "zh": "以备忘录为准：把整理器里的分类改成「",
+    "en": "Match Notes: change the organizer category to “"
+  },
+  "ub05ce80ffe2d": {
+    "kind": "template",
+    "zh": "」（备忘录当前文件夹「",
+    "en": "” (current Notes folder: “"
+  },
+  "u8ee68e0cf937": {
+    "kind": "template",
+    "zh": "」），这条就不用搬了",
+    "en": "”). This note will no longer need moving."
+  },
+  "u5f96eb71650a": {
+    "kind": "literal",
+    "zh": "未记录",
+    "en": "Not recorded"
+  },
+  "u8609400829b0": {
+    "kind": "literal",
+    "zh": "来源或文件夹信息有变化，请重新打开预览核对",
+    "en": "Source or folder information changed. Reopen the preview to review."
+  },
+  "u9b72bc3643e3": {
+    "kind": "literal",
+    "zh": "这条来源关联多个整理器条目，请先核对各条分类；本次未调整，也未移动笔记",
+    "en": "This source is linked to multiple organizer entries. Review their categories first. No categories changed and no note was moved."
+  },
+  "u236c0c831abb": {
+    "kind": "literal",
+    "zh": "已跳过异常行：这条已在默认文件夹，无需调整",
+    "en": "Skipped inconsistent row: this note is already in the default folder; no adjustment is needed"
+  },
+  "uaaba41a5fef2": {
+    "kind": "literal",
+    "zh": "分类已建立，但条目暂存失败，条目分类未改；请检查本机存储后重试",
+    "en": "Category created, but entry draft storage failed. The entry’s category was not changed; check local storage and retry."
+  },
+  "u0fa89efb54db": {
+    "kind": "literal",
+    "zh": "分类暂存失败，条目未改",
+    "en": "Category draft storage failed; entry was not changed"
+  },
+  "u86f3dcbf023d": {
+    "kind": "template",
+    "zh": "已按备忘录为准：",
+    "en": "Matched Notes: "
+  },
+  "u06ef8a562fb1": {
+    "kind": "literal",
+    "zh": "这条分类已被后续操作改变，未覆盖；请先核对当前分类。",
+    "en": "This category was changed by a later action. Nothing was overwritten; review the current category first."
+  },
+  "u2f257a774ded": {
+    "kind": "template",
+    "zh": "已撤销刚才的逐条调整：",
+    "en": "Last individual adjustment undone: "
+  },
+  "uc7e4d38cc569": {
+    "kind": "literal",
+    "zh": "（未记录说明）",
+    "en": "(No description recorded)"
+  },
+  "u09865f9baddd": {
+    "kind": "template",
+    "zh": "同时间记录当前还剩 ",
+    "en": "Batches with the same timestamp remaining: "
+  },
+  "u7555b4147527": {
+    "kind": "template",
+    "zh": " 批；本批全部还原成功后，还剩 ",
+    "en": ". After this batch is fully restored, remaining: "
+  },
+  "uc19519a96207": {
+    "kind": "template",
+    "zh": " 批。",
+    "en": " batches."
+  },
+  "u697bb7f665c1": {
+    "kind": "literal",
+    "zh": "每次只撤一批；剩余批数需更新并重启服务后查看。",
+    "en": "Only one batch is undone at a time. Update and restart the server to view the remaining batch count."
+  },
+  "u4fd49bd89441": {
+    "kind": "template",
+    "zh": "本次只撤这一批：",
+    "en": "Only this batch will be undone: "
+  },
+  "u6455897ee54c": {
+    "kind": "template",
+    "zh": " 条。\\n",
+    "en": " entries.\\n"
+  },
+  "ub97c7a76e10c": {
+    "kind": "literal",
+    "zh": "正在读取移动记录…",
+    "en": "Loading move history…"
+  },
+  "u34d4e0b7a3ba": {
+    "kind": "literal",
+    "zh": "记录接口不可用，请更新并重启整理器服务",
+    "en": "History API unavailable. Update and restart the organizer server."
+  },
+  "u5b0bbc0a893a": {
+    "kind": "template",
+    "zh": " 批，按时间倒序显示。黄色标记的是下一次撤销的批次；展开可看明细。",
+    "en": " batches, newest first. Yellow marks the next batch to undo; expand a batch for details."
+  },
+  "u219331139b20": {
+    "kind": "literal",
+    "zh": "暂无可撤销的移动记录。已撤销的记录可在 md 日志中查看。",
+    "en": "No moves available to undo. Undone moves can be viewed in the Markdown logs."
+  },
+  "u0bcdec540559": {
+    "kind": "template",
+    "zh": "</strong><span>同时间记录 · 当前剩 ",
+    "en": "</strong><span>Same timestamp · Remaining: "
+  },
+  "u95bbb1843ec0": {
+    "kind": "template",
+    "zh": " 批 · 每次撤一批</span></div>",
+    "en": " batches · Undo one batch at a time</span></div>"
+  },
+  "u7c6d79a8b170": {
+    "kind": "literal",
+    "zh": "未记录时间",
+    "en": "Time not recorded"
+  },
+  "u7984b812dfc3": {
+    "kind": "template",
+    "zh": " 条</summary><ul class=\"move-history-items\">",
+    "en": " entries</summary><ul class=\"move-history-items\">"
+  },
+  "u43f7800acfb1": {
+    "kind": "literal",
+    "zh": "<span class=\"move-history-next\">下一次撤销</span>",
+    "en": "<span class=\"move-history-next\">Next to undo</span>"
+  },
+  "uabcfe49e5ab4": {
+    "kind": "literal",
+    "zh": "未记录原文件夹",
+    "en": "Original folder not recorded"
+  },
+  "u0dde38067001": {
+    "kind": "literal",
+    "zh": "未记录目标文件夹",
+    "en": "Target folder not recorded"
+  },
+  "uafe224a50cb3": {
+    "kind": "literal",
+    "zh": "⚠️ 无法读取移动记录：",
+    "en": "⚠️ Could not load move history: "
+  },
+  "u3d55377a2544": {
+    "kind": "literal",
+    "zh": "。若刚更新过程序，请重启服务后重试。",
+    "en": ". If the app was recently updated, restart the server and retry."
+  },
+  "ud0b7988c0b83": {
+    "kind": "literal",
+    "zh": "正在查询可撤销的移动记录…",
+    "en": "Checking moves available to undo…"
+  },
+  "uea62c19dcc73": {
+    "kind": "literal",
+    "zh": "无法读取移动记录，请刷新页面重试：",
+    "en": "Could not load move history. Refresh the page and retry: "
+  },
+  "u5503fa001495": {
+    "kind": "literal",
+    "zh": "暂无可撤销的移动记录",
+    "en": "No moves available to undo"
+  },
+  "u5153e049e3cb": {
+    "kind": "literal",
+    "zh": "🗑 移入需删除 · 预览",
+    "en": "🗑 Move to \"To delete\" · Preview"
+  },
+  "u79423b4f87d1": {
+    "kind": "literal",
+    "zh": "📱 反向同步手机备忘录 · 预览",
+    "en": "📱 Sync back to phone · Preview"
+  },
+  "u7fb289c91bde": {
+    "kind": "literal",
+    "zh": "正在核对备忘录…",
+    "en": "Checking notes…"
+  },
+  "u18d3731a8259": {
+    "kind": "template",
+    "zh": "<div class=\"card\" style=\"padding:8px 10px;margin-bottom:8px;font-size:13px\">\n       备忘录里已经没有「<b>",
+    "en": "<div class=\"card\" style=\"padding:8px 10px;margin-bottom:8px;font-size:13px\">\n       Notes no longer has a folder named <b>"
+  },
+  "u9e8d37baab10": {
+    "kind": "template",
+    "zh": "</b>」这个文件夹了，\n       它的 ",
+    "en": "</b>.\\n       Of its "
+  },
+  "udedb9a0409b3": {
+    "kind": "template",
+    "zh": " 条笔记里有 <b>",
+    "en": " notes, <b>"
+  },
+  "ue2aff699508b": {
+    "kind": "template",
+    "zh": "</b> 条都在「<b>",
+    "en": "</b> are in <b>"
+  },
+  "u9d5df4081893": {
+    "kind": "template",
+    "zh": "</b>」里。<br>\n       <span style=\"color:var(--sub)\">是在备忘录里改名了吗？不处理的话，下面会把它们搬回「",
+    "en": "</b>.<br>\\n       <span style=\"color:var(--sub)\">If the folder was renamed in Notes, align the category name below. Otherwise the plan will move notes back to “"
+  },
+  "u4e5343e84e41": {
+    "kind": "template",
+    "zh": "」，并新建一个这个名字的文件夹。</span><br>\n       <button class=\"orgRenameGo\" data-from=\"",
+    "en": "” and recreate that folder.</span><br>\\n       <button class=\"orgRenameGo\" data-from=\""
+  },
+  "u58cf6d85a0be": {
+    "kind": "template",
+    "zh": "\"\n               style=\"margin-top:6px\">把整理器里的分类也改成「",
+    "en": "\"\n               style=\"margin-top:6px\">Rename the organizer category to “"
+  },
+  "ueab20d69c7e9": {
+    "kind": "template",
+    "zh": "把整理器里的分类「",
+    "en": "Rename the organizer category from “"
+  },
+  "ucf461930db56": {
+    "kind": "template",
+    "zh": "」改名成「",
+    "en": "” to “"
+  },
+  "u1d73ab3924c4": {
+    "kind": "template",
+    "zh": "」，跟备忘录对齐。\\n\\n只改名字，笔记内容和归属都不动。",
+    "en": "” to match Notes?\\n\\nOnly the name changes. Note content and membership stay the same."
+  },
+  "uf050c6a9eaaa": {
+    "kind": "template",
+    "zh": "分类已改名为「",
+    "en": "Category renamed to “"
+  },
+  "uba5be16beb97": {
+    "kind": "template",
+    "zh": "本次会动 <b>",
+    "en": "This will move <b>"
+  },
+  "u7de2b1c171d3": {
+    "kind": "template",
+    "zh": "</b> 条：搬进分类文件夹 <b>",
+    "en": "</b> notes: <b>"
+  },
+  "u6d5551ba4380": {
+    "kind": "template",
+    "zh": "</b> 条，\n       从分类文件夹里请出去 <b>",
+    "en": "</b> into category folders\n       and <b>"
+  },
+  "u8cc2ced17263": {
+    "kind": "template",
+    "zh": "</b> 条。\n       ",
+    "en": "</b> back out.\n       "
+  },
+  "uc56d06de83be": {
+    "kind": "template",
+    "zh": "<br>\n       <span style=\"color:var(--sub);font-size:12.5px\">是移动不是复制，备忘录总数不变；\n       正文一个字不改，也不会删任何笔记。以整理器里的分类为准。</span>",
+    "en": "<br>\n       <span style=\"color:var(--sub);font-size:12.5px\">Notes are moved to match their categories in the organizer.\n       The total count stays the same; no text is edited and no notes are deleted.</span>"
+  },
+  "u4c8d4423c8f0": {
+    "kind": "template",
+    "zh": "要新建文件夹：<b>",
+    "en": "Folders to create: <b>"
+  },
+  "ub4745a16ed03": {
+    "kind": "literal",
+    "zh": "没有待移动的笔记——每条笔记待的文件夹都跟整理器里的分类一致了。",
+    "en": "No notes to move. Each note’s folder already matches its organizer category."
+  },
+  "u8f64508b5207": {
+    "kind": "template",
+    "zh": "搬进去（分类 → 同名文件夹）",
+    "en": "Move in (category → folder with the same name)"
+  },
+  "ud09eb1ad492a": {
+    "kind": "template",
+    "zh": "请出去（整理器里是未分类 → ",
+    "en": "Move out (Unfiled in organizer → "
+  },
+  "u909238fe63f2": {
+    "kind": "template",
+    "zh": "有 <b>",
+    "en": "There are <b>"
+  },
+  "u3c446b6648e6": {
+    "kind": "template",
+    "zh": "</b> 条在整理器里删掉了、备忘录里还留着。\n       点下面的按钮把它们挪进「",
+    "en": "</b> entries deleted from the organizer that still exist in Notes.\n       Use the button below to move them into the “"
+  },
+  "u9cd2fe4c9c0f": {
+    "kind": "template",
+    "zh": "」文件夹，\n       <b>只是挪进去，一条都不会删</b>——真要删，在手机上看过再动手。",
+    "en": "” folder.\n       <b>They are only moved; nothing is deleted.</b> Review them on the phone before deleting."
+  },
+  "uef4c330f036e": {
+    "kind": "template",
+    "zh": "没有待处理的——整理器里删掉的条目，备忘录里也都不在了。",
+    "en": "Nothing pending. Entries deleted from the organizer are also no longer in Notes."
+  },
+  "ud5c8eebbe9ae": {
+    "kind": "template",
+    "zh": "挪进「",
+    "en": "Move into “"
+  },
+  "uc56152bbed3d": {
+    "kind": "template",
+    "zh": "」（不删除）",
+    "en": "” (no deletion)"
+  },
+  "ufdebb4af4360": {
+    "kind": "template",
+    "zh": " 条已就位",
+    "en": " already in place"
+  },
+  "u714654273592": {
+    "kind": "template",
+    "zh": " 条是手动新建的、备忘录里没有对应笔记",
+    "en": " created manually with no source note"
+  },
+  "ud38c06b3d1de": {
+    "kind": "template",
+    "zh": " 条来源笔记已被删",
+    "en": " source notes no longer found"
+  },
+  "u582e69f8c663": {
+    "kind": "template",
+    "zh": "跳过：",
+    "en": "Skipped: "
+  },
+  "uec6fd577136b": {
+    "kind": "literal",
+    "zh": "整理器没导过的笔记一律不碰。这两种操作都只移动，从头到尾不会删除任何一条备忘录。<br>",
+    "en": "Notes never imported into the organizer are left untouched. Both actions only move notes; neither deletes any Apple Notes entry.<br>"
+  },
+  "u4b0e35de8f0f": {
+    "kind": "literal",
+    "zh": "移动前会把每条现在在哪个文件夹记进 <code>Notes Library/restore-map.json</code>，",
+    "en": "Before moving, original folders are recorded in <code>Notes Library/restore-map.json</code>. "
+  },
+  "uea3f1de5d239": {
+    "kind": "literal",
+    "zh": "点「还原移动」整批退回原位；每次移动另存一份 md 清单在 ",
+    "en": "Use “Undo move” to restore the batch to its original folders. Each move also saves a Markdown list in "
+  },
+  "u9aee56f2df4e": {
+    "kind": "literal",
+    "zh": "<code>Notes Library/Move Logs/</code>，点「📄 整理log」直接打开。",
+    "en": "<code>Notes Library/Move Logs/</code>. Open 📄 Tidy-up log to review them."
+  },
+  "uf24eda5e3e72": {
+    "kind": "literal",
+    "zh": "⚠️ 无法确认所属账户：不会移动，请先在备忘录中核对账户",
+    "en": "⚠️ Account could not be verified. This note will not be moved; check its account in Notes first."
+  },
+  "u97d707740f91": {
+    "kind": "literal",
+    "zh": "未命名账户",
+    "en": "Unnamed account"
+  },
+  "u625f6677a709": {
+    "kind": "template",
+    "zh": "目标账户：",
+    "en": "Target account: "
+  },
+  "u3a9092b16f45": {
+    "kind": "template",
+    "zh": "（账户 ",
+    "en": "(Account "
+  },
+  "ud1919dd8903a": {
+    "kind": "literal",
+    "zh": " · 留在原账户",
+    "en": " · Stays in the same account"
+  },
+  "ub1d272e9cb2c": {
+    "kind": "template",
+    "zh": " 条</div>",
+    "en": " notes</div>"
+  },
+  "u8845dc9c5dfa": {
+    "kind": "template",
+    "zh": "<div class=\"ohead\">…还有 ",
+    "en": "<div class=\"ohead\">…"
+  },
+  "uaeccff704ee1": {
+    "kind": "template",
+    "zh": " 条，完整清单看 md</div>",
+    "en": " more. See the Markdown log for the full list.</div>"
+  },
+  "ua6af0fbef01c": {
+    "kind": "literal",
+    "zh": "可自动归档",
+    "en": "Confident"
+  },
+  "u719b1b96518d": {
+    "kind": "literal",
+    "zh": "待确认",
+    "en": "Needs review"
+  },
+  "u557d9d5d9f5e": {
+    "kind": "literal",
+    "zh": "待分类",
+    "en": "Unfiled"
+  },
+  "ub480644880df": {
+    "kind": "literal",
+    "zh": "出错",
+    "en": "Error"
+  },
+  "u822804d19560": {
+    "kind": "literal",
+    "zh": "跳过",
+    "en": "Skipped"
+  },
+  "uec435c86ad34": {
+    "kind": "literal",
+    "zh": "要填Key",
+    "en": "Needs key"
+  },
+  "uaca6ed656145": {
+    "kind": "template",
+    "zh": "还没归类的有 <b>",
+    "en": "<b>"
+  },
+  "u9cdd36bdd9b5": {
+    "kind": "template",
+    "zh": "</b> 条。",
+    "en": "</b> notes are not in a category yet."
+  },
+  "u45dfd66e321f": {
+    "kind": "literal",
+    "zh": " 没填 API Key —— <b>关键词那层照样能跑</b>，剩下的会标「要填Key」。",
+    "en": " No API key — <b>the keyword layer still runs</b>; the rest are marked “Needs key”."
+  },
+  "u35904448b1c1": {
+    "kind": "template",
+    "zh": "</b> 还没写说明，Jev 判这几类会偏低。",
+    "en": "</b> have no description yet, so Jev will score them low."
+  },
+  "uab6484b674d3": {
+    "kind": "literal",
+    "zh": "没有待归类的备忘录",
+    "en": "No unfiled notes"
+  },
+  "u232b14448e5c": {
+    "kind": "template",
+    "zh": "正在判断 ",
+    "en": "Judging "
+  },
+  "ua4e018f0bba1": {
+    "kind": "template",
+    "zh": " 条…",
+    "en": " notes…"
+  },
+  "u429982166227": {
+    "kind": "template",
+    "zh": "可自动归档 ",
+    "en": "Confident "
+  },
+  "u0e6eac29336e": {
+    "kind": "template",
+    "zh": " · 待确认 ",
+    "en": " · Needs review "
+  },
+  "u2a9b63e896fd": {
+    "kind": "template",
+    "zh": " · 待分类 ",
+    "en": " · Unfiled "
+  },
+  "u7fb38b584b34": {
+    "kind": "template",
+    "zh": " · 出错 ",
+    "en": " · Errors "
+  },
+  "u533f647f7852": {
+    "kind": "template",
+    "zh": " 条正文是空的（只看了标题）</span>",
+    "en": " have an empty body (title only)</span>"
+  },
+  "u244c85e17b13": {
+    "kind": "template",
+    "zh": " 条分数没拿全，判断不能信</span>",
+    "en": " came back with incomplete scores — do not trust those</span>"
+  },
+  "u9607647fbf8e": {
+    "kind": "template",
+    "zh": "<div style=\"font-size:12px;color:var(--sub);margin-top:2px\">…剩下 ",
+    "en": "<div style=\"font-size:12px;color:var(--sub);margin-top:2px\">…The remaining "
+  },
+  "u51e10d7dda49": {
+    "kind": "template",
+    "zh": " 类都更低</div>",
+    "en": " categories scored lower</div>"
+  },
+  "u5c1367d1e030": {
+    "kind": "template",
+    "zh": "<div style=\"font-size:12px;color:var(--sub)\">这条没走 Jev",
+    "en": "<div style=\"font-size:12px;color:var(--sub)\">This entry was not sent to Jev"
+  },
+  "u0a0308ec84b7": {
+    "kind": "template",
+    "zh": "，所以没有分数。</div>",
+    "en": ", so no scores are available.</div>"
+  },
+  "ufe5fbc6b3ff4": {
+    "kind": "template",
+    "zh": "<div style=\"color:var(--red);font-size:12px;margin-bottom:6px\">\n         ⚠️ 问了 ",
+    "en": "<div style=\"color:var(--red);font-size:12px;margin-bottom:6px\">\n         ⚠️ Requested "
+  },
+  "u72ec280285ec": {
+    "kind": "template",
+    "zh": " 个分类，只拿回 ",
+    "en": " category scores; received "
+  },
+  "u39f4a8ad6736": {
+    "kind": "template",
+    "zh": " 个分数。缺的那些等于没参与比较，\n         这一条的判断不能信，先解决接口问题。</div>",
+    "en": " scores. Missing scores were excluded from comparison,\n         so this result is unreliable. Resolve the API issue first.</div>"
+  },
+  "u4595fe3f4ebd": {
+    "kind": "template",
+    "zh": "<div style=\"color:var(--red);font-size:12px\">⚠️ 这条<b>正文是空的</b>，Jev 只看到了标题。\n         标题要是没信息量，判低分是必然的，不算它判错。</div>",
+    "en": "<div style=\"color:var(--red);font-size:12px\">⚠️ This entry has an <b>empty body</b>; Jev received only the title.\n         A vague title naturally produces low scores and does not indicate a classification error.</div>"
+  },
+  "u789bc81128d8": {
+    "kind": "template",
+    "zh": "<div style=\"font-size:12px;color:var(--sub)\">正文 ",
+    "en": "<div style=\"font-size:12px;color:var(--sub)\">Body: "
+  },
+  "u90f2cf4692a0": {
+    "kind": "literal",
+    "zh": "（下面只显示开头一段）",
+    "en": " (showing the opening only)"
+  },
+  "ue4831dcae2ca": {
+    "kind": "literal",
+    "zh": " · 只有<b>开头 4000 字</b>发给了 Jev",
+    "en": " · only the <b>first 4000 characters</b> were sent"
+  },
+  "u13c32d329ffe": {
+    "kind": "template",
+    "zh": "\n    <div style=\"font-size:12px;font-weight:600;margin-bottom:3px\">各分类得分</div>\n    ",
+    "en": "\n    <div style=\"font-size:12px;font-weight:600;margin-bottom:3px\">Category scores</div>\n    "
+  },
+  "ubf14b7f74307": {
+    "kind": "literal",
+    "zh": "(无标题)",
+    "en": "(no title)"
+  },
+  "uef82c3bda932": {
+    "kind": "template",
+    "zh": "」的说明：",
+    "en": "”: "
+  },
+  "u8f044e8cd514": {
+    "kind": "template",
+    "zh": "\n        <br>判得不对就改这句 —— <b>说明写得准，分数才准</b>。</div>",
+    "en": "\n        <br>Adjust this description if the result is incorrect. <b>Accurate descriptions lead to more accurate scores.</b></div>"
+  },
+  "u5ecc79b5e298": {
+    "kind": "literal",
+    "zh": "<option value=\"\">— 不归类 —</option>",
+    "en": "<option value=\"\">— Leave unfiled —</option>"
+  },
+  "u9e7341f855e2": {
+    "kind": "template",
+    "zh": " ／ 次：",
+    "en": " / runner-up: "
+  },
+  "uded2b85e11df": {
+    "kind": "literal",
+    "zh": " <span style=\"color:var(--red)\" title=\"正文是空的\">◍空</span>",
+    "en": " <span style=\"color:var(--red)\" title=\"Empty body\">◍Empty</span>"
+  },
+  "ud9bdadbe139a": {
+    "kind": "literal",
+    "zh": " <span style=\"color:var(--red)\" title=\"分数没拿全\">⚠</span>",
+    "en": " <span style=\"color:var(--red)\" title=\"Incomplete scores\">⚠</span>"
+  },
+  "uf464fa30d2ee": {
+    "kind": "template",
+    "zh": "\" style=\"flex:1;overflow:hidden;text-overflow:ellipsis;\n            white-space:nowrap;cursor:pointer;user-select:none\"\n            title=\"点一下看正文和全部得分\">",
+    "en": "\" style=\"flex:1;overflow:hidden;text-overflow:ellipsis;\n            white-space:nowrap;cursor:pointer;user-select:none\"\n            title=\"Click to view the body and all scores\">"
+  },
+  "ub9b76a10addf": {
+    "kind": "literal",
+    "zh": "分类尚未保存，请先处理保存提示",
+    "en": "Category changes are not saved. Resolve the save notice first."
+  },
+  "uc9c399d23c99": {
+    "kind": "template",
+    "zh": "已标好 ",
+    "en": "Assigned "
+  },
+  "u36ba40cd64a4": {
+    "kind": "template",
+    "zh": " 条分类。用顶部「📱 反向同步手机备忘录」预览确认后才会真的搬。",
+    "en": " category labels. Actual notes move only after previewing and confirming with “📱 Sync back to phone” above."
+  },
+  "ud11559f886df": {
+    "kind": "literal",
+    "zh": "已存了一个，留空 = 不改动",
+    "en": "One is stored. Leave empty to keep it."
+  },
+  "ua8fbfdcef28b": {
+    "kind": "literal",
+    "zh": "在 console.typesafe.ai 新建",
+    "en": "Create one at console.typesafe.ai"
+  },
+  "ua067ab366b6a": {
+    "kind": "template",
+    "zh": "\" style=\"width:100%\"\n              placeholder=\"这一类装的是……\" value=\"",
+    "en": "\" style=\"width:100%\"\n              placeholder=\"This category contains…\" value=\""
+  },
+  "u5a17f6330422": {
+    "kind": "literal",
+    "zh": "<div class=\"nthelp\">还没有任何分类。</div>",
+    "en": "<div class=\"nthelp\">No categories yet.</div>"
+  },
+  "uc5aee4b48608": {
+    "kind": "literal",
+    "zh": "正在读取设置…",
+    "en": "Loading settings…"
+  },
+  "ue11915caf09d": {
+    "kind": "literal",
+    "zh": "设置尚未保存，请先保存再猜分类。",
+    "en": "Settings have unsaved changes. Save before suggesting categories."
+  },
+  "u4d94a6c3663c": {
+    "kind": "literal",
+    "zh": "留空 = 不改动已存的",
+    "en": "Leave blank to keep the saved value"
+  },
+  "u46fa0db1a4ea": {
+    "kind": "literal",
+    "zh": "已保存，但还有新的更改未保存。",
+    "en": "Saved, but newer changes are still unsaved."
+  },
+  "udfc4297d201e": {
+    "kind": "literal",
+    "zh": "设置已保存。",
+    "en": "Settings saved."
+  },
+  "u388fc27dde4d": {
+    "kind": "literal",
+    "zh": "设置已保存",
+    "en": "Settings saved"
+  },
+  "uce489240fb23": {
+    "kind": "template",
+    "zh": "按上面的清单移动 ",
+    "en": "Move the "
+  },
+  "ua128d0750f67": {
+    "kind": "template",
+    "zh": " 条来源笔记？\\n\\n只换文件夹，不复制、不删除、不改正文。",
+    "en": " source notes listed above?\\n\\nOnly folders change. Notes are not copied or deleted, and their bodies remain unchanged."
+  },
+  "u4108f920cc40": {
+    "kind": "template",
+    "zh": "整理中 ",
+    "en": "Moving "
+  },
+  "ub6193796a79d": {
+    "kind": "literal",
+    "zh": "第一步 · 请出分类文件夹（整理器里是未分类）",
+    "en": "Move unassigned notes out of category folders"
+  },
+  "u8cf00a8dc9fd": {
+    "kind": "template",
+    "zh": "第一步 · 按分类整理：",
+    "en": "Sync by category: "
+  },
+  "ue38e5ec5d820": {
+    "kind": "template",
+    "zh": "第一步完成：移动 ",
+    "en": "Sync complete: moved "
+  },
+  "uc126fc5f03ac": {
+    "kind": "template",
+    "zh": "，失败 ",
+    "en": ", failed "
+  },
+  "u7bff9b522cb8": {
+    "kind": "template",
+    "zh": "，清单：",
+    "en": ", log: "
+  },
+  "ucf69c7962d1c": {
+    "kind": "template",
+    "zh": "已整理 ",
+    "en": "Organized "
+  },
+  "u1b8647777c7e": {
+    "kind": "literal",
+    "zh": "未知 ID",
+    "en": "Unknown ID"
+  },
+  "u962a4864c896": {
+    "kind": "literal",
+    "zh": "未确认移动成功，请核对后重试",
+    "en": "Move success could not be verified. Review and retry."
+  },
+  "u2ddb79fe5ceb": {
+    "kind": "literal",
+    "zh": "\n未移动条目：\n",
+    "en": "\nUnmoved entries:\n"
+  },
+  "uf5f733c4d1e9": {
+    "kind": "template",
+    "zh": "把这 ",
+    "en": "Move "
+  },
+  "u67ed8f6e9889": {
+    "kind": "template",
+    "zh": " 条挪进「",
+    "en": " notes to “"
+  },
+  "ufeaf7183cbc7": {
+    "kind": "template",
+    "zh": "」文件夹？\\n\\n",
+    "en": "”?\\n\\n"
+  },
+  "u3e28dd0376a0": {
+    "kind": "template",
+    "zh": "这些是在整理器里删掉、备忘录里还留着的。\\n",
+    "en": "These entries were deleted from the organizer but still exist in Notes.\\n"
+  },
+  "uc068f4742e35": {
+    "kind": "template",
+    "zh": "只是换个文件夹，一条都不会删——去手机上看过，确认没用了再自己删。",
+    "en": "This only changes folders; no notes are deleted. Review them in Notes before manually deleting any unwanted notes."
+  },
+  "u42640895dcc7": {
+    "kind": "template",
+    "zh": "挪动中 ",
+    "en": "Moving "
+  },
+  "u2d39905c9bd0": {
+    "kind": "template",
+    "zh": "第二步 · 挪进「",
+    "en": "Move to “"
+  },
+  "uecaaf7879135": {
+    "kind": "template",
+    "zh": "」（只挪不删，等在手机上确认）",
+    "en": "” (move only; review on the phone before deleting)"
+  },
+  "uf041655d9bf9": {
+    "kind": "template",
+    "zh": "第二步完成：挪进「",
+    "en": "Completed: moved to “"
+  },
+  "ua9295656281d": {
+    "kind": "template",
+    "zh": "，一条都没删",
+    "en": "; no notes deleted"
+  },
+  "ucb38cc111297": {
+    "kind": "template",
+    "zh": "。清单：",
+    "en": ". Log: "
+  },
+  "u8ab9a32cf889": {
+    "kind": "template",
+    "zh": "已挪进「",
+    "en": "Moved to “"
+  },
+  "u9bbdb81ed900": {
+    "kind": "template",
+    "zh": "已还原 ",
+    "en": "Restored "
+  },
+  "u50b38e823497": {
+    "kind": "template",
+    "zh": " 条，另有 ",
+    "en": " entries; another "
+  },
+  "uad31772da092": {
+    "kind": "template",
+    "zh": " 条没能还原",
+    "en": " entries could not be restored"
+  },
+  "u537bac04529a": {
+    "kind": "literal",
+    "zh": "⚠️ 本次还原未能确认任何条目成功",
+    "en": "⚠️ No entries could be confirmed as successfully restored"
+  },
+  "u7a4c267d5d87": {
+    "kind": "template",
+    "zh": " 条仍待还原",
+    "en": " entries still need restoring"
+  },
+  "u69b60bb0142c": {
+    "kind": "literal",
+    "zh": "归位记录已保留，可重试尚未还原的条目。",
+    "en": "Restore records have been retained. Pending entries can be retried."
+  },
+  "u225e145aa282": {
+    "kind": "literal",
+    "zh": "请核对归位记录后重试。",
+    "en": "Review the restore records and retry."
+  },
+  "u8280b7a7ae75": {
+    "kind": "literal",
+    "zh": "未知",
+    "en": "Unknown"
+  },
+  "ue1e2a92675c2": {
+    "kind": "literal",
+    "zh": "未确认还原成功",
+    "en": "Restore success could not be verified"
+  },
+  "ubad5584b9ab6": {
+    "kind": "template",
+    "zh": "还原失败（",
+    "en": "Restore failed ("
+  },
+  "ub1fb42563699": {
+    "kind": "literal",
+    "zh": "⚠️ 无法读取移动记录，请重试",
+    "en": "⚠️ Could not load move history. Retry."
+  },
+  "u0898ab363e40": {
+    "kind": "literal",
+    "zh": "\n\n把这一批退回移动前的原文件夹？部分失败时会保留未完成条目，不会跳到上一批。",
+    "en": "\n\nRestore this batch to its original folders? If some entries fail, pending entries are retained and the previous batch is not processed."
+  },
+  "u96a1ceb11e14": {
+    "kind": "literal",
+    "zh": "还原中…",
+    "en": "Restoring…"
+  },
+  "u2ba12c8e8baf": {
+    "kind": "template",
+    "zh": " 条（",
+    "en": " notes (move from "
+  },
+  "ucdc3dda0d1ed": {
+    "kind": "template",
+    "zh": " 那次）",
+    "en": ")"
+  },
+  "udf058348072d": {
+    "kind": "literal",
+    "zh": "文件夹路径已复制",
+    "en": "Folder path copied"
+  },
+  "u92b79bee4426": {
+    "kind": "literal",
+    "zh": "正在读取备忘录文件夹…",
+    "en": "Loading Notes folders…"
+  },
+  "u57bd425ead16": {
+    "kind": "literal",
+    "zh": "在备忘录里新建一条",
+    "en": "Create a new note"
+  },
+  "u6e73ae0f3812": {
+    "kind": "literal",
+    "zh": "原来的备忘录一个字都不动",
+    "en": "Keep the original note unchanged"
+  },
+  "u49443fe4454c": {
+    "kind": "literal",
+    "zh": "更新上次推送的那条",
+    "en": "Update the last exported note"
+  },
+  "ud38b9656801a": {
+    "kind": "template",
+    "zh": "上次推送：",
+    "en": "Last sent: "
+  },
+  "u7ac1a9a64888": {
+    "kind": "literal",
+    "zh": "覆盖来源备忘录",
+    "en": "Overwrite the source note"
+  },
+  "u6c411fb15482": {
+    "kind": "literal",
+    "zh": "按标题猜的：",
+    "en": "Matched by title: "
+  },
+  "u95954201fc41": {
+    "kind": "literal",
+    "zh": "来源：",
+    "en": "Source: "
+  },
+  "u5c93c2be9a37": {
+    "kind": "literal",
+    "zh": "原备忘录",
+    "en": "Original note"
+  },
+  "u5320a7887249": {
+    "kind": "literal",
+    "zh": "（原内容会被替换）",
+    "en": " (existing content will be replaced)"
+  },
+  "u738524090733": {
+    "kind": "literal",
+    "zh": "（新建）",
+    "en": " (new folder)"
+  },
+  "udd508869c300": {
+    "kind": "literal",
+    "zh": "推送的是编辑框里现在显示的这一版内容。文件夹不存在会自动新建。",
+    "en": "Sends the version currently shown in the editor. Creates the destination folder if it does not exist."
+  },
+  "u62ca06f45b2e": {
+    "kind": "literal",
+    "zh": "推送的是编辑框里现在显示的这一版内容，会整条替换掉那条备忘录的正文。",
+    "en": "Replaces the entire destination note with the version currently shown in the editor."
+  },
+  "u5c6c3cfde6cb": {
+    "kind": "literal",
+    "zh": "新文件夹名称：",
+    "en": "New folder name: "
+  },
+  "u9c5560a0be1b": {
+    "kind": "literal",
+    "zh": "找不到来源备忘录了",
+    "en": "The source note could not be found."
+  },
+  "ud1238b1e4096": {
+    "kind": "template",
+    "zh": "确定用现在这一版内容覆盖备忘录「",
+    "en": "Overwrite “"
+  },
+  "ufe613bd4f7c9": {
+    "kind": "template",
+    "zh": "」？原正文会被替换。",
+    "en": "” with the current version? The original text will be replaced."
+  },
+  "uf1914f2bb9a2": {
+    "kind": "literal",
+    "zh": "推送中…",
+    "en": "Sending…"
+  },
+  "ud4a186f1af01": {
+    "kind": "literal",
+    "zh": "已在备忘录里新建一条",
+    "en": "Created a new note in Notes"
+  },
+  "u30cbdd367164": {
+    "kind": "literal",
+    "zh": "备忘录已更新",
+    "en": "Updated the note in Notes"
+  },
+  "u14b486778ce0": {
+    "kind": "template",
+    "zh": "<div style=\"padding:20px;color:var(--sub);font-size:13px\">\n      正在读取备忘录…第一次用系统可能弹出授权窗口，请点「允许」。</div>",
+    "en": "<div style=\"padding:20px;color:var(--sub);font-size:13px\">\n      Loading notes… On first use, macOS may ask for permission to access Notes. Choose Allow or OK.</div>"
+  },
+  "u5f85f73160b8": {
+    "kind": "template",
+    "zh": "<option value=\"\">全部文件夹</option>",
+    "en": "<option value=\"\">All folders</option>"
+  },
+  "u20b1d189baca": {
+    "kind": "template",
+    "zh": "<div style=\"padding:20px;color:var(--sub);font-size:13px\">没有匹配的备忘录</div>",
+    "en": "<div style=\"padding:20px;color:var(--sub);font-size:13px\">No matching notes</div>"
+  },
+  "u82e58c4a5106": {
+    "kind": "literal",
+    "zh": "<span class=\"done\">已导入</span>",
+    "en": "<span class=\"done\">Imported</span>"
+  },
+  "u0611471d3f5d": {
+    "kind": "template",
+    "zh": "继续往下滚动可看到剩余 ",
+    "en": "Scroll to see "
+  },
+  "u53d4dc9e6f78": {
+    "kind": "template",
+    "zh": " 条（「全选当前」会连没画出来的一起选上）",
+    "en": " more notes. “Select all matching” includes notes not yet displayed."
+  },
+  "u1671f3906499": {
+    "kind": "template",
+    "zh": "当前筛选 ",
+    "en": "Current filter: "
+  },
+  "u0819094c5d17": {
+    "kind": "template",
+    "zh": " 条 / 备忘录共 ",
+    "en": " matching / "
+  },
+  "u58729e1855f2": {
+    "kind": "template",
+    "zh": " · 已选 ",
+    "en": " · Selected: "
+  },
+  "u39759d145c86": {
+    "kind": "literal",
+    "zh": "新分类名称：",
+    "en": "New category name:"
+  },
+  "u0f13cb122df6": {
+    "kind": "literal",
+    "zh": "导入所选（各归原文件夹）",
+    "en": "Import selected (match original folders)"
+  },
+  "u0a1e52ae00f0": {
+    "kind": "literal",
+    "zh": "导入所选",
+    "en": "Import selected"
+  },
+  "u62ea968f56a7": {
+    "kind": "literal",
+    "zh": "先勾选要导入的备忘录",
+    "en": "Select notes to import first."
+  },
+  "u21b1b4cded87": {
+    "kind": "template",
+    "zh": "导入中 ",
+    "en": "Importing "
+  },
+  "ue0c1b3996c1f": {
+    "kind": "template",
+    "zh": "导入完成，共 ",
+    "en": "Imported "
+  },
+  "u28122be203ec": {
+    "kind": "literal",
+    "zh": "数据加载失败，请刷新重试",
+    "en": "Data failed to load. Refresh and retry."
+  },
+  "u1b96781d7dab": {
+    "kind": "literal",
+    "zh": "⚠️ 数据加载失败",
+    "en": "⚠️ Could not load the library"
+  },
+  "u70d544983e34": {
+    "kind": "literal",
+    "zh": "无法恢复分类暂存，请检查浏览器存储",
+    "en": "Could not restore category drafts. Check browser storage."
+  },
+  "ub56687efb6d9": {
+    "kind": "literal",
+    "zh": "服务端尚未启用版本保护，请存好各窗口改动、关闭所有整理器窗口后重启服务。当前不会提交整库。",
+    "en": "Version protection is unavailable. Save changes in every window, close all Organizer windows and restart the service. The library will not be submitted yet."
+  },
+  "ue72182ea8a6c": {
+    "kind": "literal",
+    "zh": "食谱",
+    "en": "Recipes"
+  },
+  "u02d76e262ddb": {
+    "kind": "literal",
+    "zh": "做过或想做的菜和烘焙：配方、用量、火候，以及这次哪里做对了、哪里做砸了",
+    "en": "Meals and baking I want to make again: ingredients, quantities, timing, and what worked or needs changing."
+  },
+  "u9ebbe6056794": {
+    "kind": "literal",
+    "zh": "待办",
+    "en": "To do"
+  },
+  "u81cea740149b": {
+    "kind": "literal",
+    "zh": "要做还没做的事：要买的东西、要打的电话、要处理的杂务，做完就能删",
+    "en": "Calls, errands, purchases, and other tasks I still need to finish; remove them once they are done."
+  },
+  "uccd62a007794": {
+    "kind": "literal",
+    "zh": "健康",
+    "en": "Health"
+  },
+  "u24473bdb37f6": {
+    "kind": "literal",
+    "zh": "身体相关的记录：症状、用药、检查结果、医生说的话、复诊时间",
+    "en": "Symptoms, medicines, test results, advice from appointments, and dates for follow-up care."
+  },
+  "u67115afa8df4": {
+    "kind": "literal",
+    "zh": "运动",
+    "en": "Fitness"
+  },
+  "ud9044f07ef76": {
+    "kind": "literal",
+    "zh": "训练和身体数据：每次练了什么、重量组数、跑量配速、体重和围度",
+    "en": "Workout logs and progress: exercises, sets, weights, running distance and pace, and body measurements."
+  },
+  "u23b7aec08845": {
+    "kind": "literal",
+    "zh": "读书笔记",
+    "en": "Reading"
+  },
+  "u12a65b283b24": {
+    "kind": "literal",
+    "zh": "读到的内容和自己的想法：摘录、书里的观点、读完想回头再想的问题",
+    "en": "Book passages and my responses to them: useful arguments, quotations, and questions to revisit."
+  },
+  "ufc2fee32e2fe": {
+    "kind": "literal",
+    "zh": "学习",
+    "en": "Learning"
+  },
+  "u329c47d5ebb6": {
+    "kind": "literal",
+    "zh": "正在学的东西的笔记：教程步骤、概念解释、练习题和错题",
+    "en": "Notes for skills I am studying: instructions, explanations, practice problems, and mistakes to learn from."
+  },
+  "u4d762bb8eb7f": {
+    "kind": "literal",
+    "zh": "旅行",
+    "en": "Travel"
+  },
+  "ube23ecd70e2a": {
+    "kind": "literal",
+    "zh": "出门玩的信息：行程、订单号、想去的地方、当地要注意的事",
+    "en": "Trip plans and practical details: bookings, places to visit, transport, and local advice."
+  },
+  "uab1e5c798b86": {
+    "kind": "literal",
+    "zh": "工作",
+    "en": "Work"
+  },
+  "uf4a1411b64fe": {
+    "kind": "literal",
+    "zh": "跟工作有关的：会议纪要、要跟进的事、同事说的重点、工作进度",
+    "en": "Work records: meeting notes, follow-up actions, key points and progress."
+  },
+  "u378d4dc2baa1": {
+    "kind": "literal",
+    "zh": "灵感",
+    "en": "Ideas"
+  },
+  "u0a91d691df52": {
+    "kind": "literal",
+    "zh": "突然冒出来还没想清楚的念头：一句话、一个点子、以后可能要展开的东西",
+    "en": "Unfinished thoughts I might develop later: a sentence, a question, or the start of a new category."
+  },
+  "ufd681073ad2a": {
+    "kind": "literal",
+    "zh": "收藏",
+    "en": "Saved for later"
+  },
+  "u1434d00aec8c": {
+    "kind": "literal",
+    "zh": "从别处存下来还没看的：文章链接、推荐的工具、想买的东西",
+    "en": "Links and recommendations to come back to: articles, tools, and things I might buy."
+  },
+  "u19cf93f40eeb": {
+    "kind": "template",
+    "zh": "我已有的分类：",
+    "en": "Existing categories: "
+  },
+  "ub53064c8ea66": {
+    "kind": "literal",
+    "zh": "请根据下面几条备忘录的标题和开头，归纳适合的分类，并为每类写一句具体说明，能跟别的类区分开。不要用“杂项”“其他”。按“名字：描述”一行一条输出，我直接粘回整理器。\n\n我的备忘录：\n（在这里贴几条标题和开头）",
+    "en": "Suggest categories from the note titles and opening lines below. Write a specific one-sentence description for each, distinguishing it from other categories. Avoid Miscellaneous or Other. Return one Name: Description per line for pasting into the Organizer.\n\nSample notes:\n(Paste titles and opening lines here.)"
+  },
+  "u09ba8f542884": {
+    "kind": "literal",
+    "zh": "请根据我平常记录的内容，建议 5–8 个分类，名字用日常说法，并为每类写一句具体说明，能跟别的类区分开。不要用“杂项”“其他”。按“名字：描述”一行一条输出，我直接粘回整理器。\n\n我平常记这些东西：\n（在这里用几句话描述）",
+    "en": "Suggest 5–8 categories based on the typical note contents below. Use clear names and one specific sentence describing each category. Avoid Miscellaneous or Other. Return one Name: Description per line for pasting into the Organizer.\n\nTypical note contents:\n(Describe them here.)"
+  },
+  "uf9251390791d": {
+    "kind": "template",
+    "zh": "\" aria-label=\"分类名\" style=\"width:130px;font-size:13px\">\n      <textarea class=\"wzDesc jvArea\" data-i=\"",
+    "en": "\" aria-label=\"Category name\" style=\"width:130px;font-size:13px\">\n      <textarea class=\"wzDesc jvArea\" data-i=\""
+  },
+  "u46e70c09d5ee": {
+    "kind": "template",
+    "zh": "\" rows=\"2\" aria-label=\"分类描述\" style=\"flex:1;margin-top:0\">",
+    "en": "\" rows=\"2\" aria-label=\"Category description\" style=\"flex:1;margin-top:0\">"
+  },
+  "u8eb98aee048b": {
+    "kind": "literal",
+    "zh": "已复制，粘给 AI 就行。",
+    "en": "Copied. Paste into an AI chat."
+  },
+  "u665f372b1e5e": {
+    "kind": "literal",
+    "zh": "把回复按“名字：描述”一行一条粘回上面。",
+    "en": "Paste the response above, one Name: Description per line."
+  },
+  "ua65c6358beb3": {
+    "kind": "literal",
+    "zh": "账号密码",
+    "en": "Accounts & passwords"
+  },
+  "u080e1d529e84": {
+    "kind": "literal",
+    "zh": "账号、密码、恢复码、证件号等不应外发的信息。",
+    "en": "Private account details, passwords, recovery codes and identification numbers."
+  },
+  "u23d1e33a34ca": {
+    "kind": "template",
+    "zh": "建好了 ",
+    "en": "Created "
+  },
+  "uaaca4fcddce5": {
+    "kind": "template",
+    "zh": " 个分类，去“从备忘录导入”吧。",
+    "en": " categories. Open Import from Notes to continue."
+  },
+  "u6886df41984d": {
+    "kind": "template",
+    "zh": "合并选中的 ",
+    "en": "Merge "
+  },
+  "u19421ec6c1ae": {
+    "kind": "template",
+    "zh": " 组（",
+    "en": " selected groups ("
+  },
+  "ueddc8cb9feae": {
+    "kind": "template",
+    "zh": " 条 → ",
+    "en": " notes → "
+  },
+  "u590fb034660e": {
+    "kind": "template",
+    "zh": " 条）",
+    "en": " notes)"
+  },
+  "u8a6a25611d12": {
+    "kind": "literal",
+    "zh": "合并选中的组",
+    "en": "Merge selected groups"
+  },
+  "u2fddb7b80bbb": {
+    "kind": "template",
+    "zh": "<div class=\"nthelp\">这两版都太长，不画逐行对照了。</div>",
+    "en": "<div class=\"nthelp\">These versions are too long to show their changes here. Use “Read text” to inspect them.</div>"
+  },
+  "u7170e3b5c017": {
+    "kind": "template",
+    "zh": "<div class=\"nthelp\">这两版一模一样。</div>",
+    "en": "<div class=\"nthelp\">These versions are identical.</div>"
+  },
+  "ufce7050ed462": {
+    "kind": "template",
+    "zh": "<div style=\"color:var(--sub);font-size:11px\">⋯ 中间 ",
+    "en": "<div style=\"color:var(--sub);font-size:11px\">⋯ "
+  },
+  "u721f01a2d73b": {
+    "kind": "template",
+    "zh": " 行没动 ⋯</div>",
+    "en": " unchanged lines ⋯</div>"
+  },
+  "uc9a17599c5b7": {
+    "kind": "template",
+    "zh": "<div style=\"color:var(--sub);font-size:11px\">⋯ 末尾 ",
+    "en": "<div style=\"color:var(--sub);font-size:11px\">⋯ "
+  },
+  "u14020d5059f7": {
+    "kind": "template",
+    "zh": "<div class=\"nthelp\">这次没扫到重合度达标的条目。把上面的重合度调低一点再扫扫看。</div>",
+    "en": "<div class=\"nthelp\">No groups meet these settings. Adjust the overlap threshold and scan again.</div>"
+  },
+  "u1c7c02432a5a": {
+    "kind": "template",
+    "zh": "<span title=\"短备忘录的标题和正文完全相同，自动标题不参与归组\">标题和正文相同</span>",
+    "en": "<span title=\"Short notes must have identical titles and bodies; automatic titles are excluded\">Identical title and body</span>"
+  },
+  "u0327f6f6bede": {
+    "kind": "template",
+    "zh": "<span title=\"两条互相包含都达标\">正文几乎一样</span>",
+    "en": "<span title=\"Overlap meets the threshold in both directions\">Nearly identical text</span>"
+  },
+  "u60f8e4375019": {
+    "kind": "template",
+    "zh": "字　",
+    "en": " characters　"
+  },
+  "u5ab98182e607": {
+    "kind": "template",
+    "zh": "\">看正文</a>\n            ",
+    "en": "\">Read text</a>\n            "
+  },
+  "uce92bed3bb47": {
+    "kind": "literal",
+    "zh": "<span style=\"color:var(--green);font-weight:600\">　← 当前</span>",
+    "en": "<span style=\"color:var(--green);font-weight:600\"> ← Current</span>"
+  },
+  "uf91cbdddf325": {
+    "kind": "template",
+    "zh": "\">跟 v",
+    "en": "\">What changed since v"
+  },
+  "ubf7875af68b4": {
+    "kind": "template",
+    "zh": " 比差在哪</a>",
+    "en": "</a>"
+  },
+  "uac62adc16800": {
+    "kind": "template",
+    "zh": ">\n        归成一组（",
+    "en": ">\n        Combine this group ("
+  },
+  "u36e5d909fd07": {
+    "kind": "template",
+    "zh": " 条）\n        <span style=\"font-weight:400;color:var(--sub)\">",
+    "en": " notes)\n        <span style=\"font-weight:400;color:var(--sub)\">"
+  },
+  "uc2d3fca7c4c3": {
+    "kind": "literal",
+    "zh": "扫描中…",
+    "en": "Scanning…"
+  },
+  "u63f488bdb102": {
+    "kind": "template",
+    "zh": " 组 / ",
+    "en": " groups / "
+  },
+  "u0373937a757c": {
+    "kind": "template",
+    "zh": " 条　（参与正文比对 ",
+    "en": " notes (body comparisons: "
+  },
+  "u3ea5868f440e": {
+    "kind": "template",
+    "zh": " 条，短备忘录需标题和正文相同 ",
+    "en": " notes; short notes require identical titles and bodies: "
+  },
+  "u67122f875fa2": {
+    "kind": "literal",
+    "zh": "🔍 重新扫描",
+    "en": "🔍 Scan again"
+  },
+  "u933ebdd7076f": {
+    "kind": "literal",
+    "zh": "🔍 开始查找",
+    "en": "🔍 Start scan"
+  },
+  "u55444431f3ca": {
+    "kind": "literal",
+    "zh": "调整条件后，可点「重新扫描」再次查找。",
+    "en": "Adjust the settings and click Scan again to repeat."
+  },
+  "u5aa94b38ae05": {
+    "kind": "literal",
+    "zh": "调好上面的条件，点「开始查找」。",
+    "en": "Choose the settings above, then click Start scan."
+  },
+  "u386b6023b155": {
+    "kind": "template",
+    "zh": "把 ",
+    "en": "Merge "
+  },
+  "u1548f0d18026": {
+    "kind": "template",
+    "zh": " 组、共 ",
+    "en": " groups, containing "
+  },
+  "u3d75e1dec259": {
+    "kind": "template",
+    "zh": " 条归成 ",
+    "en": " notes, into "
+  },
+  "ucd8faa689990": {
+    "kind": "template",
+    "zh": " 条。\\n\\n",
+    "en": " notes?\\n\\n"
+  },
+  "u39590196541f": {
+    "kind": "template",
+    "zh": "每组最新的那条留下作为当前版，其余的作为历史版本挂在它下面——正文一个字都不会丢，",
+    "en": "The newest note in each group stays as the current version; the rest become its history. All body text is kept. "
+  },
+  "ua73e54d97276": {
+    "kind": "template",
+    "zh": "旧版随时能「设为当前版」切回去。\\n\\n合错了点「撤销上次合并」整批退回。",
+    "en": "Older versions can be made current at any time.\\n\\nUndo last merge restores the entire batch."
+  },
+  "u3e60db914162": {
+    "kind": "literal",
+    "zh": "合并中…",
+    "en": "Merging…"
+  },
+  "u2f240aa02612": {
+    "kind": "literal",
+    "zh": "请先完成分类保存，再合并",
+    "en": "Save category changes before merging"
+  },
+  "u4144db026b73": {
+    "kind": "template",
+    "zh": "✓ 合并了 ",
+    "en": "✓ Merged "
+  },
+  "u9254a480fef4": {
+    "kind": "template",
+    "zh": " 组，",
+    "en": " groups; "
+  },
+  "u1e0b5261f478": {
+    "kind": "template",
+    "zh": " 条并成历史版本",
+    "en": " notes became historical versions"
+  },
+  "uec644c09b2d2": {
+    "kind": "template",
+    "zh": "已归成 ",
+    "en": "Merged "
+  },
+  "uaa4ac22a14a8": {
+    "kind": "template",
+    "zh": " 组",
+    "en": " groups"
+  },
+  "u1bfb5134fc8c": {
+    "kind": "template",
+    "zh": "恢复 ",
+    "en": "Restore "
+  },
+  "u4976ad3d3868": {
+    "kind": "template",
+    "zh": " 组中的 ",
+    "en": " groups containing "
+  },
+  "u5cdf15d80c40": {
+    "kind": "template",
+    "zh": " 条备忘录？\\n\\n",
+    "en": " notes?\\n\\n"
+  },
+  "ucc2760fccc99": {
+    "kind": "literal",
+    "zh": "把上一次合并整批退回去，每条恢复成合并前各自独立的样子。",
+    "en": "Undo the entire last merge and restore each original note as a separate item?"
+  },
+  "uc2217187b574": {
+    "kind": "literal",
+    "zh": "请先完成分类保存，再撤销合并",
+    "en": "Save category changes before undoing the merge"
+  },
+  "ua9127f28175c": {
+    "kind": "template",
+    "zh": "✓ 退回了 ",
+    "en": "✓ Undid "
+  },
+  "uebf81859eabb": {
+    "kind": "template",
+    "zh": " 组，恢复 ",
+    "en": " groups; restored "
+  },
+  "ub4728a10e2e6": {
+    "kind": "literal",
+    "zh": "已撤销上次合并",
+    "en": "Last merge undone"
+  },
+  "u9ea7a74f1a4a": {
+    "kind": "html",
+    "zh": "备忘录整理器",
+    "en": " Notes Organizer "
+  },
+  "ud636a5f24f6e": {
+    "kind": "html",
+    "zh": "🗂 备忘录整理器",
+    "en": "🗂 Notes Organizer"
+  },
+  "ue472fd43472b": {
+    "kind": "html",
+    "zh": "📥 从备忘录导入",
+    "en": "📥 Import from Notes"
+  },
+  "u5855ce29ea0f": {
+    "kind": "html",
+    "zh": "备忘录日期 新→旧",
+    "en": " Notes date: newest first "
+  },
+  "u60666b9d5d17": {
+    "kind": "html",
+    "zh": "备忘录日期 旧→新",
+    "en": " Notes date: oldest first "
+  },
+  "u83e691dfd87e": {
+    "kind": "html",
+    "zh": "整理器改动 新→旧",
+    "en": " Organizer edits: newest first "
+  },
+  "u00ebc7946dca": {
+    "kind": "html",
+    "zh": "按分类（组内 新→旧）",
+    "en": " Category (newest first within each) "
+  },
+  "uab77e0c4e98f": {
+    "kind": "html",
+    "zh": "标题 A→Z",
+    "en": " Title A–Z "
+  },
+  "u3eba4169a96e": {
+    "kind": "html",
+    "zh": "＋ 新建备忘录",
+    "en": "＋ New note"
+  },
+  "u9a40cca0d896": {
+    "kind": "html",
+    "zh": "语言",
+    "en": " Language "
+  },
+  "ud8585866bc46": {
+    "kind": "html",
+    "zh": "跟随系统",
+    "en": " System default "
+  },
+  "u147b51b71bef": {
+    "kind": "html",
+    "zh": "中文",
+    "en": "中文"
+  },
+  "u8b7f132f6cd8": {
+    "kind": "html",
+    "zh": "☑️ 批量选择",
+    "en": "☑️ Bulk select"
+  },
+  "u374b85d583af": {
+    "kind": "html",
+    "zh": "💡 智能整理",
+    "en": "💡 Smart sort"
+  },
+  "ude44f8818078": {
+    "kind": "html",
+    "zh": "📑 内容迭代",
+    "en": "📑 Versions"
+  },
+  "u0cbe2c77fff0": {
+    "kind": "html",
+    "zh": "分类已保存",
+    "en": " Categories saved "
+  },
+  "u1a6ce935500e": {
+    "kind": "html",
+    "zh": "重试保存",
+    "en": " Retry save "
+  },
+  "u96d6c5ba851f": {
+    "kind": "html",
+    "zh": "📱 反向同步手机备忘录",
+    "en": "📱 Sync back to phone"
+  },
+  "u61657ca0fdd8": {
+    "kind": "html",
+    "zh": "🗑 移入需删除",
+    "en": "🗑 Move to &quot;To delete&quot;"
+  },
+  "u936f2c3e8509": {
+    "kind": "html",
+    "zh": "↩︎ 还原移动",
+    "en": "↩︎ Undo move"
+  },
+  "ud48b8bfcf116": {
+    "kind": "html",
+    "zh": "下载未提交副本",
+    "en": " Download unsaved copy "
+  },
+  "uce95778ccccc": {
+    "kind": "html",
+    "zh": "保留新版，放弃分类暂存",
+    "en": " Keep latest library; discard staged categories "
+  },
+  "ua2edba63dbc3": {
+    "kind": "html",
+    "zh": "已选 0 条",
+    "en": "0 selected"
+  },
+  "ub281d6d7abb9": {
+    "kind": "html",
+    "zh": "全选当前",
+    "en": " Select all shown "
+  },
+  "u3e7374f32c84": {
+    "kind": "html",
+    "zh": "清空选择",
+    "en": " Clear selection "
+  },
+  "u4837d1b66e93": {
+    "kind": "html",
+    "zh": "退出批量",
+    "en": " Exit selection "
+  },
+  "u0a203a453b96": {
+    "kind": "html",
+    "zh": "移动到：",
+    "en": " Move to: "
+  },
+  "ud4344e9f0bd3": {
+    "kind": "html",
+    "zh": "移动",
+    "en": " Move "
+  },
+  "u4cd424de3c16": {
+    "kind": "html",
+    "zh": "↩︎ 撤销上次批量移动",
+    "en": "↩︎ Undo last bulk move"
+  },
+  "u46f253511646": {
+    "kind": "html",
+    "zh": "📄 合并导出 txt",
+    "en": "📄 Export combined text"
+  },
+  "ubfc6a3424a6f": {
+    "kind": "html",
+    "zh": "🗑 删除所选",
+    "en": "🗑 Delete selected"
+  },
+  "u2cb983c629b5": {
+    "kind": "html",
+    "zh": "这里还空着。",
+    "en": " No notes here yet. "
+  },
+  "u56b8d41f59bc": {
+    "kind": "html",
+    "zh": "点右上角「📥 从备忘录导入」把备忘录搬进来，",
+    "en": " Click 📥 Import from Notes in the toolbar to import notes, "
+  },
+  "u1d0b4daa0cfc": {
+    "kind": "html",
+    "zh": "或「＋ 新建备忘录」直接粘贴。",
+    "en": " or paste content into ＋ New note. "
+  },
+  "ue7b3c0695e9a": {
+    "kind": "html",
+    "zh": "确认批量移动分类",
+    "en": " Confirm bulk category move "
+  },
+  "ue50f86202da2": {
+    "kind": "html",
+    "zh": "取消",
+    "en": " Cancel "
+  },
+  "u4ec86c8994a0": {
+    "kind": "html",
+    "zh": "确认移动",
+    "en": " Confirm move "
+  },
+  "u980ce9db2418": {
+    "kind": "html",
+    "zh": "关闭",
+    "en": " Close "
+  },
+  "u60bd002dc1b4": {
+    "kind": "html",
+    "zh": "重试剩余条目",
+    "en": " Retry remaining notes "
+  },
+  "ud451ca99d13e": {
+    "kind": "html",
+    "zh": "📄 整理log",
+    "en": "📄 Tidy-up log"
+  },
+  "u7d867f6234cf": {
+    "kind": "html",
+    "zh": "每按一次撤销，只退回最近的一批；一次同步可能分成多批。",
+    "en": " Each undo restores only the latest batch; one sync may contain several batches. "
+  },
+  "u7cfde6a8ae7a": {
+    "kind": "html",
+    "zh": "按记录时间分组（精度到分钟），同时间也可能包含多次操作。这里列出仍可撤销的记录；完整历史可打开下方 md 日志查看。",
+    "en": " Records are grouped by minute. Multiple operations can share the same time. This list shows batches still available to undo; the Markdown log contains the full history. "
+  },
+  "u1a09a710cf00": {
+    "kind": "html",
+    "zh": "刷新记录",
+    "en": " Refresh history "
+  },
+  "u5e9f0c9659cb": {
+    "kind": "html",
+    "zh": "在访达打开 md 日志",
+    "en": " Show Markdown log in Finder "
+  },
+  "u1ec5c574cf06": {
+    "kind": "html",
+    "zh": "📋 一键复制",
+    "en": "📋 Copy text"
+  },
+  "ud3ec577adc5d": {
+    "kind": "html",
+    "zh": "📂 显示 txt 文件",
+    "en": "📂 Show text file"
+  },
+  "u51d251f4adbc": {
+    "kind": "html",
+    "zh": "📨 添加备忘录到手机",
+    "en": "📨 Add notes to phone"
+  },
+  "u26b20c5f2773": {
+    "kind": "html",
+    "zh": "💾 保存修改",
+    "en": "💾 Save changes"
+  },
+  "u119ae640cbc4": {
+    "kind": "html",
+    "zh": "🆕 另存为新版本",
+    "en": "🆕 Save as new version"
+  },
+  "u0b3b0e88f75e": {
+    "kind": "html",
+    "zh": "⭐ 设为当前版",
+    "en": "⭐ Make current"
+  },
+  "ua84a532731c6": {
+    "kind": "html",
+    "zh": "有未保存的修改",
+    "en": " Unsaved changes "
+  },
+  "u8666675a56ac": {
+    "kind": "html",
+    "zh": "删除此版本",
+    "en": " Delete this version "
+  },
+  "u67f7026ad58d": {
+    "kind": "html",
+    "zh": "删除这条备忘录",
+    "en": " Delete this note "
+  },
+  "uf6af0724f2b7": {
+    "kind": "html",
+    "zh": "📑 内容迭代 · 归成同一条的版本",
+    "en": "📑 Versions · Group related iterations"
+  },
+  "ud028b13bfcab": {
+    "kind": "html",
+    "zh": "把内容几乎一样的几条归成同一条的 v1/v2/v3，按备忘录自己的修改时间排，",
+    "en": " Group nearly identical notes as v1/v2/v3, ordered by their modification dates in Notes. "
+  },
+  "ue01dd0700435": {
+    "kind": "html",
+    "zh": "最新那版作为当前版本",
+    "en": " The newest becomes the current version "
+  },
+  "ue875794ca467": {
+    "kind": "html",
+    "zh": "，旧版留着随时能切回去。\n        合错了是把两份不同的东西焊成一条，比分错类严重得多——",
+    "en": " ; older versions remain available. Merging different notes is harder to correct than assigning a wrong category, so "
+  },
+  "uf9fc9201f588": {
+    "kind": "html",
+    "zh": "所以默认一组都不选，逐组看过再勾",
+    "en": " no groups are selected by default. Review each group before selecting it "
+  },
+  "ufeb43709e711": {
+    "kind": "html",
+    "zh": "。合完还能整批撤销。",
+    "en": ". The whole merge can also be undone."
+  },
+  "u4a3870c0d0ab": {
+    "kind": "html",
+    "zh": "重合度 ≥",
+    "en": " Similarity ≥ "
+  },
+  "u3a7cbec643f5": {
+    "kind": "html",
+    "zh": "长度差 ≤",
+    "en": " Length ratio ≤ "
+  },
+  "ud3f279b052e4": {
+    "kind": "html",
+    "zh": "倍",
+    "en": "×"
+  },
+  "u747e3f294781": {
+    "kind": "html",
+    "zh": "正文 ≥",
+    "en": " Body length ≥ "
+  },
+  "u46c8d468473b": {
+    "kind": "html",
+    "zh": "字",
+    "en": " characters "
+  },
+  "u21d791f7d9ba": {
+    "kind": "html",
+    "zh": "🔍 开始查找",
+    "en": "🔍 Start scan"
+  },
+  "u5ceadaf7afba": {
+    "kind": "html",
+    "zh": "全选",
+    "en": " Select all "
+  },
+  "u76a77590422a": {
+    "kind": "html",
+    "zh": "全不选",
+    "en": " Deselect all "
+  },
+  "ucba6bca2f925": {
+    "kind": "html",
+    "zh": "↩︎ 撤销上次合并",
+    "en": "↩︎ Undo last merge"
+  },
+  "ue86fc2866489": {
+    "kind": "html",
+    "zh": "合并选中的组",
+    "en": " Merge selected groups "
+  },
+  "ue783e25aefd8": {
+    "kind": "html",
+    "zh": "📱 反向同步手机备忘录 · 预览",
+    "en": "📱 Sync back to phone · Preview"
+  },
+  "u0a0074b95fce": {
+    "kind": "html",
+    "zh": "按分类搬文件夹 · 请先核对清单",
+    "en": " Move into category folders · Review the list first "
+  },
+  "u9eabea2110f3": {
+    "kind": "html",
+    "zh": "正在核对…",
+    "en": " Checking… "
+  },
+  "uffd59532490a": {
+    "kind": "html",
+    "zh": "每行 ↩️：以备忘录当前文件夹为准，只改整理器分类，不移动笔记。分类改动独立保存，关闭面板也会保留。撤销逐条调整只恢复分类，自动新增的分类会保留。",
+    "en": " Each ↩️ adopts the current Notes folder as the Organizer category without moving the note. Changes are saved independently and remain after closing this panel. Undo restores only the category; newly created categories remain. "
+  },
+  "u3d4c52babaae": {
+    "kind": "html",
+    "zh": "撤销刚才的逐条调整",
+    "en": " Undo last category alignment "
+  },
+  "uec8b0a5c992d": {
+    "kind": "html",
+    "zh": "整理器里删掉的，挪进「需删除」等人工确认",
+    "en": " Notes removed from the Organizer move to “To delete” for manual review "
+  },
+  "u632770c10918": {
+    "kind": "html",
+    "zh": "每行 ↩️：用备忘录当前正文新建一条 v1，分类沿用当前文件夹，原来的整理器历史版本无法恢复。笔记不会移动；挑回来的条目独立保存，关闭面板也会保留。撤销只移除本次新建且未再修改的条目，自动新增的分类会保留。",
+    "en": " Each ↩️ imports the current Notes body as a new v1, using its current folder as the category. Previous Organizer versions cannot be recovered. Notes are not moved. Imports are saved independently and remain after closing this panel. Undo removes only the newly created, unmodified entry; newly created categories remain. "
+  },
+  "uf6e9cac2f96c": {
+    "kind": "html",
+    "zh": "撤销刚才的挑回来",
+    "en": " Undo last re-import "
+  },
+  "ue05478704023": {
+    "kind": "html",
+    "zh": "确认移入「需删除」",
+    "en": " Confirm move to “To delete” "
+  },
+  "u79f6a6bb7d61": {
+    "kind": "html",
+    "zh": "确认反向同步手机备忘录",
+    "en": " Confirm sync back to phone "
+  },
+  "u12085825049c": {
+    "kind": "html",
+    "zh": "先看看分类建议",
+    "en": "Review category suggestions"
+  },
+  "u82d092b285a3": {
+    "kind": "html",
+    "zh": " · 不移动备忘录",
+    "en": " · Notes stay where they are"
+  },
+  "ubb6455d6764a": {
+    "kind": "html",
+    "zh": "每批 ",
+    "en": "Batch size: "
+  },
+  "ub8016609e767": {
+    "kind": "html",
+    "zh": " 条",
+    "en": " notes"
+  },
+  "udc2205e120bf": {
+    "kind": "html",
+    "zh": "💡 获取建议",
+    "en": "💡 Get suggestions"
+  },
+  "u7b4a1650770a": {
+    "kind": "html",
+    "zh": "✓ 采纳可自动归档项",
+    "en": "✓ Apply ready suggestions"
+  },
+  "udf3b0b373eef": {
+    "kind": "html",
+    "zh": "改过设置？先保存，再获取建议。",
+    "en": "Changed a setting? Save it before getting suggestions."
+  },
+  "u1f65bd915f74": {
+    "kind": "html",
+    "zh": "连接 Jev · TypeSafe API Key",
+    "en": "Connect to Jev · TypeSafe API Key"
+  },
+  "ua3bbeaa0a48a": {
+    "kind": "html",
+    "zh": "在",
+    "en": "Create a key at"
+  },
+  "uabeb1adebf53": {
+    "kind": "html",
+    "zh": "创建 Key。仅保存在本机，已存的 Key 不会显示在页面上。也可用 TYPESAFE_API_KEY 环境变量。",
+    "en": "The key is stored locally and never displayed after saving. You can also use the TYPESAFE_API_KEY environment variable."
+  },
+  "u5685407563e3": {
+    "kind": "html",
+    "zh": "分类说明",
+    "en": "Describe your categories"
+  },
+  "u9842dba4c699": {
+    "kind": "html",
+    "zh": "每个分类写一句具体说明，建议会更准。例如：可复用的提示词片段、角色设定和写作规则。",
+    "en": "One specific sentence per category helps Jev give better suggestions. For example: reusable prompt snippets, role definitions and writing rules."
+  },
+  "u24fc0962e495": {
+    "kind": "html",
+    "zh": "判断标准",
+    "en": "Suggestion thresholds"
+  },
+  "u528e6e9cfb24": {
+    "kind": "html",
+    "zh": "最高分 ≥",
+    "en": " Top score ≥ "
+  },
+  "u80938c326a98": {
+    "kind": "html",
+    "zh": "→ 可自动归档",
+    "en": "→ Confident suggestion"
+  },
+  "ubaff2f1a2d87": {
+    "kind": "html",
+    "zh": "最高分 &lt;",
+    "en": " Top score &lt; "
+  },
+  "ub4df6497b55d": {
+    "kind": "html",
+    "zh": "→ 待分类",
+    "en": "→ Unassigned"
+  },
+  "udc574735d2de": {
+    "kind": "html",
+    "zh": "领先第二名 ≥",
+    "en": " Lead over second place ≥ "
+  },
+  "u0fc126763350": {
+    "kind": "html",
+    "zh": "才算没歧义",
+    "en": " for an unambiguous result "
+  },
+  "u2251de3dedcd": {
+    "kind": "html",
+    "zh": "先用默认值即可，再按结果调整。",
+    "en": "Start with the defaults and adjust after reviewing a batch."
+  },
+  "u38e44729e90d": {
+    "kind": "html",
+    "zh": "隐私保护",
+    "en": "Privacy controls"
+  },
+  "u5bdd56b3c9cf": {
+    "kind": "html",
+    "zh": "笔记先在",
+    "en": "Notes are checked "
+  },
+  "ub67e935ae9d2": {
+    "kind": "html",
+    "zh": "本机检查",
+    "en": "on this Mac"
+  },
+  "uaf5229bd4f82": {
+    "kind": "html",
+    "zh": "。默认拦截命中的内容，不发送给 Jev；结果中会显示跳过原因。",
+    "en": ". Matches are blocked by default and never sent to Jev. The results show why each note was skipped."
+  },
+  "u91cbd2cd7771": {
+    "kind": "html",
+    "zh": "敏感信息发送",
+    "en": "Send sensitive content"
+  },
+  "ub789f7e644a1": {
+    "kind": "html",
+    "zh": "默认关闭。勾选后，命中敏感规则的内容也会发给 Jev。",
+    "en": "Off by default. Enabling this also sends content that matches sensitive rules to Jev."
+  },
+  "u10e55e069b22": {
+    "kind": "html",
+    "zh": "启用内置敏感规则",
+    "en": "Use built-in sensitive rules"
+  },
+  "ub5d6f07db1ae": {
+    "kind": "html",
+    "zh": "补充敏感词 · 每行一个，不区分大小写",
+    "en": "Additional sensitive terms · one per line, case-insensitive"
+  },
+  "u4de5312d6024": {
+    "kind": "html",
+    "zh": "不读取、不发送的文件夹 · 每行一个",
+    "en": "Folders to exclude from reading and sending · one per line"
+  },
+  "ue05610c327a7": {
+    "kind": "html",
+    "zh": "这些文件夹",
+    "en": "These folders are "
+  },
+  "u06dac4d67033": {
+    "kind": "html",
+    "zh": "始终排除",
+    "en": "always excluded"
+  },
+  "u84466178d7bf": {
+    "kind": "html",
+    "zh": "保存设置",
+    "en": " Save settings "
+  },
+  "ud7101b388ec5": {
+    "kind": "html",
+    "zh": "添加备忘录到手机",
+    "en": " Add notes to phone "
+  },
+  "u7ea1887913d1": {
+    "kind": "html",
+    "zh": "标题",
+    "en": " Title "
+  },
+  "u7d2fd0e85774": {
+    "kind": "html",
+    "zh": "方式",
+    "en": " Mode "
+  },
+  "u09c9bdffd2bf": {
+    "kind": "html",
+    "zh": "文件夹",
+    "en": " Folder "
+  },
+  "u52fbc180cf76": {
+    "kind": "html",
+    "zh": "＋新文件夹",
+    "en": "＋ New folder"
+  },
+  "u98338c284222": {
+    "kind": "html",
+    "zh": "推送",
+    "en": " Add to Notes "
+  },
+  "u8c6764d1c445": {
+    "kind": "html",
+    "zh": "从备忘录导入",
+    "en": " Import from Notes "
+  },
+  "u4c94d2a11265": {
+    "kind": "html",
+    "zh": "全部文件夹",
+    "en": " All folders "
+  },
+  "u006130c0a489": {
+    "kind": "html",
+    "zh": "隐藏已导入",
+    "en": " Hide imported notes "
+  },
+  "ucdb31da0f9bb": {
+    "kind": "html",
+    "zh": "沿用备忘录的文件夹",
+    "en": " Use folders from Notes "
+  },
+  "uace7afd24ce2": {
+    "kind": "html",
+    "zh": "导入到：",
+    "en": " Import into: "
+  },
+  "ue48bf8aae945": {
+    "kind": "html",
+    "zh": "＋新分类",
+    "en": "＋ New category"
+  },
+  "u10e0ede4e745": {
+    "kind": "html",
+    "zh": "导入所选",
+    "en": " Import selected "
+  },
+  "u976d25678101": {
+    "kind": "html",
+    "zh": "🎈 先花两分钟，调成合用的样子",
+    "en": "🎈 Quick setup"
+  },
+  "u6bd1b8a9cfa0": {
+    "kind": "html",
+    "zh": "工具整理的是这台 Mac 上的「备忘录」。手机上的笔记要同步变化，需要两边使用同一个 Apple 账户、都开启备忘录同步，且笔记存放在 iCloud 中。",
+    "en": " This tool organizes notes on this Mac. Phone sync requires the same Apple account on both devices, Notes sync enabled and the notes stored in iCloud. "
+  },
+  "u1669bd20b4c5": {
+    "kind": "html",
+    "zh": "这几步都可以跳过，以后在界面上随时能改。全部跳过也能用——导入、整理、导出、归位都不需要任何配置。",
+    "en": " Setup is optional and settings can be changed later. Importing, organizing, exporting and undoing moves require no setup. "
+  },
+  "u2cfbe8f9c1bb": {
+    "kind": "html",
+    "zh": "先建几个分类",
+    "en": " Create categories "
+  },
+  "u8dc187f2b9c1": {
+    "kind": "html",
+    "zh": "勾上就建。",
+    "en": " Select categories to create them. "
+  },
+  "ubeff66670b91": {
+    "kind": "html",
+    "zh": "每个后面那句话很重要",
+    "en": " The description beside each category matters "
+  },
+  "u1079598dc7d6": {
+    "kind": "html",
+    "zh": "——AI 猜分类时只看得到这句，只给个名字它猜不出「素材」里装的是什么。\n        名字和描述都可以直接改。",
+    "en": ": AI uses it to judge notes. A name such as “Resources” gives little context. Names and descriptions can be edited directly."
+  },
+  "uf349668de7b2": {
+    "kind": "html",
+    "zh": "这里没有的，自己加（一行一个，格式：",
+    "en": " Add more categories (one per line, using "
+  },
+  "u54894d2b57d6": {
+    "kind": "html",
+    "zh": "名字：这一类装的是……",
+    "en": " Name: This category contains… "
+  },
+  "ued02cb86dcc2": {
+    "kind": "html",
+    "zh": "📋 不知道怎么写？复制一段话去问 AI",
+    "en": "📋 Copy a prompt for AI help"
+  },
+  "ud071b170c701": {
+    "kind": "html",
+    "zh": "带密码的笔记，默认就拦着",
+    "en": " Notes containing passwords are blocked by default "
+  },
+  "ue9ce5d88a56d": {
+    "kind": "html",
+    "zh": "这道检查在本机跑，命中的根本不会发给 AI。默认开着，什么都不用配。",
+    "en": " Checks run locally and matched notes are not sent to AI. Protection is on by default, with no configuration needed. "
+  },
+  "uaf9ba0824b96": {
+    "kind": "html",
+    "zh": "顺便建一个「",
+    "en": " Also create a “ "
+  },
+  "u498f9245b81d": {
+    "kind": "html",
+    "zh": "账号密码",
+    "en": " Accounts & passwords "
+  },
+  "ue6cc87b459c1": {
+    "kind": "html",
+    "zh": "」分类，并把它拉进",
+    "en": "” category and add it to the"
+  },
+  "ued826d1d705e": {
+    "kind": "html",
+    "zh": "不发送名单",
+    "en": " never-send list "
+  },
+  "uc3ac56f9d814": {
+    "kind": "html",
+    "zh": "——这个文件夹里的笔记连读都不读。",
+    "en": "— notes in this folder will not even be read."
+  },
+  "uc252acc6eabe": {
+    "kind": "html",
+    "zh": "AI 猜分类（可选，不填就不用）",
+    "en": " AI suggestions (optional) "
+  },
+  "u300bc99f491c": {
+    "kind": "html",
+    "zh": "几百条笔记一条条判断归哪类很费时间，可以让 Jev 先猜一遍，再逐条过目。\n        要去",
+    "en": " Jev can suggest categories in batches for manual review. Create a key at "
+  },
+  "u48ec73de7a6d": {
+    "kind": "html",
+    "zh": "注册拿一个 Key。",
+    "en": "."
+  },
+  "uc42171d3e2bc": {
+    "kind": "html",
+    "zh": "不填也完全不影响其他功能。",
+    "en": " All other features work without a key. "
+  },
+  "u4029ed16af85": {
+    "kind": "html",
+    "zh": "以后再说",
+    "en": " Skip for now "
+  },
+  "u6db6699b8eef": {
+    "kind": "html",
+    "zh": "就这样，开始用",
+    "en": " Finish setup "
+  },
+  "u895a2f76ec08": {
+    "kind": "html",
+    "zh": "搜索标题或内容…",
+    "en": " Search titles or content… "
+  },
+  "u036e5e69b3d4": {
+    "kind": "html",
+    "zh": "排序方式",
+    "en": " Sort order "
+  },
+  "u824005deb55a": {
+    "kind": "html",
+    "zh": "方块视图",
+    "en": " Card view "
+  },
+  "u6faa62961d0c": {
+    "kind": "html",
+    "zh": "列表视图",
+    "en": " List view "
+  },
+  "u25c2d876d516": {
+    "kind": "html",
+    "zh": "界面语言",
+    "en": " Interface language "
+  },
+  "ubcde48ae4d13": {
+    "kind": "html",
+    "zh": "把内容几乎一样的几条认出来，归成同一条的 v1/v2/v3",
+    "en": " Group nearly identical notes as versions v1/v2/v3 "
+  },
+  "u94edc2a56ed5": {
+    "kind": "html",
+    "zh": "正在查询可撤销的移动记录…",
+    "en": " Checking available undo batches… "
+  },
+  "u7ce5a784c769": {
+    "kind": "html",
+    "zh": "查看整理log",
+    "en": "View the tidy-up log"
+  },
+  "u987a438e187d": {
+    "kind": "html",
+    "zh": "查看整理log",
+    "en": "View the tidy-up log"
+  },
+  "u50b20e438df1": {
+    "kind": "html",
+    "zh": "暂无可撤销的批量移动（刷新后清空）",
+    "en": " No bulk move to undo (cleared on refresh) "
+  },
+  "u2a6a0c390ca7": {
+    "kind": "html",
+    "zh": "把选中的这些合并成一个 txt，存到指定位置",
+    "en": " Combine selected notes into one text file and choose a save location "
+  },
+  "ueec110e5aadc": {
+    "kind": "html",
+    "zh": "关闭移动记录",
+    "en": " Close move history "
+  },
+  "ub627d9f87191": {
+    "kind": "html",
+    "zh": "备忘录内容…",
+    "en": " Note content… "
+  },
+  "u3e385929ed46": {
+    "kind": "html",
+    "zh": "两条互相包含都要达到这个比例才算同一份东西的两版",
+    "en": " Both notes must meet this overlap ratio to count as versions of the same content "
+  },
+  "u72c7a4b68c06": {
+    "kind": "html",
+    "zh": "长的超过短的这么多倍就不算改写，更像是被整段引用进了另一篇",
+    "en": " A greater length difference may mean one note quotes another rather than revises it "
+  },
+  "u46bb6612405d": {
+    "kind": "html",
+    "zh": "比这短的需标题和正文都完全相同；相同的简短提醒仍可能是不同事件，请逐组核对",
+    "en": " Below this length, both titles and bodies must match exactly; identical short reminders may still describe separate events. "
+  },
+  "ua42d8f03452d": {
+    "kind": "html",
+    "zh": "在界面内查看整理log",
+    "en": "View the tidy-up log in this window"
+  },
+  "uc7aaaf34c93b": {
+    "kind": "html",
+    "zh": "每批条数",
+    "en": " Notes per batch "
+  },
+  "ua7674cedc08d": {
+    "kind": "html",
+    "zh": "留空 = 不改动已存的",
+    "en": " Leave blank to keep the stored key "
+  },
+  "u96306c022ce9": {
+    "kind": "html",
+    "zh": "银行卡&#10;社保&#10;老家地址",
+    "en": " Bank card&#10;Social security&#10;Home address "
+  },
+  "u5de8a67ddb8d": {
+    "kind": "html",
+    "zh": "账号密码类&#10;身份证",
+    "en": " Credentials&#10;Identity documents "
+  },
+  "u560897ecc0c8": {
+    "kind": "html",
+    "zh": "备忘录标题",
+    "en": " Note title "
+  },
+  "u86acb3a1378d": {
+    "kind": "html",
+    "zh": "筛选备忘录标题…",
+    "en": " Filter note titles… "
+  },
+  "ud16c3d98b155": {
+    "kind": "html",
+    "zh": "备忘录里已经分好文件夹的话，勾上这个一次全导完，不用一个文件夹一个文件夹地来",
+    "en": " Use existing Notes folders to categorize all imported notes in one pass "
+  },
+  "u81cd93e154b4": {
+    "kind": "html",
+    "zh": "手账：贴纸、排版、本子和笔的记录&#10;装修：尺寸、建材型号、师傅联系方式",
+    "en": " Journaling: stickers, layouts, notebooks and pens&#10;Renovation: measurements, materials and contractor contacts "
+  },
+  "u397da589080d": {
+    "kind": "html",
+    "zh": "留空 = 先不配，以后随时能填",
+    "en": " Leave blank to configure later "
+  },
+  "u8769e31ffed5": {
+    "kind": "literal",
+    "zh": "；",
+    "en": "; "
+  },
+  "ue856c3c4be5b": {
+    "kind": "template",
+    "zh": "」",
+    "en": "”"
+  },
+  "uae78306c6b52": {
+    "kind": "literal",
+    "zh": "、",
+    "en": ", "
+  },
+  "u3f498429eecf": {
+    "kind": "template",
+    "zh": "【",
+    "en": "["
+  },
+  "u59f6a7348c8f": {
+    "kind": "template",
+    "zh": "】",
+    "en": "]"
+  },
+  "ud90223456aeb": {
+    "kind": "template",
+    "zh": "」</button>\n     </div>",
+    "en": "”</button>\n     </div>"
+  },
+  "u422e9d243fef": {
+    "kind": "template",
+    "zh": "</b>。",
+    "en": "</b>."
+  },
+  "u4e61c13af650": {
+    "kind": "template",
+    "zh": "。<br>",
+    "en": ".<br>"
+  },
+  "u9ca93fdca045": {
+    "kind": "template",
+    "zh": "<div style=\"font-size:12px;color:var(--sub);margin-top:8px\">\n        「",
+    "en": "<div style=\"font-size:12px;color:var(--sub);margin-top:8px\">\n        “"
+  },
+  "ue7880a2c6f2d": {
+    "kind": "template",
+    "zh": "）：",
+    "en": "): "
+  },
+  "u50786ef34bc9": {
+    "kind": "template",
+    "zh": "，",
+    "en": ", "
+  },
+  "uf63e498509f8": {
+    "kind": "template",
+    "zh": "</strong><div>id：",
+    "en": "</strong><div>id: "
+  },
+  "u1335fe173958": {
+    "kind": "template",
+    "zh": "。\\n",
+    "en": ".\\n"
+  },
+  "ua0bfbebbc5e4": {
+    "kind": "html",
+    "zh": "，不受「敏感信息发送」开关影响。",
+    "en": ", even when “Send sensitive content” is on."
+  },
+  "ue00d84a22b18": {
+    "kind": "template",
+    "zh": "）",
+    "en": ")"
+  },
+  "uf30fcf536c4f": {
+    "kind": "literal",
+    "zh": "💾 覆盖当前版 v{version}",
+    "en": "💾 Overwrite v{version}"
+  },
+  "u6e26d33da069": {
+    "kind": "literal",
+    "zh": "🆕 另存为 v{version}",
+    "en": "🆕 Save as v{version}"
+  },
+  "ue8b08facd967": {
+    "kind": "html",
+    "zh": "欢迎",
+    "en": "Welcome"
+  },
+  "u48d05a7c9c00": {
+    "kind": "html",
+    "zh": "简单几步设置一下",
+    "en": "A few quick settings"
+  },
+  "ua3ff2d1b471d": {
+    "kind": "html",
+    "zh": "这个工具会把这台 Mac 上的「备忘录」备份成本地的文字副本，便于在电脑上整理使用。手机上备忘录的分类和新增备忘录可以通过 iCloud 反向同步回去，也可以保持原样不动。",
+    "en": "This tool backs up Notes on this Mac into local text copies, so they are easier to organize and use on the computer. Categories and newly added notes can be synced back to the phone through iCloud, or the phone can be left exactly as it is."
+  },
+  "u5aeb18b08952": {
+    "kind": "html",
+    "zh": "刚才系统弹过一句「无法验证开发者」——那是因为这个工具没有购买苹果的开发者签名，不是因为它有问题。macOS 对所有没签名的程序都这么提示。不放心的话，可以把代码仓库丢给任何一个 AI 帮你核对：仓库里有校验和清单，代码也是公开可读的。",
+    "en": "macOS just said the developer could not be verified. That is because this tool does not carry a paid Apple developer signature, not because anything is wrong with it. macOS says the same about every unsigned program. To be sure, hand the repository to any AI and have it checked: there is a checksum list in the repo, and the source is readable."
+  },
+  "u6f0d0c8de47a": {
+    "kind": "html",
+    "zh": "下面几步都能跳过，跳过了照样能用——导入、整理、导出、归位都不需要任何配置。分类以后随时能改：卡片上直接选、拖到左边分类里，或者让「💡 智能整理」先猜一遍；内容重复的笔记用「📑 内容迭代」归成同一条的不同版本。",
+    "en": "Every step below can be skipped, and skipping them all still leaves the tool fully usable — importing, organizing, exporting and filing back need no configuration. Categories can be changed any time: pick one on the card, drag a card onto a category, or let <strong>💡 Smart sort</strong> take a first pass; notes with repeated content go into <strong>📑 Versions</strong> as versions of one entry."
+  },
+  "u6d389106cc54": {
+    "kind": "html",
+    "zh": "开始设置 →",
+    "en": "Start setup →"
+  },
+  "uffc42226387b": {
+    "kind": "html",
+    "zh": "🎈 重新看一遍引导",
+    "en": "🎈 Show the welcome guide again"
+  }
+}

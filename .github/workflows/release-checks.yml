@@ -1,0 +1,22 @@
+name: Release checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check generated bilingual pages
+        run: python3 build_ui.py --check
+      - name: Run Python tests
+        run: python3 -m unittest discover tests -q
+      - name: Run frontend browser regressions
+        run: node tests/frontend_regressions.js
+      - name: Verify release checksums
+        run: shasum -a 256 -c CHECKSUMS.txt

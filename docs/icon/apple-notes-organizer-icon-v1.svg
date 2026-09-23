@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+<title id="title">Apple Notes Organizer project icon</title>
+<desc id="desc">A lined note and a blue sheet organized inside a yellow folder, on a warm cream rounded square with pink print accents.</desc>
+<rect x="48" y="48" width="928" height="928" rx="212" fill="#FFEFE3"/>
+<!-- Folder back and raised tab -->
+<path d="M214 434 Q214 410 238 410 H373 L424 462 H786 Q810 462 810 486 V760 Q810 791 779 791 H245 Q214 791 214 760Z" fill="#FF84BA" stroke="#1F1B18" stroke-width="20" stroke-linejoin="round"/>
+<!-- Secondary page: one clear blue layer -->
+<g transform="rotate(10 598 457)">
+<rect x="431" y="238" width="301" height="419" rx="26" fill="#99C2FF" stroke="#1F1B18" stroke-width="20"/>
+</g>
+<!-- Main note and pink header, with deliberately offset print accents -->
+<rect x="301" y="205" width="320" height="431" rx="26" fill="#FF84BA"/>
+<rect x="286" y="190" width="320" height="431" rx="26" fill="#FFEFE3" stroke="#1F1B18" stroke-width="20"/>
+<path d="M312 190 H580 Q606 190 606 216 V270 H286 V216 Q286 190 312 190Z" fill="#FF84BA"/>
+<path d="M286 269 H606 M312 190 H580 Q606 190 606 216 V595 Q606 621 580 621 H312 Q286 621 286 595 V216 Q286 190 312 190Z" fill="none" stroke="#1F1B18" stroke-width="20" stroke-linejoin="round"/>
+<path d="M340 336 H551 M340 404 H551 M340 472 H480" fill="none" stroke="#1F1B18" stroke-width="19" stroke-linecap="square"/>
+<!-- Folder front: a broad yellow field with an inset blue label -->
+<path d="M218 529 H804 Q825 529 820 551 L770 773 Q766 791 747 791 H275 Q256 791 252 773 L202 551 Q197 529 218 529Z" fill="#FFDF82" stroke="#1F1B18" stroke-width="20" stroke-linejoin="round"/>
+<rect x="448" y="622" width="142" height="59" fill="#FF84BA"/>
+<rect x="434" y="609" width="142" height="59" fill="#99C2FF" stroke="#1F1B18" stroke-width="14"/>
+</svg>

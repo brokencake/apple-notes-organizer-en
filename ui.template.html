@@ -1,0 +1,3556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>@@u9ea7a74f1a4a@@</title>
+<style>
+  :root {
+    /* 已发布宣传图的纸底、粉、黄、蓝；彩色仅用作填充。 */
+    --bg: #ffefe3; --card: #ffffff; --ink: #1f1b18; --sub: #665c55;
+    --pink: #ff84ba; --blue: #99c2ff; --yellow: #ffdf82; --line: #b7a99e;
+    --disabled: #e6ddd6;
+    --cream: var(--bg); --aqua: var(--blue); --coral: var(--pink); --sun: var(--yellow);
+    --accent: var(--ink); --accent-soft: var(--bg); --focus: var(--ink);
+    --green: #2f5e8a; --red: #a82f5c;
+    --blue-wash: rgba(153,194,255,.25); --focus-ring: rgba(31,27,24,.2);
+    --hover-wash: rgba(31,27,24,.05); --active-wash: rgba(31,27,24,.1);
+    --shadow: rgba(31,27,24,.1); --overlay: rgba(31,27,24,.4);
+    --fine-line: rgba(31,27,24,.12); --track: rgba(31,27,24,.07); --detail: rgba(31,27,24,.02);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif;
+    background: var(--bg); color: var(--ink); height: 100vh; display: flex; flex-direction: column;
+  }
+  header {
+    display: flex; flex-direction: column; gap: 8px; padding: 12px 20px;
+    background: var(--card); border-bottom: 1px solid var(--line); flex-shrink: 0;
+  }
+  .toolbar-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; min-width: 0; }
+  .toolbar-row + .toolbar-row { border-top: 1px solid var(--line); padding-top: 8px;
+  }
+  .toolbar-actions { column-gap:24px; }
+  .toolbar-group { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; min-width:0; max-width:100%; }
+  header h1 { font-size: 17px; font-weight: 700; margin-right: 8px; white-space: nowrap; }
+  #search {
+    flex: 1; min-width: 160px; max-width: 420px; padding: 8px 12px; font-size: 14px;
+    border: 1px solid var(--line); border-radius: 8px; background: var(--bg); outline: none;
+  }
+  #search:focus { border-color: var(--focus); background: var(--card); box-shadow: 0 0 0 3px var(--focus-ring); }
+  button {
+    font-family: inherit; font-size: 13.5px; padding: 8px 14px; border-radius: 8px;
+    --button-fill: var(--card);
+    border: 1px solid var(--line); background: var(--button-fill); color: var(--ink); cursor: pointer;
+  }
+  input, textarea, select { color: var(--ink); background-color: var(--card); accent-color: var(--focus); }
+  input::placeholder, textarea::placeholder { color: var(--sub); opacity: 1; }
+  button:hover { border-color:var(--ink); color:var(--ink); background:linear-gradient(var(--hover-wash),var(--hover-wash)),var(--button-fill); }
+  button:active { border-color:var(--ink); color:var(--ink); background:linear-gradient(var(--active-wash),var(--active-wash)),var(--button-fill); }
+  button.primary { --button-fill:var(--blue); background-color:var(--button-fill); border-color:var(--line); color:var(--ink); font-weight:600; }
+  button:disabled, button:disabled:hover, button:disabled:active { background:var(--disabled); color:var(--ink); border-color:var(--line); opacity:1; cursor:not-allowed; }
+  input:disabled, select:disabled { color:var(--sub); opacity:1; }
+  #layout { flex: 1; display: flex; overflow: hidden; }
+  /* ---- 侧栏 ---- */
+  aside {
+    width: 200px; flex-shrink: 0; padding: 14px 10px; display: flex; flex-direction: column;
+    overflow: hidden; border-right: 1px solid var(--line); background: var(--bg);
+  }
+  /* 全部/已标记/未标记 固定在上面不参与滚动，项目列表单独滚 */
+  #sideList { flex: 1; overflow-y: auto; margin: 0 -10px; padding: 0 10px; }
+  .proj {
+    display: flex; align-items: center; padding: 8px 10px; border-radius: 8px;
+    font-size: 14px; cursor: pointer; margin-bottom: 2px; user-select: none;
+  }
+  .proj:hover { background: var(--blue-wash); }
+  .proj.on { background: var(--yellow); color: var(--ink); font-weight: 600; }
+  .proj .n { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .proj .c { font-size: 12px; opacity: 1; margin-left: 6px; }
+  .proj .ops { display:none; flex:0 0 auto; align-items:center; height:0; margin-left:4px; }
+  .proj:hover .ops, .proj.on .ops, .proj:focus-within .ops { display:inline-flex; }
+  .proj .ops span { display:inline-flex; align-items:center; justify-content:center; flex:0 0 24px; width:24px; height:24px; padding:0; font-size:16px; line-height:1; opacity:1; border-radius:3px; }
+  .proj .ops span:hover, .proj .ops span:focus-visible { background:var(--card); outline:1px solid var(--line); }
+  .proj .ops .op-delete { margin-left:6px; color:var(--red); }
+  #sideOpTooltip { position:fixed; z-index:100; max-width:min(300px,calc(100vw - 16px)); padding:7px 10px; border:1px solid var(--line); border-radius:4px; background:var(--card); color:var(--ink); font-size:13.5px; line-height:1.6; overflow-wrap:anywhere; pointer-events:none; }
+  .category-dragging #sideOpTooltip { display:none; }
+  #addProj { width: 100%; margin-top: 10px; font-size: 13px; color: var(--ink); }
+  .sidesep { height: 1px; background: var(--line); margin: 8px 4px 6px; }
+  /* ---- 卡片区 ---- */
+  main { flex: 1; overflow-y: auto; padding: 18px 20px; }
+  #empty { color: var(--sub); text-align: center; margin-top: 80px; font-size: 14px; line-height: 2; }
+  /* ---- 批量选择 ---- */
+  #selBar {
+    display: none; flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 14px;
+    padding: 10px 12px; background: var(--accent-soft); border: 1px solid var(--line);
+    border-radius: 10px; position: sticky; top: -18px; z-index: 5;
+  }
+  #selBar.on { display: flex; }
+  #selInfo { font-size: 13px; font-weight: 600; }
+  .sel-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; min-width:0; }
+  #selExit { margin-left:auto; }
+  .sel-move-row { padding:8px 10px; border-left:3px solid var(--ink); background:var(--card); border-radius:6px; }
+  #selBar .sel-move-row select { flex:1 1 120px; min-width:100px; max-width:240px; }
+  .card.sel { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+  .card .thead { display: flex; align-items: flex-start; gap: 8px; }
+  .card .cbox { accent-color: var(--focus); pointer-events: none; margin-top: 3px; flex-shrink: 0; }
+  #cardMore { grid-column: 1 / -1; padding: 16px; text-align: center; color: var(--sub); font-size: 12.5px; }
+  #cards.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 15px; cursor: pointer; display: flex; flex-direction: column; gap: 8px;
+    transition: box-shadow .15s;
+  }
+  .card:hover { box-shadow: 0 3px 14px var(--shadow); border-color: var(--aqua); }
+  .card .t { font-size: 14.5px; font-weight: 600; line-height: 1.4; }
+  .card .meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .tag { font-size: 11.5px; padding: 2px 8px; border: 1px solid var(--fine-line); border-radius: 20px; color: var(--ink); font-weight: 600; }
+  .vbadge { font-size: 11.5px; color: var(--sub); }
+  .card .prev {
+    font-size: 12.5px; color: var(--sub); line-height: 1.55; overflow: hidden;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; word-break: break-all;
+  }
+  .card .time { font-size: 11px; color: var(--sub); }
+  /* ---- 列表视图 ---- */
+  .viewbtn { padding: 7px 11px; }
+  .viewbtn.on { background: var(--blue); border-color: var(--ink); color: var(--ink); font-weight: 600; }
+  .viewbtn.on:hover { background:linear-gradient(var(--hover-wash),var(--hover-wash)),var(--blue); border-color:var(--ink); color:var(--ink); }
+  .viewbtn.on:active { background:linear-gradient(var(--active-wash),var(--active-wash)),var(--blue); }
+  #cards.list {
+    display: block; background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; overflow: hidden;
+  }
+  #cards.list .card {
+    flex-direction: row; align-items: center; gap: 10px; padding: 9px 13px;
+    border: none; border-bottom: 1px solid var(--line); border-radius: 0; box-shadow: none;
+  }
+  #cards.list .card:last-child { border-bottom: none; }
+  #cards.list .card:hover { background: var(--blue-wash); box-shadow: none; }
+  #cards.list .card.sel { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+  #cards.list .cbox { margin-top: 0; }
+  #cards.list .t {
+    flex: 0 1 300px; min-width: 110px; font-size: 13.5px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  #cards.list .prev {
+    flex: 1 1 0; min-width: 0; display: block; white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis; word-break: normal; line-height: 1.4;
+  }
+  #cards.list .tag, #cards.list .vbadge, #cards.list .time { flex-shrink: 0; }
+  #cards.list .time { width: 92px; text-align: right; }
+  #cards.list #cardMore { border-bottom: none; }
+  @media (max-width: 720px) {
+    #cards.list .prev, #cards.list .time { display: none; }
+  }
+  /* ---- 弹层通用 ---- */
+  .overlay {
+    position: fixed; inset: 0; background: var(--overlay); display: none;
+    align-items: center; justify-content: center; z-index: 10;
+  }
+  .overlay.show { display: flex; }
+  .panel {
+    background: var(--card); border-radius: 14px; width: min(860px, 94vw);
+    max-height: 92vh; display: flex; flex-direction: column; overflow: hidden;
+  }
+  .panel-head { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  .panel-body { flex: 1; overflow-y: auto; padding: 14px 18px; display: flex; flex-direction: column; gap: 12px; }
+  .panel-foot { display: flex; gap: 8px; padding: 12px 18px; border-top: 1px solid var(--line); flex-wrap: wrap; align-items: center; }
+  .x { margin-left: auto; font-size: 20px; border: none; background: none; padding: 4px 8px; color: var(--ink); }
+  /* ---- 编辑器 ---- */
+  #edTitle { font-size: 16px; font-weight: 700; border: none; outline: none; flex: 1; min-width: 100px; font-family: inherit; }
+  #edProj, select {
+    font-family: inherit; font-size: 13px; padding: 6px 8px; border: 1px solid var(--line);
+    border-radius: 8px; background: var(--bg); max-width: 180px;
+  }
+  #verRow { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .vchip {
+    font-size: 12.5px; padding: 4px 12px; border-radius: 20px; cursor: pointer;
+    border: 1px solid var(--line); background: var(--bg); user-select: none;
+  }
+  .vchip.cur { border-color: var(--coral); background: var(--sun); color: var(--ink); font-weight: 600; }
+  .vchip .star { color: var(--green); }
+  .vchip.cur .star { color: var(--green); }
+  #verInfo { font-size: 12px; color: var(--sub); margin-left: 4px; }
+  #edBody {
+    width: 100%; min-height: 44vh; resize: vertical; font-family: "SF Mono", Menlo, "PingFang SC", monospace;
+    font-size: 13.5px; line-height: 1.7; padding: 12px; border: 1px solid var(--line);
+    border-radius: 10px; outline: none; background: var(--card);
+  }
+  #edBody:focus { border-color: var(--focus); box-shadow: 0 0 0 3px var(--focus-ring); }
+  #dirtyHint { font-size: 12px; color: var(--red); display: none; }
+  /* ---- 导入 ---- */
+  #impBar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  #impSearch { flex: 1; min-width: 140px; padding: 7px 10px; font-size: 13px; border: 1px solid var(--line); border-radius: 8px; outline: none; }
+  #impList { border: 1px solid var(--line); border-radius: 10px; overflow-y: auto; max-height: 46vh; }
+  .nrow { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--line); font-size: 13.5px; cursor: pointer; }
+  .nrow:hover { background: var(--blue-wash); }
+  .nrow input { accent-color: var(--focus); }
+  .nrow .nm { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .nrow .fd { font-size: 11.5px; color: var(--sub); }
+  .nrow .done { font-size: 11px; color: var(--green); border: 1px solid var(--green); border-radius: 10px; padding: 1px 6px; }
+  #impStatus { font-size: 13px; color: var(--sub); }
+  #impFailures { padding:10px 12px; color:var(--red); border:1px solid var(--red); border-radius:8px; font-size:13px; }
+  #impFailures ul { margin:6px 0; padding-left:20px; }
+  #impCount { font-size: 12px; color: var(--sub); margin: -4px 0 -4px 2px; }
+  #impMore { padding: 10px; text-align: center; color: var(--sub); font-size: 12px; }
+  /* ---- 推送 ---- */
+  .prow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .plab { font-size: 13px; color: var(--sub); width: 48px; flex-shrink: 0; }
+  #pushTitle { flex: 1; min-width: 180px; padding: 7px 10px; font-size: 13.5px; font-family: inherit;
+    border: 1px solid var(--line); border-radius: 8px; outline: none; }
+  #pushTitle:focus { border-color: var(--focus); box-shadow: 0 0 0 3px var(--focus-ring); }
+  #pushFolder { max-width: 240px; }
+  #pushModes { display: flex; flex-direction: column; gap: 6px; }
+  #pushModes label { font-size: 13.5px; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+  #pushModes .sub { font-size: 12px; color: var(--sub); }
+  #pushHint { font-size: 12.5px; color: var(--sub); line-height: 1.7; background: var(--bg);
+    border-radius: 8px; padding: 9px 12px; }
+  /* ---- 按分类整理 ---- */
+  #orgMoveSection:not([hidden]), #orgDeleteSection:not([hidden]) { display: flex; flex-direction: column; gap: 12px; }
+  #orgMeta { font-size: 13.5px; line-height: 1.8; }
+  #orgList, #orgDelList { max-height: 34vh; overflow-y: auto;
+    border: 1px solid var(--line); border-radius: 10px; }
+  #orgList:empty, #orgDelList:empty { display: none; }
+  #orgDelMeta { font-size: 13.5px; line-height: 1.8; }
+  .ostep { font-size: 13px; font-weight: 600; letter-spacing: .02em;
+    border-left: 3px solid var(--green); padding-left: 8px; margin-top: 2px; }
+  .orow { display: flex; align-items: center; gap: 10px; padding: 7px 12px;
+    border-bottom: 1px solid var(--line); font-size: 13px; }
+  .orow:last-child { border-bottom: none; }
+  .orow .of { flex: 1; font-weight: 600; }
+  .orow .oc { color: var(--sub); font-size: 12.5px; }
+  .orow .onew { font-size: 11px; color: var(--green); border: 1px solid var(--green);
+    border-radius: 10px; padding: 1px 6px; }
+  .ohead { font-size: 12px; color: var(--sub); background: var(--bg);
+    padding: 6px 12px; border-bottom: 1px solid var(--line); }
+  #orgHint { font-size: 12.5px; color: var(--sub); line-height: 1.75;
+    background: var(--bg); border-radius: 8px; padding: 9px 12px; }
+  .nthelp { font-size: 12px; color: var(--sub); line-height: 1.7; margin-top: 5px; }
+  /* ---- 诊断包 ---- */
+  .dlab { font-size: 12.5px; color: var(--sub); margin-bottom: 6px; }
+  /* 敏感词/文件夹两个输入框：跟诊断框同一套外观，不然会被压成一条线 */
+  .jvArea {
+    width: 100%; font-family: inherit; font-size: 13px; line-height: 1.6; padding: 8px;
+    border: 1px solid var(--line); border-radius: 8px; background: var(--card);
+    resize: vertical; min-height: 58px; color: var(--ink); margin-top: 4px;
+  }
+  #diagPath {
+    display: block; font-family: "SF Mono", Menlo, monospace; font-size: 11.5px;
+    background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+    padding: 8px 10px; word-break: break-all; color: var(--sub);
+  }
+  #diagMeta { font-size: 13px; }
+  #diagHint { font-size: 12.5px; color: var(--sub); line-height: 1.75;
+    background: var(--bg); border-radius: 8px; padding: 9px 12px; }
+  #diagHint b { color: var(--red); }
+  /* ---- toast ---- */
+  #toast {
+    position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%);
+    background: var(--yellow); color: var(--ink); font-size: 13.5px; padding: 9px 18px;
+    border-radius: 20px; opacity: 0; transition: opacity .25s; pointer-events: none; z-index: 99;
+  }
+
+  /* 统一平面边框；不改变现有控件的宽高、内边距或字号。 */
+  :where(input:not([type="checkbox"]):not([type="radio"]), textarea, select) {
+    border: 1px solid var(--line); border-radius: 8px;
+    box-shadow: none; outline: none;
+  }
+  #edTitle { border: 1px solid var(--line); border-radius: 8px; }
+  input[type="number"] {
+    appearance: none; -webkit-appearance: none; border-radius: 6px;
+  }
+  /* 保留浏览器数字步进按钮；上下方向键也可调值。 */
+  input[type="number"]::-webkit-inner-spin-button { opacity: 1; }
+  #edProj, select {
+    appearance: none; -webkit-appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--sub) 50%),
+                      linear-gradient(135deg, var(--sub) 50%, transparent 50%);
+    background-size: 3px 3px, 3px 3px;
+    background-position: calc(100% - 4px) 50%, calc(100% - 1px) 50%;
+    background-repeat: no-repeat;
+  }
+  input:not([type="checkbox"]):not([type="radio"]):focus, textarea:focus, select:focus {
+    border-color: var(--focus); box-shadow: 0 0 0 3px var(--focus-ring);
+  }
+  .card-category { width:132px; max-width:100%; font-size:11.5px; padding:2px 16px 2px 7px; flex:0 0 auto; }
+  #cards.list .card-category { width:120px; min-width:80px; flex:0 1 120px; }
+  #categorySaveStatus { font-size:12px; color:var(--sub); }
+  #categorySaveRetry { font-size:12px; padding:4px 8px; }
+  .proj.category-drop { outline:2px solid var(--focus); outline-offset:-2px; background:var(--accent-soft); color:var(--ink); }
+  .proj.category-drop .c, .category-dragging .proj .ops { display:none; }
+  .proj.category-drop::after { content:"改分类 · " attr(data-drag-count) " 条"; font-size:11px; white-space:nowrap; margin-left:4px; }
+  #categoryDragBadge { position:fixed; top:0; left:-1000px; padding:8px 12px; border:1px solid var(--focus); border-radius:8px; background:var(--card); color:var(--ink); font-size:13px; }
+  a, a:visited { color:var(--ink); }
+  .toolbar-row:nth-child(1) button { --button-fill:var(--blue); }
+  .toolbar-yellow button { --button-fill:var(--yellow); }
+  .toolbar-pink button { --button-fill:var(--pink); }
+  #jevRun, #jevApply, #jvSave, #simScan, #simGo, #selMove { --button-fill:var(--yellow); }
+  #orgGo, #orgDelGo, #orgUndo, #pushGo, button.danger { --button-fill:var(--pink); }
+  #batchMoveList { min-height:0; }
+  .batch-move-group h3 { font-size:14px; margin-bottom:8px; }
+  .batch-move-item { padding:8px 0; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:4px; overflow-wrap:anywhere; }
+  .batch-move-item strong { font-size:13.5px; }
+  .batch-move-item span { font-size:12px; color:var(--sub); }
+  #batchMoveSummary, #batchMoveStatus { font-size:13px; overflow-wrap:anywhere; }
+  #batchMoveConfirm { --button-fill:var(--yellow); }
+  #orgRestoreResultOverlay { z-index:11; }
+  #orgRestoreDetail { white-space:pre-wrap; font-size:13px; color:var(--sub); }
+  .restore-failure { padding:10px 0; border-bottom:1px solid var(--line); overflow-wrap:anywhere; font-size:13px; }
+  .restore-failure div { margin-top:4px; }
+  #orgRestoreRetry { --button-fill:var(--pink); }
+
+  /* 仅智能整理放大正文；其他面板不继承这组字号。 */
+  #smartOverlay .panel-body { font-size:14px; line-height:1.75; min-height:0; }
+  #smartOverlay .panel-body [style*="font-size"] { font-size:inherit !important; }
+  #smartOverlay .nthelp { font-size:13.5px; line-height:1.75; }
+  #smartOverlay .dlab { font-size:14px; line-height:1.75; }
+  #smartOverlay .ostep { font-size:14.5px; line-height:1.75; }
+  #smartOverlay input, #smartOverlay textarea, #smartOverlay select { font-family:inherit; font-size:14px; line-height:1.75; }
+  #smartOverlay button:not(.x) { font-size:14px; }
+  #smartOverlay .jvArea { font-size:14px; line-height:1.75; }
+  #smartOverlay pre { line-height:1.75 !important; }
+  #smartOverlay input:not([type="checkbox"]):not([type="radio"]),
+  #smartOverlay textarea, #smartOverlay select { border-radius:0; }
+  #smartOverlay input[type="number"], #simTh, #simRatio, #simMin { border-radius:0; padding:4px 6px !important; }
+  #smartOverlay #jevBox > div:has(> label[for="jevN"]) { flex-wrap:wrap; }
+  #smartOverlay #jevRows > div:has(> .jevPick) { flex-wrap:wrap; }
+  #smartOverlay .jevOpen { min-width:120px; }
+  #orgSyncNotice { font-size:13.5px; line-height:1.65; color:var(--red); margin-top:6px; overflow-wrap:anywhere; }
+  #orgSyncNotice[data-uncertain="true"] { color:var(--sub); }
+  #saveConflictNotice { font-size:13.5px; line-height:1.65; color:var(--red); margin-top:6px; }
+
+  .org-undo-tools { display:inline-flex; align-items:center; gap:6px; flex-shrink:0; }
+  .toolbar-tail { display:flex; align-items:center; gap:8px; margin-left:auto; position:relative; }
+  #btnFinishSession { --button-fill:var(--blue); font-size:15px; font-weight:700; padding:10px 15px; white-space:nowrap; }
+  #btnSettings { font-size:18px; padding:6px 11px; }
+  #settingsMenu { position:absolute; right:0; top:calc(100% + 8px); z-index:9; width:min(290px,90vw); padding:8px; border:1px solid var(--line); border-radius:9px; background:var(--card); box-shadow:0 8px 24px var(--shadow); }
+  #settingsMenu[hidden] { display:none; }
+  .settings-group + .settings-group { border-top:1px solid var(--line); margin-top:8px; padding-top:8px; }
+  .settings-group h2 { font-size:12px; color:var(--sub); padding:5px 8px; }
+  .settings-group button { display:block; width:100%; text-align:left; border:0; white-space:normal; }
+  #btnOrgHistory { width:auto; padding:8px 12px; gap:6px; white-space:nowrap; }
+  #edOverlay .panel { width:min(1040px,96vw); }
+  #edOverlay .panel-foot { display:block; }
+  .ed-foot-grid { display:grid; grid-template-columns:max-content minmax(0,1fr) max-content; gap:18px; align-items:stretch; width:100%; }
+  .ed-foot-delete, .ed-foot-tools, .ed-foot-save { display:grid; grid-template-rows:auto auto; gap:12px; align-content:space-between; }
+  .ed-foot-delete { gap:18px; }
+  .ed-foot-tools > div, .ed-foot-save > div { display:flex; gap:8px; align-items:center; white-space:nowrap; }
+  .ed-foot-tools > div:last-child { justify-content:center; }
+  .ed-foot-save > div { justify-content:flex-end; }
+  .ed-foot-grid button { white-space:nowrap; }
+  .ed-foot-delete button { --button-fill:var(--card) !important; color:#8b1635; border-color:#8b1635; }
+  .ed-foot-delete button:hover { color:#8b1635; }
+  #btnCopy, #btnShowTxt, #btnSetActive { --button-fill:var(--card); font-weight:400; }
+  #btnPush, #btnSaveVer, #btnNewVer { --button-fill:var(--blue); }
+  @media(max-width:950px) { .ed-foot-grid { gap:10px; } .ed-foot-grid button { padding:7px 8px; font-size:12.5px; } }
+  @media(max-width:760px) { .ed-foot-grid { grid-template-columns:1fr 1fr; } .ed-foot-delete { grid-row:2; } .ed-foot-save { grid-column:2; grid-row:1 / 3; } }
+  #orgHistoryOverlay { z-index:11; }
+  body:has(#orgHistoryOverlay.show) #orgRestoreResultOverlay { z-index:12; }
+  #orgHistoryOverlay .panel { width:min(760px,94vw); }
+  #orgHistorySearch { width:calc(100% - 36px); margin:12px 18px 0; max-width:none; }
+  .session-row { display:flex; align-items:center; gap:8px; padding:8px 0; border-bottom:1px solid var(--line); overflow-wrap:anywhere; }
+  .session-row > span { flex:1; min-width:0; }
+  .session-row button { flex-shrink:0; }
+  #sessionFinish { border-top:1px solid var(--line); padding-top:14px; }
+  #sessionFinish p { margin:8px 0; overflow-wrap:anywhere; }
+  #sessionFinish .session-finish-actions { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
+  #sessionMoveOverlay { z-index:13; }
+  #orgHistoryBody { min-height:0; font-size:13.5px; line-height:1.65; }
+  #orgHistoryIntro { padding:12px 18px; font-size:13px; line-height:1.65; border-bottom:1px solid var(--line); overflow-wrap:anywhere; }
+  #orgHistoryStatus { color:var(--sub); }
+  .move-history-group { border:1px solid var(--line); border-radius:8px; flex-shrink:0; overflow-wrap:anywhere; }
+  .move-history-heading { padding:10px 12px; background:var(--bg); border-bottom:1px solid var(--line); }
+  .move-history-heading strong { display:block; font-size:14px; }
+  .move-history-group details + details { border-top:1px solid var(--line); }
+  .move-history-group summary { padding:10px 12px; cursor:pointer; }
+  .move-history-next { display:inline-block; padding:1px 6px; margin-right:6px; background:var(--yellow); border:1px solid var(--line); border-radius:4px; font-size:12px; }
+  .move-history-items { list-style:none; padding:0 12px 10px; }
+  .move-history-items li { padding:7px 0; border-top:1px solid var(--line); }
+  .move-history-items strong, .move-history-items span { display:block; }
+  .move-history-items span { color:var(--sub); }
+
+  #orgDelList .orow.with-account { flex-wrap:nowrap; min-width:0; }
+  #orgDelList .with-account .of { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  #orgDelList .with-account .oc { flex:0 1 45%; min-width:0; }
+  .orow.with-account .oc { white-space:normal !important; overflow-wrap:anywhere; }
+  .org-account { display:block; font-size:13.5px; color:var(--sub); line-height:1.5; }
+  #orgStatus { white-space:pre-wrap; overflow-wrap:anywhere; }
+  #orgDelList .orow, #orgList .orow { flex-wrap:nowrap; min-width:0; }
+  #orgDelList .orow .of, #orgList .orow .of { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  #orgDelList .orow .oc, #orgList .orow .oc { flex:0 1 45%; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .org-align { flex:0 0 28px; width:28px; height:28px; padding:0; font-size:15px; line-height:1; border-radius:4px; }
+  #orgPickNotice, #orgAlignNotice { font-size:13px; line-height:1.6; padding:8px 0; color:var(--sub); }
+  #orgPickTools, #orgAlignTools { display:flex; align-items:center; flex-wrap:wrap; gap:6px 10px; }
+  #orgPickStatus, #orgPickSaveState, #orgAlignStatus, #orgAlignSaveState { font-size:12.5px; color:var(--sub); }
+  #orgPickUndo, #orgAlignUndo { font-size:12.5px; padding:5px 8px; }
+  .language-control { display:inline-flex; align-items:center; gap:6px; font-size:13.5px; color:var(--sub); margin-left:auto; }
+  .language-control select { max-width:145px; }
+
+  /* Shared panel readability; preserve existing container widths and spacing. */
+  input:not([type="checkbox"]):not([type="radio"]), textarea, select { border-radius:0 !important; }
+  .panel-body, .panel-foot { font-size:13.5px; }
+  .panel :is(.nthelp,.dlab,.restore-failure,.move-history-next),
+  .panel :is(input,textarea,select,button,pre),
+  .panel [style*="font-size:11px"], .panel [style*="font-size:12px"],
+  .panel [style*="font-size:12.5px"], .panel [style*="font-size:13px"],
+  #orgHistoryIntro, #orgPickNotice, #orgAlignNotice,
+  #orgPickStatus, #orgPickSaveState, #orgAlignStatus, #orgAlignSaveState,
+  #orgPickUndo, #orgAlignUndo { font-size:13.5px !important; }
+
+  /* Finishing layout uses the existing palette and keeps all action states. */
+  .sel-right { display:inline-flex; gap:8px; margin-left:auto; flex-wrap:wrap; }
+  #selExport { --button-fill:var(--blue); color:var(--ink); }
+  #selDel { --button-fill:var(--pink); color:var(--ink); }
+  #btnOrgHistory { display:inline-flex; align-items:center; justify-content:center; }
+  #categorySaveStatus[hidden] { display:none; }
+  #smartOverlay .panel-body { gap:14px; background:var(--bg); }
+  #smartOverlay .smart-section { padding:16px; border:1px solid var(--line); border-radius:10px; background:var(--card); }
+  #smartOverlay .smart-preview { border-top:4px solid var(--yellow); }
+  #smartOverlay .smart-section > .dlab:first-child { margin-top:0; font-weight:700; }
+  #smartOverlay .smart-section .nthelp { margin-top:6px; }
+  #smartOverlay .smart-section .ostep { margin:0 0 12px; }
+  #smartOverlay #jevRows > div:has(> .jevPick) { padding:9px 0 !important; border-bottom:1px solid var(--fine-line); }
+  #smartOverlay #jvCats { display:grid; grid-template-columns:1fr 1fr; gap:8px 14px; }
+  #smartOverlay #jvCats input { width:100%; }
+  #smartOverlay #jvKey { width:100%; }
+  #smartOverlay #jvHint:empty { display:none; }
+  .welcome-panel { width:min(740px,95vw); }
+  #welcomeTitle { font-size:24px; }
+  .welcome-subtitle { display:flex; align-items:center; gap:12px; flex-wrap:wrap; font-size:16px; }
+  .welcome-copy { font-size:15px; line-height:1.85; }
+  .welcome-copy p + p { margin-top:20px; }
+  .toolbar-row #btnWelcomeGuide { --button-fill:var(--card); color:var(--sub); font-size:12.5px; padding:6px 8px; white-space:nowrap; }
+  #welcomeOverlay .panel-foot { justify-content:flex-end; }
+  @media (max-width:600px) { #smartOverlay #jvCats { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="toolbar-row">
+  <h1>@@ud636a5f24f6e@@</h1>
+  <button id="btnImport">@@ue472fd43472b@@</button>
+  <input id="search" placeholder="@@u895a2f76ec08@@">
+  <select id="sortBy" data-tip="@@u036e5e69b3d4@@" aria-label="@@u036e5e69b3d4@@">
+    <option value="note_desc">@@u5855ce29ea0f@@</option>
+    <option value="note_asc">@@u60666b9d5d17@@</option>
+    <option value="updated_desc">@@u83e691dfd87e@@</option>
+    <option value="proj_asc">@@u00ebc7946dca@@</option>
+    <option value="title_asc">@@uab77e0c4e98f@@</option>
+  </select>
+  <button class="viewbtn" id="btnGrid" data-tip="@@u824005deb55a@@" aria-label="@@u824005deb55a@@">▦</button>
+  <button class="viewbtn" id="btnList" data-tip="@@u6faa62961d0c@@" aria-label="@@u6faa62961d0c@@">☰</button>
+  <button id="btnNew" class="primary">@@u3eba4169a96e@@</button>
+  <label class="language-control">@@u9a40cca0d896@@ <select id="uiLanguage" aria-label="@@u25c2d876d516@@"><option value="system">@@ud8585866bc46@@</option><option value="en">English</option><option value="zh">@@u147b51b71bef@@</option></select></label>
+  <button id="btnWelcomeGuide" type="button">@@uffc42226387b@@</button>
+  </div>
+  <div class="toolbar-row toolbar-actions">
+  <div class="toolbar-group toolbar-yellow">
+  <button id="btnSelMode">@@u8b7f132f6cd8@@</button>
+  <button id="btnOrganize">@@u374b85d583af@@</button>
+  <button id="btnSimilar" data-tip="@@ubcde48ae4d13@@" aria-label="@@ubcde48ae4d13@@">@@ude44f8818078@@</button>
+  <span id="categorySaveStatus" hidden role="status" aria-live="polite">@@u0cbe2c77fff0@@</span>
+  <button id="categorySaveRetry" hidden>@@u1a6ce935500e@@</button>
+  </div>
+  <div class="toolbar-group toolbar-pink">
+  <button id="btnOrgMove" aria-describedby="orgSyncNotice">@@u96d6c5ba851f@@</button>
+  <button id="btnOrgDelete">@@u61657ca0fdd8@@</button>
+  <span class="org-undo-tools"><button id="btnOrgUndo" disabled data-tip="@@u94edc2a56ed5@@" aria-label="@@u936f2c3e8509@@">@@u936f2c3e8509@@</button>
+  <button id="btnOrgHistory" data-tip="@@u7ce5a784c769@@" aria-label="@@u987a438e187d@@" aria-haspopup="dialog">📄 @@u0f4e42a58a90@@</button></span>
+  </div>
+  <div class="toolbar-tail"><button id="btnFinishSession" type="button" aria-haspopup="dialog">@@u20ba0b28621c@@</button><button id="btnSettings" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="settingsMenu" data-tip="@@u41ac972780ab@@" aria-label="@@u41ac972780ab@@">⚙</button>
+    <div id="settingsMenu" role="menu" hidden><section class="settings-group"><h2>@@u009247eda138@@</h2><button id="settingsOpenMoveLogs" role="menuitem" type="button">@@u3892e7c50c28@@</button></section></div>
+  </div>
+  </div>
+  <div id="orgSyncNotice" role="status" aria-live="polite" hidden></div>
+  <div id="saveConflictNotice" role="alert" hidden><span id="saveConflictText"></span> <button id="saveDraftDownload">@@ud48b8bfcf116@@</button> <button id="discardCategoryReplay">@@uce95778ccccc@@</button></div>
+</header>
+<div id="layout">
+  <aside id="side">
+    <div id="sideTop"></div>
+    <div id="sideList"></div>
+  </aside>
+  <main id="mainScroll">
+    <div id="selBar">
+      <div class="sel-row">
+        <span id="selInfo">@@ua2edba63dbc3@@</span>
+        <button id="selAll">@@ub281d6d7abb9@@</button>
+        <button id="selNone">@@u3e7374f32c84@@</button>
+        <button id="selExit">@@u4837d1b66e93@@</button>
+        <span class="sel-right">
+        <button id="selExport" title="@@u2a6a0c390ca7@@">@@u46f253511646@@</button>
+        <button class="danger" id="selDel">@@ubfc6a3424a6f@@</button>
+        </span>
+      </div>
+      <div class="sel-row sel-move-row">
+        <span style="font-size:13px">@@u0a203a453b96@@</span>
+        <select id="selMoveTo"></select>
+        <button id="selMove">@@ud4344e9f0bd3@@</button>
+        <button id="selMoveUndo" disabled title="@@u50b20e438df1@@">@@u4cd424de3c16@@</button>
+      </div>
+
+    </div>
+    <div id="cards"></div>
+    <div id="empty" style="display:none">
+      @@u2cb983c629b5@@<br>@@u56b8d41f59bc@@<br>@@u1d0b4daa0cfc@@
+    </div>
+  </main>
+</div>
+
+<!-- 整理器内部批量分类确认，与 Notes 文件夹移动独立 -->
+<div class="overlay" id="batchMoveOverlay" role="dialog" aria-modal="true" aria-labelledby="batchMoveTitle" aria-describedby="batchMoveSummary">
+  <div class="panel">
+    <div class="panel-head"><strong id="batchMoveTitle">@@ue7b3c0695e9a@@</strong></div>
+    <div class="panel-head" id="batchMoveSummary"></div>
+    <div class="panel-body" id="batchMoveList"></div>
+    <div class="panel-foot">
+      <span id="batchMoveStatus" role="status" style="flex:1 1 100%;color:var(--sub)"></span>
+      <button id="batchMoveCancel">@@ue50f86202da2@@</button>
+      <button id="batchMoveConfirm">@@u4ec86c8994a0@@</button>
+    </div>
+  </div>
+</div>
+
+<!-- 还原结果：两个撤销入口共用，失败清单独立滚动。 -->
+<div class="overlay" id="orgRestoreResultOverlay" role="dialog" aria-modal="true" aria-labelledby="orgRestoreSummary">
+  <div class="panel" style="width:min(640px,94vw)">
+    <div class="panel-head"><strong id="orgRestoreSummary"></strong></div>
+    <div class="panel-body" style="min-height:0">
+      <div id="orgRestoreDetail" role="status"></div>
+      <div id="orgRestoreFailures"></div>
+    </div>
+    <div class="panel-foot">
+      <button id="orgRestoreClose">@@u980ce9db2418@@</button>
+      <button id="orgRestoreRetry">@@u60bd002dc1b4@@</button>
+    </div>
+  </div>
+</div>
+
+<!-- 移动记录仅展示归位表当前仍可撤销的批次；历史 md 另有入口。 -->
+<div class="overlay" id="orgHistoryOverlay" role="dialog" aria-modal="true" aria-labelledby="orgHistoryTitle">
+  <div class="panel">
+    <div class="panel-head"><strong id="orgHistoryTitle">@@ud451ca99d13e@@</strong><button class="x" id="orgHistoryClose" aria-label="@@ueec110e5aadc@@">✕</button></div>
+    <div id="orgHistoryIntro">@@u8712b7e48d11@@</div>
+    <input id="orgHistorySearch" type="search" placeholder="@@u873fe013f1ab@@" aria-label="@@u873fe013f1ab@@">
+    <div class="panel-body" id="orgHistoryBody"><div id="orgHistoryStatus" role="status"></div><div id="orgHistoryList"></div>
+      <section id="sessionFinish" hidden><h2>@@u20ba0b28621c@@</h2><div id="sessionSyncStatus" role="status"></div><ul id="sessionUnsyncedList"></ul>
+        <div class="session-finish-actions"><button id="sessionSyncNow">@@uf764c7d76c03@@</button><button id="sessionSkipSync">@@u41d1e82228a1@@</button></div>
+        <p id="sessionLogPath"></p><button id="sessionLogReveal">@@u008701b76b87@@</button><p id="sessionFinishHint">@@u9fc173e4041e@@</p>
+      </section>
+    </div>
+    <div class="panel-foot"><button id="orgHistoryRefresh">@@u1a09a710cf00@@</button><button id="orgHistoryReveal">@@u5e9f0c9659cb@@</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="sessionMoveOverlay" role="dialog" aria-modal="true" aria-labelledby="sessionMoveTitle">
+  <div class="panel" style="width:min(540px,94vw)"><div class="panel-head"><strong id="sessionMoveTitle">@@u637ac24cf382@@</strong></div>
+    <div class="panel-body"><p id="sessionMoveDetail"></p><label>@@u70dd271e3b21@@ <select id="sessionMoveTarget"></select></label><p id="sessionMoveError" role="alert"></p></div>
+    <div class="panel-foot" style="justify-content:flex-end"><button id="sessionMoveCancel">@@ue50f86202da2@@</button><button id="sessionMoveConfirm" disabled>@@u59c8b73a1072@@</button></div>
+  </div>
+</div>
+
+<!-- 编辑弹层 -->
+<div class="overlay" id="edOverlay">
+  <div class="panel">
+    <div class="panel-head">
+      <input id="edTitle" placeholder="@@u7ea1887913d1@@">
+      <select id="edProj"></select>
+      <button class="x" onclick="closeEditor()">✕</button>
+    </div>
+    <div class="panel-body">
+      <div id="verRow"></div>
+      <textarea id="edBody" placeholder="@@ub627d9f87191@@" spellcheck="false"></textarea>
+      <div id="edCount" style="font-size:12px;color:var(--sub);text-align:right;margin-top:-6px"></div>
+    </div>
+    <div class="panel-foot"><div class="ed-foot-grid">
+      <div class="ed-foot-delete"><button class="danger" id="btnDelVer">@@u8666675a56ac@@</button><button class="danger" id="btnDelPrompt">@@u67f7026ad58d@@</button></div>
+      <div class="ed-foot-tools"><div><button id="btnShowTxt">@@ud3ec577adc5d@@</button><button id="btnSetActive">@@u0b3b0e88f75e@@</button></div><div><button id="btnCopy">@@u1ec5c574cf06@@</button><span id="dirtyHint">@@ua84a532731c6@@</span></div></div>
+      <div class="ed-foot-save"><div><button id="btnSaveVer">@@u26b20c5f2773@@</button></div><div><button id="btnPush">@@u51d251f4adbc@@</button><button id="btnNewVer">@@u119ae640cbc4@@</button></div></div>
+    </div></div>
+  </div>
+</div>
+
+<div class="overlay" id="deleteConfirmOverlay" role="dialog" aria-modal="true" aria-labelledby="deleteConfirmTitle" aria-describedby="deleteConfirmDetail">
+  <div class="panel" style="width:min(560px,94vw)">
+    <div class="panel-head"><strong id="deleteConfirmTitle"></strong></div>
+    <div class="panel-body">
+      <p id="deleteConfirmDetail" style="white-space:pre-wrap;overflow-wrap:anywhere"></p>
+      <blockquote id="deleteConfirmPreview" style="padding:10px 12px;border-left:3px solid var(--red);background:var(--bg);white-space:pre-wrap;overflow-wrap:anywhere"></blockquote>
+      <label id="deleteConfirmTypeWrap">@@u9d2445a9d001@@ <input id="deleteConfirmType" autocomplete="off" spellcheck="false"></label>
+    </div>
+    <div class="panel-foot" style="justify-content:flex-end"><button id="deleteConfirmCancel">@@ue50f86202da2@@</button><button class="danger" id="deleteConfirmGo" style="--button-fill:var(--card);color:#8b1635;border-color:#8b1635">@@u6ba00e0a8811@@</button></div>
+  </div>
+</div>
+
+<!-- 按分类整理备忘录 -->
+<!-- 相似条目归组 -->
+<div class="overlay" id="simOverlay">
+  <div class="panel" style="width:min(880px,96vw)">
+    <div class="panel-head">
+      <b style="font-size:16px">@@uf6af0724f2b7@@</b>
+      <button class="x" onclick="$('simOverlay').classList.remove('show')">✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="nthelp" style="margin-bottom:10px">
+        @@ud028b13bfcab@@<b>@@ue01dd0700435@@</b>@@ue875794ca467@@<b>@@uf9fc9201f588@@</b>@@ufeb43709e711@@
+      </div>
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:13px;margin-bottom:10px">
+        <label title="@@u3e385929ed46@@">@@u4a3870c0d0ab@@ <input id="simTh" type="number" value="90" min="50" max="100" step="1" style="width:88px">%</label>
+        <label title="@@u72c7a4b68c06@@">@@u3a7cbec643f5@@ <input id="simRatio" type="number" value="1.5" min="1" max="5" step="0.1" style="width:88px">@@ud3f279b052e4@@</label>
+        <label title="@@u46bb6612405d@@">@@u747e3f294781@@ <input id="simMin" type="number" value="100" min="0" max="2000" step="10" style="width:88px">@@u46c8d468473b@@</label>
+        <button id="simScan">@@u21d791f7d9ba@@</button>
+        <span id="simMeta" style="color:var(--sub)"></span>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:10px">
+        <button id="simAll" style="font-size:12px">@@u5ceadaf7afba@@</button>
+        <button id="simNone" style="font-size:12px">@@u76a77590422a@@</button>
+      </div>
+      <div id="simList"></div>
+      <div id="simHint"></div>
+    </div>
+    <div class="panel-foot">
+      <button id="simUndo">@@ucba6bca2f925@@</button>
+      <span id="simStatus" style="font-size:13px;color:var(--sub)"></span>
+      <span style="flex:1"></span>
+      <button class="primary" id="simGo" disabled>@@ue86fc2866489@@</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="orgOverlay">
+  <div class="panel" style="width:min(640px,94vw)">
+    <div class="panel-head">
+      <b id="orgTitle" style="font-size:16px">@@ue783e25aefd8@@</b>
+      <button class="x" onclick="closeOrg()">✕</button>
+    </div>
+    <div class="panel-body">
+      <section id="orgMoveSection">
+      <div class="ostep">@@u0a0074b95fce@@</div>
+      <div id="orgRename"></div>
+      <div id="orgMeta">@@u9eabea2110f3@@</div>
+      <div id="orgAlignNotice">@@uffd59532490a@@</div>
+      <div id="orgAlignTools"><button id="orgAlignUndo" disabled>@@u3d4c52babaae@@</button><span id="orgAlignSaveState" role="status"></span></div>
+      <div id="orgAlignStatus" role="status"></div>
+      <div id="orgList"></div>
+      </section>
+      <section id="orgDeleteSection">
+      <div class="ostep">@@uec8b0a5c992d@@</div>
+      <div id="orgDelMeta"></div>
+      <div id="orgPickNotice">@@u632770c10918@@</div>
+      <div id="orgPickTools"><button id="orgPickUndo" disabled>@@uf6e9cac2f96c@@</button><span id="orgPickSaveState" role="status"></span></div>
+      <div id="orgPickStatus" role="status"></div>
+      <div id="orgDelList"></div>
+      </section>
+      <div id="orgHint"></div>
+    </div>
+    <div class="panel-foot">
+      <button id="orgUndo">@@u936f2c3e8509@@</button>
+      <button id="orgLog" title="@@ua42d8f03452d@@">@@ud451ca99d13e@@</button>
+      <span id="orgStatus" style="font-size:13px;color:var(--sub)"></span>
+      <span style="flex:1"></span>
+      <button id="orgDelGo">@@ue05478704023@@</button>
+      <button class="primary" id="orgGo">@@u79f6a6bb7d61@@</button>
+    </div>
+  </div>
+</div>
+
+<!-- 智能整理：Jev 建议与设置合在同一面板 -->
+<div class="overlay" id="smartOverlay">
+  <div class="panel" style="width:min(760px,94vw)">
+    <div class="panel-head">
+      <b style="font-size:16px">@@u374b85d583af@@</b>
+      <button class="x" onclick="$('smartOverlay').classList.remove('show')">✕</button>
+    </div>
+    <div class="panel-body">
+      <section class="smart-section smart-preview">
+      <div class="ostep">@@u12085825049c@@<span style="font-weight:400;color:var(--sub)">@@u82d092b285a3@@</span></div>
+      <div id="jevBox">
+        <div id="jevMeta" style="font-size:13px;color:var(--sub)"></div>
+        <div id="jevRows"></div>
+        <div style="display:flex;gap:8px;align-items:center;margin:8px 0 14px">
+          <label for="jevN" style="font-size:13.5px;white-space:nowrap">@@ubb6455d6764a@@<input id="jevN" type="number" value="50" min="1" max="200"
+            aria-label="@@uc7aaaf34c93b@@" style="width:88px;padding:2px 4px;margin:0 2px">@@ub8016609e767@@</label>
+          <button id="jevRun" type="button">@@udc2205e120bf@@</button>
+          <button id="jevApply" disabled>@@u7b4a1650770a@@</button>
+          <span id="jevStatus" style="font-size:13px;color:var(--sub)"></span>
+        </div>
+      </div>
+      <div class="nthelp">@@udf3b0b373eef@@</div>
+      </section>
+      <section class="smart-section">
+      <div class="dlab">@@u1f65bd915f74@@</div>
+      <input type="password" id="jvKey" placeholder="@@ua7674cedc08d@@">
+      <div class="nthelp">@@ua3bbeaa0a48a@@ <b>console.typesafe.ai</b> @@uabeb1adebf53@@</div>
+
+      </section>
+      <section class="smart-section">
+      <div class="dlab">@@u5685407563e3@@</div>
+      <div class="nthelp">@@u9842dba4c699@@</div>
+      <div id="jvCats" style="margin-top:10px"></div>
+
+      </section>
+      <section class="smart-section">
+      <div class="dlab">@@u24fc0962e495@@</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:13px">
+        <label>@@u528e6e9cfb24@@ <input id="jvAuto" type="number" step="0.05" min="0" max="1" style="width:88px"> @@u80938c326a98@@</label>
+        <label>@@ubaff2f1a2d87@@ <input id="jvLow" type="number" step="0.05" min="0" max="1" style="width:88px"> @@ub4df6497b55d@@</label>
+        <label>@@udc574735d2de@@ <input id="jvGap" type="number" step="0.05" min="0" max="1" style="width:88px"> @@u0fc126763350@@</label>
+      </div>
+      <div class="nthelp">@@u2251de3dedcd@@</div>
+
+      </section>
+      <section class="smart-section">
+      <div class="dlab">@@u38e44729e90d@@</div>
+      <div class="nthelp">
+        @@u5bdd56b3c9cf@@<b>@@ub67e935ae9d2@@</b>@@uaf5229bd4f82@@
+      </div>
+      <label style="display:flex;gap:8px;align-items:flex-start;font-size:13px;margin:8px 0">
+        <input type="checkbox" id="jvSendSecret" style="margin-top:3px">
+        <span><b>@@u91cbd2cd7771@@</b>　@@ub789f7e644a1@@</span>
+      </label>
+      <label style="display:flex;gap:8px;align-items:flex-start;font-size:13px;margin:8px 0">
+        <input type="checkbox" id="jvBuiltin" style="margin-top:3px">
+        <span><b>@@u10e55e069b22@@</b>　<span id="jvBuiltinList" style="color:var(--sub)"></span></span>
+      </label>
+      <div style="font-size:13px;margin-top:8px">@@ub5d6f07db1ae@@</div>
+      <textarea id="jvCustomSecret" class="jvArea" rows="3"
+        placeholder="@@u96306c022ce9@@"></textarea>
+      <div style="font-size:13px;margin-top:8px">@@u4de5312d6024@@</div>
+      <textarea id="jvSecretFolders" class="jvArea" rows="2"
+        placeholder="@@u5de8a67ddb8d@@"></textarea>
+      <div class="nthelp">@@ue05610c327a7@@<b>@@u06dac4d67033@@</b>@@ua0bfbebbc5e4@@</div>
+      </section>
+      <div id="jvHint" role="status" aria-live="polite"></div>
+    </div>
+    <div class="panel-foot">
+      <span style="flex:1"></span>
+      <button class="primary" id="jvSave">@@u84466178d7bf@@</button>
+    </div>
+  </div>
+</div>
+
+<!-- 诊断包弹层 -->
+
+<!-- 推送弹层 -->
+<div class="overlay" id="pushOverlay">
+  <div class="panel" style="width:min(560px,94vw)">
+    <div class="panel-head">
+      <b style="font-size:16px">@@ud7101b388ec5@@</b>
+      <button class="x" onclick="closePush()">✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="prow">
+        <span class="plab">@@u7ea1887913d1@@</span>
+        <input id="pushTitle" placeholder="@@u560897ecc0c8@@">
+      </div>
+      <div class="prow">
+        <span class="plab">@@u7d2fd0e85774@@</span>
+        <div id="pushModes"></div>
+      </div>
+      <div class="prow" id="pushFolderRow">
+        <span class="plab">@@u09c9bdffd2bf@@</span>
+        <select id="pushFolder"></select>
+        <button id="pushNewFolder">@@u52fbc180cf76@@</button>
+      </div>
+      <div id="pushHint"></div>
+    </div>
+    <div class="panel-foot">
+      <span id="pushStatus" style="font-size:13px;color:var(--sub)"></span>
+      <span style="flex:1"></span>
+      <button class="primary" id="pushGo">@@u98338c284222@@</button>
+    </div>
+  </div>
+</div>
+
+<!-- 导入弹层 -->
+<div class="overlay" id="impOverlay">
+  <div class="panel">
+    <div class="panel-head">
+      <b style="font-size:16px">@@u8c6764d1c445@@</b>
+      <button class="x" onclick="closeImport()">✕</button>
+    </div>
+    <div class="panel-body">
+      <div id="impBar">
+        <input id="impSearch" placeholder="@@u86acb3a1378d@@">
+        <select id="impFolder"><option value="">@@u4c94d2a11265@@</option></select>
+        <label style="font-size:13px;display:flex;align-items:center;gap:4px">
+          <input type="checkbox" id="impHideDone" checked> @@u006130c0a489@@
+        </label>
+        <button id="impSelAll">@@ub281d6d7abb9@@</button>
+        <button id="impSelNone">@@u3e7374f32c84@@</button>
+      </div>
+      <div id="impCount"></div>
+      <div id="impList"></div>
+      <div id="impFailures" role="alert" hidden><strong>@@u53e31203e1a7@@</strong><ul id="impFailureList"></ul><button id="impRetryFailed" type="button">@@u9e21d4548a23@@</button></div>
+    </div>
+    <div class="panel-foot">
+      <label style="font-size:13px;display:flex;gap:5px;align-items:center"
+             title="@@ud16c3d98b155@@">
+        <input type="checkbox" id="impUseFolder">@@ucdb31da0f9bb@@</label>
+      <span style="font-size:13px">@@uace7afd24ce2@@</span>
+      <select id="impProj"></select>
+      <button id="impNewProj">@@ue48bf8aae945@@</button>
+      <span style="flex:1"></span>
+      <span id="impStatus"></span>
+      <button class="primary" id="impGo">@@u10e0ede4e745@@</button>
+    </div>
+  </div>
+</div>
+
+<!-- Welcome precedes the unchanged three setup sections. -->
+<div class="overlay" id="welcomeOverlay" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+  <div class="panel welcome-panel">
+    <div class="panel-head"><h2 id="welcomeTitle">@@ue8b08facd967@@</h2><button class="x" onclick="$('welcomeOverlay').classList.remove('show')" aria-label="@@ueec110e5aadc@@">✕</button></div>
+    <div class="panel-body">
+      <div class="welcome-subtitle"><span>@@u48d05a7c9c00@@</span><label class="language-control">@@u9a40cca0d896@@ <select id="welcomeLanguage" aria-label="@@u25c2d876d516@@"><option value="system">@@ud8585866bc46@@</option><option value="en">English</option><option value="zh">@@u147b51b71bef@@</option></select></label></div>
+      <div class="welcome-copy"><p>@@ua3ff2d1b471d@@</p><p>@@u5aeb18b08952@@</p><p>@@u6f0d0c8de47a@@</p></div>
+    </div>
+    <div class="panel-foot"><button class="primary" id="welcomeStart">@@u6d389106cc54@@</button></div>
+  </div>
+</div>
+
+<!-- 首次引导 -->
+<div class="overlay" id="wzOverlay">
+  <div class="panel" style="width:min(720px,95vw)">
+    <div class="panel-head">
+      <b style="font-size:16px">@@u976d25678101@@</b>
+      <button class="x" onclick="$('wzOverlay').classList.remove('show')">✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="nthelp" style="font-size:13.5px">@@u6bd1b8a9cfa0@@</div>
+      <div class="nthelp" style="margin-bottom:12px">
+        @@u1669bd20b4c5@@
+      </div>
+
+      <div class="dlab">@@u2cfbe8f9c1bb@@</div>
+      <div class="nthelp">
+        @@u8dc187f2b9c1@@<b>@@ubeff66670b91@@</b>@@u1079598dc7d6@@
+      </div>
+      <div id="wzCats" style="margin-top:8px"></div>
+      <div style="margin-top:10px">
+        <div style="font-size:13px">@@uf349668de7b2@@<code>@@u54894d2b57d6@@</code>）</div>
+        <textarea id="wzOwn" class="jvArea" rows="3"
+          placeholder="@@u81cd93e154b4@@"></textarea>
+      </div>
+      <div style="margin-top:8px">
+        <button id="wzAskAI">@@ued02cb86dcc2@@</button>
+        <span class="nthelp" id="wzAskHint"></span>
+      </div>
+
+      <div class="dlab" style="margin-top:18px">@@ud071b170c701@@</div>
+      <div class="nthelp">
+        @@ue9ce5d88a56d@@
+      </div>
+      <label style="display:flex;gap:8px;align-items:flex-start;font-size:13px;margin-top:8px">
+        <input type="checkbox" id="wzSecretFolder" checked style="margin-top:3px">
+        <span>@@uaf9ba0824b96@@<b>@@u498f9245b81d@@</b>@@ue6cc87b459c1@@<b>@@ued826d1d705e@@</b>@@uc3ac56f9d814@@</span>
+      </label>
+
+      <div class="dlab" style="margin-top:18px">@@uc252acc6eabe@@</div>
+      <div class="nthelp">
+        @@u300bc99f491c@@ <b>console.typesafe.ai</b> @@u48ec73de7a6d@@<b>@@uc42171d3e2bc@@</b>
+      </div>
+      <input type="password" id="wzKey" autocomplete="off" placeholder="@@u397da589080d@@"
+             style="width:100%;margin-top:8px">
+
+      <div id="wzHint" style="margin-top:10px"></div>
+    </div>
+    <div class="panel-foot">
+      <button id="wzSkip">@@u4029ed16af85@@</button>
+      <span style="flex:1"></span>
+      <button class="primary" id="wzDone">@@u6db6699b8eef@@</button>
+    </div>
+  </div>
+</div>
+
+<div id="sideOpTooltip" role="tooltip" hidden></div>
+<div id="toast"></div>
+
+<script>
+let DB = { projects: [], prompts: [], importedNoteIds: [] };
+let curProj = "__all__";        // __all__ / __none__ / 项目名
+let curPrompt = null;           // 编辑中的 prompt 对象
+let curVer = null;              // 编辑中查看的版本号
+let dirty = false;
+let allNotes = [];              // 备忘录列表缓存
+let impSel = new Set();         // 导入面板里勾选的备忘录 id（与渲染无关，滚动/筛选都不会丢）
+
+// 文件夹标签使用主题色的浅色阶，保证深色文字始终清楚。
+const PALETTE = ["var(--pink)","var(--yellow)","var(--blue)","var(--bg)"];
+const $ = id => document.getElementById(id);
+
+function toast(msg) {
+  const t = $("toast"); t.textContent = msg; t.style.opacity = 1;
+  clearTimeout(t._h); t._h = setTimeout(() => t.style.opacity = 0, 1800);
+}
+function tagColor(name) {
+  let h = 0; for (const c of name) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return PALETTE[h % PALETTE.length];
+}
+function now() {
+  const d = new Date(), p = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+async function requestApi(path, body) {
+  const headers = {"X-UI-Language": document.documentElement.lang.startsWith("zh") ? "zh" : "en"};
+  if (body) {
+    headers["Content-Type"] = "application/json";
+    headers["X-Session-Token"] = await getSessionToken();
+  }
+  const r = await fetch(path, body ? { method: "POST", headers, body: JSON.stringify(body) } : {headers});
+  const j = await r.json();
+  if (!r.ok || j.error) { const error=new Error(j.error || `@@ua499b9057b1e@@${r.status}@@ue00d84a22b18@@`); error.status=r.status; error.code=j.code; error.rev=j.rev; throw error; }
+  return j;
+}
+let sessionTokenRequest = null;
+async function getSessionToken() {
+  if (!sessionTokenRequest) sessionTokenRequest = fetch("/api/session/token")
+    .then(async response => {
+      const result = await response.json();
+      if (!response.ok || !result.token) throw new Error(result.error || "Session verification is unavailable.");
+      return result.token;
+    }).catch(error => { sessionTokenRequest = null; throw error; });
+  return sessionTokenRequest;
+}
+// 只缓存来源笔记的当前位置；分类改动用本地库重算，不查询 AppleScript。
+let orgSyncNotes = null, orgSyncCount = 0, orgSyncFresh = false;
+let skippedSyncSignature = null;
+let orgSyncError = "", notesListEpoch = 0, notesListInFlight = null;
+// 账户信息仅用于本次 Notes 预览和执行校验，不改整理器的分类数据。
+function orgAccountMeta(n) {
+  return {accountId:String(n.accountId || ""), accountName:String(n.accountName || ""),
+    folderId:String(n.folderId || ""), accountCount:Number(n.accountCount) || 0};
+}
+function orgMoveTarget(n, folder) {
+  return {noteId:n.id, folder, accountId:String(n.accountId || "")};
+}
+function classifiedMovePlan(notes) {
+  const byId = new Map(notes.map(n => [n.id, n])), projects = new Set(DB.projects);
+  const groups = {}, rowsIn = [], problems = { 没来源:0, 找不到笔记:0, 已就位:0 };
+  for (const p of DB.prompts) {
+    if (!p.project || !projects.has(p.project)) continue;
+    if (!p.srcNoteId) { problems.没来源++; continue; }
+    const n = byId.get(p.srcNoteId);
+    if (!n) { problems.找不到笔记++; continue; }
+    if (n.folder === p.project) { problems.已就位++; continue; }
+    (groups[p.project] ||= []).push(orgMoveTarget(n, p.project));
+    rowsIn.push({id:p.id, noteId:n.id, kind:"in", title:n.name, from:n.folder, to:p.project, ...orgAccountMeta(n)});
+  }
+  return {groups, rowsIn, problems, inCount:rowsIn.length};
+}
+function remindUnsyncedBeforeUnload(event) {
+  if (orgSyncCount <= 0) return;
+  if (skippedSyncSignature !== null && skippedSyncSignature === currentSyncSignature()) return;
+  event.preventDefault(); event.returnValue = "";
+}
+function currentSyncSignature() {
+  if (orgSyncNotes === null) return null;
+  return JSON.stringify([DB.rev, classifiedMovePlan(orgSyncNotes).rowsIn.map(row => [row.id,row.noteId,row.from,row.to])]);
+}
+function updateOrgSyncNotice() {
+  if (!dataLoaded) return;
+  orgSyncCount = orgSyncNotes === null ? 0 : classifiedMovePlan(orgSyncNotes).inCount;
+  const notice = $("orgSyncNotice");
+  notice.hidden = orgSyncFresh && orgSyncCount === 0;
+  notice.dataset.uncertain = String(!orgSyncFresh);
+  const reminder = orgSyncCount > 0
+    ? `@@u0993fbc3e620@@${orgSyncCount}@@u7c058fd5524b@@` : "";
+  notice.textContent = orgSyncFresh ? reminder
+    : (orgSyncError ? @@ua7b85ef40779@@ : @@u0196c09efa1e@@)
+      + (reminder ? @@uc9e8faf9544d@@ + reminder : @@uae2dfe9d4874@@);
+  // 无待同步项时不注册关闭监听；不影响原来的本机分类暂存机制。
+  window.removeEventListener("beforeunload", remindUnsyncedBeforeUnload);
+  if (orgSyncCount > 0) window.addEventListener("beforeunload", remindUnsyncedBeforeUnload);
+}
+function invalidateOrgSyncNotes() {
+  ++notesListEpoch; notesListInFlight = null;
+  orgSyncFresh = false; orgSyncError = ""; updateOrgSyncNotice();
+}
+async function api(path, body) {
+  if (path === "/api/notes/move") {
+    invalidateOrgSyncNotes();
+    try { return await requestApi(path, body); }
+    finally { invalidateOrgSyncNotes(); }
+  }
+  if (path !== "/api/notes/list" || body) return requestApi(path, body);
+  if (notesListInFlight) return notesListInFlight;
+  const epoch = notesListEpoch;
+  const pending = requestApi(path).then(result => {
+    if (!Array.isArray(result.notes)) throw new Error(@@u4d9aa5d6d491@@);
+    if (epoch === notesListEpoch) {
+      orgSyncNotes = result.notes; orgSyncFresh = true; orgSyncError = "";
+      updateOrgSyncNotice();
+    }
+    return result;
+  }).catch(error => {
+    if (epoch === notesListEpoch) { orgSyncFresh = false; orgSyncError = error.message; updateOrgSyncNotice(); }
+    throw error;
+  }).finally(() => { if (notesListInFlight === pending) notesListInFlight = null; });
+  notesListInFlight = pending;
+  return pending;
+}
+async function refreshOrgSyncNotes() {
+  try { await api("/api/notes/list"); } catch {} // 常驻提示显示核对失败；不把未知当作零条。
+}
+const CATEGORY_LEGACY = "notesOrganizerPendingCategoriesV1";
+let CATEGORY_JOURNAL = "", journalOwner = "";
+const JOURNAL_PREFIX = "notesOrganizerCategoriesV2:";
+const CATEGORY_WAIT = 1000;
+let categoryPending = new Map(), categoryTimer = null, saveQueue = Promise.resolve();
+let categoryRevision = 0, categoryDataBusy = false, categorySaving = false, dataLoaded = false;
+let categoryOps = [], categoryBaseline = null, saveConflict = false, replayBlocked = false;
+let recoveryMessages = [], recoveryDrafts = [], draftDbPromise, serverRevisionReady = false;
+const conflictText = @@u483c6fa32e64@@;
+function showSaveNotice(text) { $("saveConflictNotice").hidden = !text; $("saveConflictText").textContent = text; }
+function categoryStatus(text, failed = false) {
+  $("categorySaveStatus").textContent = saveConflict ? @@u8ac72ee9408d@@ : text;
+  $("categorySaveStatus").hidden = !saveConflict && text === @@u5e4ee373036c@@;
+  $("categorySaveRetry").hidden = saveConflict || !failed;
+  $("orgAlignSaveState").textContent = $("categorySaveStatus").textContent;
+  $("orgPickSaveState").textContent = $("categorySaveStatus").textContent.replace(/分类/g,@@u6f7dddeca3de@@);
+  if (saveConflict) showSaveNotice(conflictText);
+}
+function categorySnapshot() { return {projects:[...DB.projects], items:new Map(DB.prompts.map(p=>[p.id,p.project || ""]))}; }
+async function acquireJournal(id) {
+  if (!navigator.locks) throw new Error(@@ue0095dbdd81c@@);
+  return new Promise((resolve,reject)=>{ navigator.locks.request(JOURNAL_PREFIX+id,{ifAvailable:true},lock=>{
+    resolve(!!lock); if (lock) return new Promise(()=>{});
+  }).catch(reject); });
+}
+async function initCategoryJournal() {
+  const old = sessionStorage.getItem("notesOrganizerWindowV2");
+  journalOwner = old && await acquireJournal(old) ? old : crypto.randomUUID();
+  if (journalOwner !== old && !await acquireJournal(journalOwner)) throw new Error(@@u3395552ba7b7@@);
+  sessionStorage.setItem("notesOrganizerWindowV2",journalOwner);
+  CATEGORY_JOURNAL = JOURNAL_PREFIX+journalOwner;
+  const sources = [CATEGORY_JOURNAL];
+  for (const key of Object.keys(localStorage)) {
+    if (key.startsWith(JOURNAL_PREFIX) && key!==CATEGORY_JOURNAL && await acquireJournal(key.slice(JOURNAL_PREFIX.length))) sources.push(key);
+  }
+  const seen = new Set();
+  for (const key of sources) {
+    const saved=JSON.parse(localStorage.getItem(key)||'{"ops":[]}');
+    if (!Array.isArray(saved.ops)) throw new Error(@@u8cd43d12c173@@);
+    for(const op of saved.ops) if(!seen.has(op.token)){seen.add(op.token);categoryOps.push(op)}
+  }
+  // 旧版日志只迁移一次；先写入新日志后才移除来源，避免迁移中断丢记录。
+  if (await acquireJournal("legacy-migration")) {
+    const legacy=JSON.parse(localStorage.getItem(CATEGORY_LEGACY)||"[]");
+    for(const [id,item] of legacy) {
+      const p=DB.prompts.find(p=>p.id===id);
+      if(item.project && !DB.projects.includes(item.project)) categoryOps.push({token:crypto.randomUUID(),kind:"add",name:item.project});
+      categoryOps.push({token:crypto.randomUUID(),kind:"set",id,from:p?.project||"",to:item.project,updated:item.updated});
+    }
+    writeCategoryOps(categoryOps);localStorage.removeItem(CATEGORY_LEGACY);
+  } else writeCategoryOps(categoryOps);
+  for(const key of sources) if(key!==CATEGORY_JOURNAL)localStorage.removeItem(key);
+  const custody=new Set(sources.map(key=>key.slice(JOURNAL_PREFIX.length)));
+  for(const draft of await draftStore("all"))if(custody.has(draft.id)){
+    await draftStore("put",{...draft,id:"recovered:"+crypto.randomUUID()});
+    await draftStore("delete",draft.id);
+  }
+  recoveryDrafts = await draftStore("all");
+}
+function writeCategoryOps(ops) {
+  if (!CATEGORY_JOURNAL) throw new Error(@@u50773771241c@@);
+  if(ops.length) localStorage.setItem(CATEGORY_JOURNAL,JSON.stringify({ops}));
+  else localStorage.removeItem(CATEGORY_JOURNAL);
+}
+function appendCategoryOps(ops) {
+  if(!ops.length)return;
+  const next=[...categoryOps,...ops.map(op=>({...op,token:crypto.randomUUID()}))];
+  writeCategoryOps(next);categoryOps=next;
+}
+function projectOp(kind,name,to) {
+  return {kind,name,to,members:DB.prompts.filter(p=>p.project===name).map(p=>p.id)};
+}
+function storeCategoryJournal(entries = categoryPending) {
+  const ops=[], projects=new Set(DB.projects), byId=new Map(DB.prompts.map(p=>[p.id,p]));
+  for(const [id,item] of entries){const p=byId.get(id);if(!p||p.project===item.project)continue;
+    if(item.project&&!projects.has(item.project)){ops.push({kind:"add",name:item.project});projects.add(item.project)}
+    ops.push({kind:"set",id,from:p.project||"",to:item.project,updated:item.updated});
+  }
+  appendCategoryOps(ops);
+  if(categoryBaseline)for(const op of ops){if(op.kind==="add")categoryBaseline.projects.push(op.name);else categoryBaseline.items.set(op.id,op.to)}
+}
+function reconcileCategoryJournal() {
+  if(!categoryBaseline)return;
+  const ops=[], changed=new Set();
+  for(const name of DB.projects)if(!categoryBaseline.projects.includes(name))ops.push({kind:"add",name});
+  for(const p of DB.prompts)if(categoryBaseline.items.has(p.id)&&categoryBaseline.items.get(p.id)!==(p.project||"")){
+    ops.push({kind:"set",id:p.id,from:categoryBaseline.items.get(p.id),to:p.project||"",updated:p.updated});changed.add(p.id);
+  }
+  for(const name of categoryBaseline.projects)if(!DB.projects.includes(name))ops.push({kind:"delete",name,members:[...categoryBaseline.items].filter(([id,pr])=>pr===name&&!changed.has(id)).map(([id])=>id)});
+  appendCategoryOps(ops);categoryBaseline=categorySnapshot();
+}
+function applyCategoryOp(op) {
+  const byId=new Map(DB.prompts.map(p=>[p.id,p]));
+  if(op.kind==="add") {if(!DB.projects.includes(op.name))DB.projects.push(op.name);return "ok";}
+  // 挑回/撤销只回放明确的新条目；新版已修改或另有同源条目时暂停，绝不覆盖。
+  if(op.kind==="pick") {
+    const p=op.item, current=byId.get(p.id);
+    if(current)return JSON.stringify(current)===JSON.stringify(p) ? "ok" : false;
+    if(DB.prompts.some(x=>x.srcNoteId===p.srcNoteId) || (p.project&&!DB.projects.includes(p.project)))return false;
+    DB.prompts.push(JSON.parse(JSON.stringify(p)));
+    if(!DB.importedNoteIds.includes(p.srcNoteId))DB.importedNoteIds.push(p.srcNoteId);
+    return "ok";
+  }
+  if(op.kind==="unpick") {
+    const current=byId.get(op.item.id);
+    if(!current)return "ok";
+    if(JSON.stringify(current)!==JSON.stringify(op.item))return false;
+    DB.prompts=DB.prompts.filter(p=>p.id!==op.item.id);
+    return "ok";
+  }
+  if(op.kind==="set") {
+    const p=byId.get(op.id);if(!p)return @@uc315da49401d@@+op.id;
+    if((p.project||"")===op.to)return "ok";
+    if((p.project||"")!==op.from || (op.to&&!DB.projects.includes(op.to)))return false;
+    p.project=op.to;p.updated=op.updated||now();return "ok";
+  }
+  if(!["rename","delete"].includes(op.kind))return false;
+  if(!DB.projects.includes(op.name)) {
+    if(op.kind==="delete")return "ok";
+    return DB.projects.includes(op.to) && op.members.every(id=>!byId.has(id)||byId.get(id).project===op.to) ? "ok" : false;
+  }
+  if(op.kind==="rename"&&DB.projects.includes(op.to))return false;
+  const expected=new Set(op.members||[]), current=DB.prompts.filter(p=>p.project===op.name);
+  if(current.some(p=>!expected.has(p.id)) || [...expected].some(id=>byId.has(id)&&byId.get(id).project!==op.name))return false;
+  if(op.kind==="rename")DB.projects=DB.projects.map(x=>x===op.name?op.to:x);else DB.projects=DB.projects.filter(x=>x!==op.name);
+  for(const p of current)p.project=op.kind==="rename"?op.to:"";
+  return "ok";
+}
+function restoreCategoryJournal() {
+  // 按原操作顺序回放。遇到同一分类/条目已被另一窗口改动，暂停其后的回放供人核对。
+  for(const op of categoryOps){const result=applyCategoryOp(op);if(result===false){replayBlocked=true;break}if(result!=="ok")recoveryMessages.push(result)}
+  categoryBaseline=categorySnapshot();
+  if(replayBlocked)showSaveNotice(@@u8d48f19f7849@@);
+  else if(recoveryMessages.length)showSaveNotice(recoveryMessages.join(@@u8769e31ffed5@@));
+  else if(recoveryDrafts.length)showSaveNotice(@@uc40912299115@@);
+  if(categoryOps.length){categoryStatus(@@u9fcd5fa9d539@@);if(!replayBlocked)scheduleCategorySave()}
+}
+function scheduleCategorySave() {clearTimeout(categoryTimer);categoryTimer=setTimeout(()=>{categoryTimer=null;persist()},CATEGORY_WAIT)}
+function draftStore(action,value) {
+  if(!draftDbPromise)draftDbPromise=new Promise((resolve,reject)=>{const req=indexedDB.open("notesOrganizerRecoveryV2",1);req.onupgradeneeded=()=>req.result.createObjectStore("drafts",{keyPath:"id"});req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});
+  return draftDbPromise.then(db=>new Promise((resolve,reject)=>{
+    const tx=db.transaction("drafts",action==="all"?"readonly":"readwrite"),st=tx.objectStore("drafts");let req;
+    if(action==="put")req=st.put(value);else if(action==="delete")req=st.delete(value);else req=st.getAll();
+    tx.oncomplete=()=>resolve(req.result);tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||new Error(@@u592b6822c635@@));
+  }));
+}
+function persist() {
+  updateOrgSyncNotice();clearTimeout(categoryTimer);categoryTimer=null;
+  try {reconcileCategoryJournal()}catch(e){categoryStatus(@@u0c9e9a76206b@@,true);return Promise.resolve(false)}
+  const run=async()=>{
+    if(!dataLoaded)return false;
+    categorySaving=true;
+    const tokens=new Set(categoryOps.map(op=>op.token)),sent=new Map(categoryPending);
+    try {
+      const payload=JSON.parse(JSON.stringify(DB));
+      // 完整副本仅供找回，不自动并入新库；先落到浏览器IndexedDB，再向服务器提交。
+      await draftStore("put",{id:journalOwner,data:payload,time:now()});
+      if(saveConflict||replayBlocked)return false;
+      if(!serverRevisionReady){showSaveNotice(@@u9bcc488a6e27@@);return false;}
+      if(categoryOps.length)categoryStatus(@@u588d582847ce@@);
+      const result=await api("/api/save",payload);
+      if(!Number.isSafeInteger(result.rev))throw new Error(@@u9b931c5c846f@@);
+      DB.rev=result.rev;
+      categoryOps=categoryOps.filter(op=>!tokens.has(op.token));writeCategoryOps(categoryOps);
+      for(const [id,item]of sent)if(categoryPending.get(id)?.revision===item.revision)categoryPending.delete(id);
+      await draftStore("delete",journalOwner);
+      categoryStatus(categoryOps.length?@@u9fcd5fa9d539@@:@@u5e4ee373036c@@);
+      if(result.warning)showSaveNotice(result.warning);
+      return true;
+    }catch(e){
+      if(e.status===409||e.code==="REV_CONFLICT"){saveConflict=true;categoryStatus(conflictText);showSaveNotice(conflictText)}
+      else {categoryStatus(@@uaf238549c080@@,true);showSaveNotice(e.message)}
+      return false;
+    }finally{categorySaving=false}
+  };
+  saveQueue=saveQueue.then(run,run);return saveQueue;
+}
+$("categorySaveRetry").onclick=()=>persist();
+$("saveDraftDownload").onclick=async()=>{
+  const drafts=await draftStore("all");
+  const blob=new Blob([JSON.stringify({说明:@@ub297cd68d5e0@@,current:DB,categoryOps,drafts},null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=@@ue6cfa939000b@@;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+};
+$("discardCategoryReplay").onclick=async()=>{
+  if(!confirm(@@u15d8786ced7f@@))return;
+  await draftStore("put",{id:journalOwner,data:JSON.parse(JSON.stringify(DB)),time:now()});
+  writeCategoryOps([]);categoryOps=[];location.reload();
+};
+addEventListener("beforeunload",event=>{if(categorySaving||categoryOps.length||saveConflict||dirty){event.preventDefault();event.returnValue=""}});
+
+function categoryOptions() {
+  return @@u65ed8e92f3e1@@ + DB.projects.map(name =>
+    `<option value="${esc(name)}">${esc(name)}</option>`).join("");
+}
+function syncCategorySelect(select, p) {
+  select.value = DB.projects.includes(p.project) ? p.project : "";
+  select.style.backgroundColor = select.value ? tagColor(select.value) : "var(--card)";
+}
+function refreshCardCategories() {
+  const options = categoryOptions(), byId = new Map(DB.prompts.map(p => [p.id, p]));
+  document.querySelectorAll(".card-category").forEach(select => {
+    const p = byId.get(select.closest(".card").dataset.id);
+    if (p) { select.innerHTML = options; syncCategorySelect(select, p); }
+  });
+}
+function changeCardCategories(ids, project) {
+  if (!dataLoaded || categoryDataBusy) { toast(@@ucf19d99bfe3c@@); return false; }
+  if (project && !DB.projects.includes(project)) return false;
+  const wanted = new Set(ids), changed = DB.prompts.filter(p => wanted.has(p.id) && p.project !== project);
+  if (!changed.length) return true;
+  const pending = new Map(categoryPending), updated = now();
+  for (const p of changed) pending.set(p.id, {project, updated, revision:++categoryRevision});
+  try { storeCategoryJournal(pending); }
+  catch (e) { toast(@@ud10d6838824e@@); return false; }
+  categoryPending = pending;
+  for (const p of changed) { p.project = project; p.updated = updated; }
+  categoryStatus(@@u9fcd5fa9d539@@); scheduleCategorySave();
+  const changedById = new Map(changed.map(p => [p.id, p]));
+  document.querySelectorAll(".card-category").forEach(select => {
+    const p = changedById.get(select.closest(".card").dataset.id);
+    if (p) syncCategorySelect(select, p);
+  });
+  // 保留当前条目位置与选择，下一次筛选/排序/视图切换再重排。
+  const scroll = $("sideList").scrollTop;
+  renderSide(); $("sideList").scrollTop = scroll;
+  orgPlan = null; orgDelPlan = null;
+  return true;
+}
+let categoryDrag = null, suppressCardClickUntil = 0, dragScrollFrame = 0, dragScrollStep = 0;
+function clearCategoryDrag() {
+  categoryDrag = null; dragScrollStep = 0;
+  cancelAnimationFrame(dragScrollFrame); dragScrollFrame = 0;
+  document.body.classList.remove("category-dragging");
+  document.querySelectorAll(".category-drop").forEach(d => d.classList.remove("category-drop"));
+  $("categoryDragBadge")?.remove();
+}
+function wireCategoryCard(d, p) {
+  d.dataset.id = p.id; d.draggable = true;
+  const select = d.querySelector(".card-category");
+  syncCategorySelect(select, p);
+  for (const event of ["click", "mousedown", "pointerdown", "keydown"])
+    select.addEventListener(event, e => { e.stopPropagation(); if (event === "pointerdown") d.draggable = false; });
+  select.addEventListener("change", e => {
+    e.stopPropagation();
+    if (!changeCardCategories([p.id], select.value)) syncCategorySelect(select, p);
+  });
+  d.addEventListener("pointerdown", e => { d.draggable = !e.target.closest("select,button,input"); });
+  d.ondragstart = e => {
+    if (categoryDataBusy || e.target.closest("select")) { e.preventDefault(); return; }
+    const ids = selMode && selIds.has(p.id) ? [...selIds] : [p.id];
+    categoryDrag = {ids};
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("application/x-notes-category", "internal");
+    const badge = document.createElement("div"); badge.id = "categoryDragBadge";
+    badge.textContent = `@@ud99e864e03f0@@${ids.length}@@ucf11dc176a9b@@`; document.body.appendChild(badge);
+    e.dataTransfer.setDragImage(badge, 12, 12);
+    document.body.classList.add("category-dragging");
+  };
+  d.ondragend = () => { suppressCardClickUntil = performance.now() + 250; clearCategoryDrag(); };
+}
+function wireCategoryTarget(d, project) {
+  d.dataset.categoryTarget = project;
+  d.ondragover = e => {
+    if (!categoryDrag || categoryDataBusy) return;
+    e.preventDefault(); e.dataTransfer.dropEffect = "move";
+    document.querySelectorAll(".category-drop").forEach(other => { if (other !== d) other.classList.remove("category-drop"); });
+    d.classList.add("category-drop"); d.dataset.dragCount = categoryDrag.ids.length;
+  };
+  d.ondragleave = e => { if (!d.contains(e.relatedTarget)) d.classList.remove("category-drop"); };
+  d.ondrop = e => {
+    if (!categoryDrag) return;
+    e.preventDefault(); e.stopPropagation();
+    const ids = categoryDrag.ids; clearCategoryDrag(); suppressCardClickUntil = performance.now() + 250;
+    if (changeCardCategories(ids, project)) toast(`@@ue50eae40aeaf@@${ids.length}@@u275f2601a901@@${project || @@u881b630609fc@@}@@ue856c3c4be5b@@`);
+  };
+}
+document.addEventListener("dragover", e => {
+  if (!categoryDrag) return;
+  const r = $("sideList").getBoundingClientRect();
+  dragScrollStep = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom
+    ? (e.clientY < r.top + 36 ? -8 : e.clientY > r.bottom - 36 ? 8 : 0) : 0;
+  if (!dragScrollFrame && dragScrollStep) {
+    const tick = () => {
+      if (!categoryDrag || !dragScrollStep) { dragScrollFrame = 0; return; }
+      $("sideList").scrollTop += dragScrollStep;
+      dragScrollFrame = requestAnimationFrame(tick);
+    };
+    dragScrollFrame = requestAnimationFrame(tick);
+  }
+});
+document.addEventListener("drop", clearCategoryDrag);
+document.addEventListener("dragend", clearCategoryDrag);
+
+function activeVer(p) { return p.versions.find(v => v.v === p.active) || p.versions[p.versions.length-1]; }
+
+// 单个页面级浮层，侧栏和顶栏共用。
+let sideTipTarget = null;
+function hideSideOpTooltip() {
+  sideTipTarget?.removeAttribute("aria-describedby");
+  sideTipTarget=null; $("sideOpTooltip").hidden=true;
+}
+function showSideOpTooltip(target) {
+  if (!target || document.body.classList.contains("category-dragging")) { hideSideOpTooltip(); return; }
+  if (sideTipTarget!==target) sideTipTarget?.removeAttribute("aria-describedby");
+  sideTipTarget=target; target.setAttribute("aria-describedby","sideOpTooltip");
+  const tip=$("sideOpTooltip"); tip.textContent=target.dataset.tip; tip.hidden=false;
+  const icon=target.getBoundingClientRect(), side=$("side").getBoundingClientRect(), box=tip.getBoundingClientRect();
+  const inSide=side.contains(target), wantedLeft=inSide ? side.right+8 : icon.left;
+  const left=Math.max(8,Math.min(wantedLeft,innerWidth-box.width-8));
+  const wantedTop=inSide ? icon.top+(icon.height-box.height)/2 : icon.bottom+6;
+  const top=Math.max(8,Math.min(wantedTop,innerHeight-box.height-8));
+  tip.style.left=left+"px";tip.style.top=top+"px";
+}
+document.addEventListener("pointerover",e=>{
+  const icon=e.target.closest("[data-tip]"); if(icon)showSideOpTooltip(icon);
+});
+document.addEventListener("pointerout",e=>{
+  if(sideTipTarget && !sideTipTarget.contains(e.relatedTarget) && !e.relatedTarget?.closest?.("[data-tip]"))hideSideOpTooltip();
+});
+document.addEventListener("focusin",e=>{const icon=e.target.closest("[data-tip]");if(icon)showSideOpTooltip(icon)});
+document.addEventListener("focusout",e=>{if(!e.relatedTarget?.closest?.("[data-tip]"))hideSideOpTooltip()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape" && sideTipTarget)hideSideOpTooltip()});
+$("side").addEventListener("keydown",e=>{
+  if(e.key==="Escape"){hideSideOpTooltip();return}
+  const icon=e.target.closest(".ops [data-tip]");
+  if(icon&&(e.key==="Enter"||e.key===" ")){e.preventDefault();e.stopPropagation();icon.click()}
+});
+$("side").addEventListener("click",hideSideOpTooltip);
+document.addEventListener("scroll",hideSideOpTooltip,true);
+document.addEventListener("dragstart",hideSideOpTooltip,true);
+window.addEventListener("resize",hideSideOpTooltip);
+window.addEventListener("blur",hideSideOpTooltip);
+
+/* ---------- 侧栏 & 卡片 ---------- */
+function renderSide() {
+  hideSideOpTooltip();
+  updateOrgSyncNotice();
+  const side = $("sideList"); side.innerHTML = "";
+  const top = $("sideTop"); top.innerHTML = "";
+  const counts = {};
+  let noneCount = 0;
+  for (const p of DB.prompts) {
+    if (p.project && DB.projects.includes(p.project)) counts[p.project] = (counts[p.project]||0)+1;
+    else noneCount++;
+  }
+  const mk = (key, label, count, ops, box) => {
+    const d = document.createElement("div");
+    d.className = "proj" + (curProj === key ? " on" : "");
+    const name = document.createElement("span"), tally = document.createElement("span");
+    name.className = "n"; name.textContent = label;
+    tally.className = "c"; tally.textContent = count;
+    d.append(name, tally);
+    if (ops) {
+      const o = document.createElement("span"); o.className = "ops";
+      // 📂 / 📋 对当前选中的项目也要能点，所以这一排不再因为 curProj 而整体隐藏
+      o.innerHTML = `@@u7048d14b81d8@@` +
+        `@@u6111cf192e74@@` +
+        (curProj === key ? "" : `@@u931cdc5a8665@@`);
+      o.children[0].onclick = e => { e.stopPropagation(); revealProject(key); };
+      o.children[1].onclick = e => { e.stopPropagation(); copyProjectPath(key); };
+      if (o.children.length > 2) {
+        o.children[2].onclick = e => { e.stopPropagation(); renameProject(key); };
+        o.children[3].onclick = e => { e.stopPropagation(); deleteProject(key); };
+      }
+      d.appendChild(o);
+    }
+    d.onclick = () => { curProj = key; renderSide(); renderCards(); };
+    if (key === "__none__" || ops) wireCategoryTarget(d, key === "__none__" ? "" : key);
+    (box || side).appendChild(d);
+  };
+  mk("__all__", @@u5c417bfb14c9@@, DB.prompts.length, false, top);
+  mk("__tagged__", @@uce1c9a454708@@, DB.prompts.length - noneCount, false, top);
+  mk("__none__", @@u5a81ebb85900@@, noneCount, false, top);
+  const sep = document.createElement("div"); sep.className = "sidesep";
+  top.appendChild(sep);
+  for (const pr of DB.projects) mk(pr, pr, counts[pr]||0, true);
+  const b = document.createElement("button");
+  b.id = "addProj"; b.textContent = @@u8d6b57a5f58d@@;
+  b.onclick = () => { const n = prompt(@@u8f55213a2328@@); if (n && n.trim()) addProject(n.trim()); };
+  side.appendChild(b);
+
+  // 镜像文件的扩展名。库里相当一部分笔记本来就写着 markdown（标题、加粗、列表、表格），
+  // 存成 .txt 时编辑器只能显示裸语法。内容一个字不改，改对扩展名就行。
+  const ext = document.createElement("div");
+  ext.id = "mirrorExtBox";
+  ext.style.cssText = "margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--sub)";
+  ext.innerHTML = `@@u61504bc702fe@@`;
+  side.appendChild(ext);
+  const sel = ext.querySelector("#mirrorExt");
+  sel.value = DB.mirrorExt === ".md" ? ".md" : ".txt";
+  sel.title = @@u40e8b082a91d@@;
+  sel.onchange = async () => {
+    DB.mirrorExt = sel.value;
+    await persist();
+    toast(`@@u7a0a6160f503@@${sel.value}@@u1f1159bd57cf@@`);
+  };
+}
+async function addProject(name, {deferSave = false} = {}) {
+  if (!DB.projects.includes(name)) {
+    try { appendCategoryOps([{kind:"add",name}]); } catch(e) { toast(@@ucecb9d8aea1b@@); return null; }
+    DB.projects.push(name); categoryBaseline=categorySnapshot();
+    renderSide(); fillProjSelects();
+    if (deferSave) { categoryStatus(@@u9fcd5fa9d539@@); scheduleCategorySave(); }
+    else await persist();
+  }
+  return name;
+}
+async function renameProject(old) {
+  const n = prompt(@@u9ecd3a8e458d@@, old); if (!n || !n.trim() || n === old) return;
+  const nn = n.trim();
+  if (DB.projects.includes(nn)) { toast(@@uab653b586cdb@@); return; }
+  try { appendCategoryOps([projectOp("rename",old,nn)]); } catch(e) { toast(@@u46252fda7541@@); return; }
+  DB.projects[DB.projects.indexOf(old)] = nn;
+  for (const p of DB.prompts) if (p.project === old) p.project = nn;
+  if (curProj === old) curProj = nn;
+  categoryBaseline=categorySnapshot();
+  renderSide(); renderCards(); fillProjSelects(); await persist();
+}
+async function deleteProject(name) {
+  const cnt = DB.prompts.filter(p => p.project === name).length;
+  if (!confirm(`@@ue5c7594a1fa9@@${name}@@ubd270b947ded@@${cnt}@@u578f90d7fb10@@`)) return;
+  try { appendCategoryOps([projectOp("delete",name)]); } catch(e) { toast(@@u08a3db7f5fa7@@); return; }
+  DB.projects = DB.projects.filter(x => x !== name);
+  for (const p of DB.prompts) if (p.project === name) p.project = "";
+  if (curProj === name) curProj = "__all__";
+  categoryBaseline=categorySnapshot();
+  renderSide(); renderCards(); fillProjSelects(); await persist();
+}
+/* 卡片也是滚一屏画一屏（上千条时一次性画会卡）。
+   注意：筛选结果存在 cardList 里，全选/移动/删除一律针对 cardList，跟画出来多少无关。 */
+const CARD_CHUNK = 120;
+let cardList = [];
+let cardDrawn = 0;
+let view = "grid";   // grid = 方块，list = 列表；启动时从 localStorage 读回
+let sortBy = "note_desc";
+
+/* 排序用的日期：优先备忘录自己的修改时间，没有就退回整理器里的改动时间。
+   两边都是补过零的 "YYYY-MM-DD hh:mm"，所以直接按字符串比就是按时间比。 */
+function dateOf(p) { return p.noteDate || p.updated || ""; }
+function dateTip(p) {
+  return p.noteDate ? `@@u749d2623c70c@@${p.noteDate}@@u2a611daa8d1b@@${p.updated||"—"}`
+                    : `@@ua7e9356f055c@@${p.updated||"—"}@@uf366fde33fdf@@`;
+}
+function filteredPrompts() {
+  const q = $("search").value.trim().toLowerCase();
+  const list = DB.prompts.filter(p => {
+    const tagged = p.project && DB.projects.includes(p.project);
+    if (curProj === "__none__") { if (tagged) return false; }
+    else if (curProj === "__tagged__") { if (!tagged) return false; }
+    else if (curProj !== "__all__") { if (p.project !== curProj) return false; }
+    if (q) {
+      const hay = (p.title + "\n" + p.versions.map(v => v.content).join("\n")).toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  const byTitle = (a,b) => (a.title||"").localeCompare(b.title||"", "zh");
+  const byNewest = (a,b) => dateOf(b).localeCompare(dateOf(a));
+  // 未分类统一排到最后：项目名一律比 ￿ 小
+  const projKey = p => p.project || "￿";
+  if (sortBy === "note_asc")        list.sort((a,b) => dateOf(a).localeCompare(dateOf(b)) || byTitle(a,b));
+  else if (sortBy === "updated_desc") list.sort((a,b) => (b.updated||"").localeCompare(a.updated||"") || byTitle(a,b));
+  else if (sortBy === "proj_asc")   list.sort((a,b) => projKey(a).localeCompare(projKey(b), "zh") || byNewest(a,b));
+  else if (sortBy === "title_asc")  list.sort(byTitle);
+  else                              list.sort((a,b) => byNewest(a,b) || byTitle(a,b));
+  return list;
+}
+function renderCards() {
+  cardList = filteredPrompts();
+  cardDrawn = 0;
+  const box = $("cards");
+  box.className = view;
+  box.innerHTML = "";
+  $("empty").style.display = cardList.length ? "none" : "block";
+  drawMoreCards();
+  updSelInfo();
+}
+/* 视图偏好只存浏览器本地：存进库里会让每次切换都触发一次几 MB 的全量保存 */
+function setView(v) {
+  view = v;
+  try { localStorage.setItem("整理器视图", v); } catch {}
+  $("btnGrid").classList.toggle("on", v === "grid");
+  $("btnList").classList.toggle("on", v === "list");
+  renderCards();
+  $("mainScroll").scrollTop = 0;
+}
+$("btnGrid").onclick = () => setView("grid");
+$("btnList").onclick = () => setView("list");
+
+/* 2026-07-27 之前导入的备忘录只记了导入时间，没记备忘录自己的日期。
+   靠 srcNoteId 回备忘录里补一次，之后新导入的直接带日期，不会再补。 */
+async function backfillNoteDates() {
+  const need = DB.prompts.filter(p => p.srcNoteId && !p.noteDate);
+  if (!need.length) return 0;
+  toast(`@@u755fd1b498c5@@${need.length}@@uc90ffbb56270@@`);
+  const j = await api("/api/notes/list");
+  allNotes = j.notes;
+  const byId = Object.fromEntries(allNotes.map(n => [n.id, n]));
+  let n = 0;
+  for (const p of need) {
+    const note = byId[p.srcNoteId];
+    if (note && note.date) { p.noteDate = note.date; n++; }
+  }
+  if (n) await persist();
+  return n;
+}
+$("sortBy").onchange = async () => {
+  sortBy = $("sortBy").value;
+  try { localStorage.setItem("整理器排序", sortBy); } catch {}
+  renderCards();
+  $("mainScroll").scrollTop = 0;
+  if (sortBy.startsWith("note_")) {
+    try {
+      const n = await backfillNoteDates();
+      if (n) { renderCards(); toast(`@@u9ef605a2c4b8@@${n}@@ub549b8e06fbe@@`); }
+    } catch (e) { toast(@@u640355642a25@@ + e.message); }
+  }
+};
+function drawMoreCards() {
+  const box = $("cards");
+  const old = $("cardMore"); if (old) old.remove();
+  const frag = document.createDocumentFragment();
+  const end = Math.min(cardDrawn + CARD_CHUNK, cardList.length);
+  for (let i = cardDrawn; i < end; i++) {
+    const p = cardList[i];
+    const av = activeVer(p);
+    const on = selIds.has(p.id);
+    const d = document.createElement("div");
+    d.className = "card" + (selMode && on ? " sel" : "");
+    const tag = `@@ufca265107d6f@@${esc(p.title)}@@u162e50f958fe@@${categoryOptions()}</select>`;
+    const cb = selMode ? `<input type="checkbox" class="cbox"${on ? " checked" : ""}>` : "";
+    if (view === "list") {
+      // 列表行：预览压成一行，换行符换成空格，不然 ellipsis 不生效
+      const one = (av.content || "").replace(/\s+/g, " ").slice(0, 200);
+      d.innerHTML = `${cb}<div class="t">${esc(p.title)}</div>${tag}
+        <div class="prev">${esc(one)}</div>
+        <span class="vbadge">v${p.active}${p.versions.length > 1 ? " · " + p.versions.length + @@u5351856efdfe@@ : ""}</span>
+        <span class="time" title="${dateTip(p)}">${dateOf(p).slice(0,10)}</span>`;
+    } else {
+      d.innerHTML = `<div class="thead">${cb}<div class="t">${esc(p.title)}</div></div>
+        <div class="meta">${tag}@@ubfabf8e45a06@@${p.active}@@u6330ff107bb5@@${p.versions.length}@@ud382f03668ae@@${esc((av.content||"").slice(0,150))}</div>
+        <div class="time" title="${dateTip(p)}">${dateOf(p)}</div>`;
+    }
+    wireCategoryCard(d, p);
+    d.onclick = () => {
+      if (categoryDrag || performance.now() < suppressCardClickUntil) return;
+      if (selMode) toggleSel(p, d); else openEditor(p);
+    };
+    frag.appendChild(d);
+  }
+  box.appendChild(frag);
+  cardDrawn = end;
+  if (cardDrawn < cardList.length) {
+    const more = document.createElement("div");
+    more.id = "cardMore";
+    more.textContent = `@@u0993fbc3e620@@${cardList.length - cardDrawn}@@u4790df414318@@`;
+    box.appendChild(more);
+  }
+}
+$("mainScroll").onscroll = () => {
+  const m = $("mainScroll");
+  if (cardDrawn < cardList.length && m.scrollTop + m.clientHeight >= m.scrollHeight - 200) drawMoreCards();
+};
+
+/* ---------- 批量选择 / 移动 / 删除 ---------- */
+let selMode = false;
+let selIds = new Set();
+const PICK = "__pick__";   // 移动目标下拉的占位值：选它 = 还没选，移动按钮保持灰的
+
+function toggleSel(p, el) {
+  if (selIds.has(p.id)) selIds.delete(p.id); else selIds.add(p.id);
+  const on = selIds.has(p.id);
+  el.classList.toggle("sel", on);
+  const cb = el.querySelector(".cbox"); if (cb) cb.checked = on;
+  updSelInfo();
+}
+function syncCardChecks() {
+  const els = $("cards").querySelectorAll(".card");
+  els.forEach((el, i) => {
+    const p = cardList[i]; if (!p) return;
+    const on = selIds.has(p.id);
+    el.classList.toggle("sel", on);
+    const cb = el.querySelector(".cbox"); if (cb) cb.checked = on;
+  });
+}
+function updSelInfo() {
+  if (!selMode) return;
+  $("selInfo").textContent = `@@u9abfd8981a52@@${selIds.size}@@u86fa140c0f05@@${cardList.length}@@ucf11dc176a9b@@`;
+  const n = selIds.size;
+  $("selDel").disabled = n === 0;
+  $("selExport").disabled = n === 0;
+  $("selMove").disabled = n === 0 || $("selMoveTo").value === PICK;
+}
+$("selMoveTo").onchange = updSelInfo;
+function setSelMode(on) {
+  selMode = on;
+  $("selBar").classList.toggle("on", on);
+  $("btnSelMode").textContent = on ? @@u42162b04484b@@ : @@u0951a87c76ff@@;
+  if (!on) selIds.clear();
+  renderCards();
+}
+$("btnSelMode").onclick = () => setSelMode(!selMode);
+$("selExit").onclick = () => setSelMode(false);
+$("selAll").onclick = () => {
+  const allOn = cardList.length > 0 && cardList.every(p => selIds.has(p.id));
+  for (const p of cardList) { if (allOn) selIds.delete(p.id); else selIds.add(p.id); }
+  syncCardChecks(); updSelInfo();
+  toast(allOn ? @@u375fa5f4661e@@ : `@@u4231f1b1ac12@@${cardList.length}@@ucf11dc176a9b@@`);
+};
+$("selNone").onclick = () => { selIds.clear(); syncCardChecks(); updSelInfo(); };
+/* 合并导出：把勾选的这些拼成一个 txt，弹 macOS 原生存储面板选位置。
+   顺序按屏幕上看到的来；勾了之后又切了项目/改了搜索的，补在后面，一条都不漏。 */
+function selectedInOrder() {
+  const onScreen = cardList.filter(p => selIds.has(p.id));
+  const seen = new Set(onScreen.map(p => p.id));
+  const rest = DB.prompts.filter(p => selIds.has(p.id) && !seen.has(p.id));
+  return onScreen.concat(rest);
+}
+function mergedText(list) {
+  const RULE = "─".repeat(40);
+  const projs = [...new Set(list.map(p => p.project || @@u881b630609fc@@))];
+  const head = [
+    `@@u74ad4dc5f872@@${list.length}@@u5af0a313a4b6@@${now()}`,
+    `@@u90acebd1765c@@${projs.join(@@uae78306c6b52@@)}`,
+    RULE, "",
+  ].join("\n");
+  const body = list.map(p => {
+    const v = activeVer(p);
+    const t = (p.title || @@u5d337c32c69b@@).trim();
+    return [
+      /^[【\[]/.test(t) ? t : `@@u3f498429eecf@@${t}@@u59f6a7348c8f@@`,     // 标题本身带括号的就不再套一层
+      `　${p.project || @@u881b630609fc@@}@@uc112d426c3a2@@${p.noteDate || "—"}@@ua34ef124f4ca@@${p.active}`,
+      "",
+      (v && v.content || "").replace(/\r\n/g, "\n").trim(),
+      "", RULE, "",
+    ].join("\n");
+  }).join("\n");
+  return head + "\n" + body;
+}
+$("selExport").onclick = async () => {
+  const list = selectedInOrder();
+  if (!list.length) return;
+  const projs = [...new Set(list.map(p => p.project || @@u881b630609fc@@))];
+  const name = (projs.length === 1 ? projs[0] : @@uf96e01a23c74@@)
+    + `_${list.length}@@uf11da9913aeb@@${now().slice(0, 10)}.txt`;
+  $("selExport").disabled = true;
+  const old = $("selExport").textContent;
+  $("selExport").textContent = @@u748eafd4d79a@@;
+  try {
+    const r = await api("/api/export/txt", { text: mergedText(list), defaultName: name });
+    if (r.cancelled) toast(@@u0c4a20f01980@@);
+    else toast(`@@u5b0a489323b9@@${list.length}@@ue380698e3747@@${r.path.split("/").pop()}`);
+  } catch (e) {
+    toast("⚠️ " + e.message);
+  } finally {
+    $("selExport").textContent = old;
+    updSelInfo();
+  }
+};
+// 仅撤销整理器内的分类标记；不调用 Notes 移动/归位接口。
+let batchMovePlan = null, batchMoveUndo = null, batchMoveBusy = false;
+function syncBatchMoveUndo() {
+  $("selMoveUndo").disabled = !batchMoveUndo || batchMoveBusy;
+  $("selMoveUndo").title = batchMoveUndo
+    ? `@@u864741453173@@${batchMoveUndo.items.length}@@u4800947717bd@@`
+    : @@ub51aee2b767a@@;
+}
+function renderBatchMovePlan(target, picked) {
+  batchMovePlan = {target, items:picked.map(p => ({id:p.id, title:p.title || @@u5d337c32c69b@@, project:p.project || ""}))};
+  const changed = batchMovePlan.items.filter(p => p.project !== target);
+  const unchanged = batchMovePlan.items.filter(p => p.project === target);
+  $("batchMoveSummary").textContent = `@@u9abfd8981a52@@${picked.length}@@ub7fc357a6820@@${target || @@u881b630609fc@@}@@u1f0131292c54@@${changed.length}@@uf2254d6becc5@@${unchanged.length}@@ucf11dc176a9b@@`;
+  const group = (items, label) => `<section class="batch-move-group"><h3>${label}（${items.length}@@ucc87713be65b@@`
+    + items.map(p => `<div class="batch-move-item"><strong>${esc(p.title)}</strong><span>${esc(p.project || @@u881b630609fc@@)} → ${esc(target || @@u881b630609fc@@)}</span></div>`).join("") + '</section>';
+  $("batchMoveList").innerHTML = group(changed, @@uf3d17806a555@@) + group(unchanged, @@u4f75583e539d@@);
+  $("batchMoveConfirm").disabled = !changed.length;
+}
+function closeBatchMove() {
+  if (batchMoveBusy) return;
+  $("batchMoveOverlay").classList.remove("show"); batchMovePlan = null;
+  $("selMove").focus();
+}
+$("selMove").onclick = () => {
+  if (!dataLoaded || categoryDataBusy || batchMoveBusy) return;
+  const target = $("selMoveTo").value;
+  const picked = DB.prompts.filter(p => selIds.has(p.id));
+  if (!picked.length || target === PICK) return;
+  renderBatchMovePlan(target, picked);
+  $("batchMoveStatus").textContent = @@ud4eb59b5a03e@@;
+  $("batchMoveOverlay").classList.add("show");
+  $("batchMoveList").scrollTop = 0; $("batchMoveCancel").focus();
+};
+$("batchMoveCancel").onclick = closeBatchMove;
+$("batchMoveOverlay").addEventListener("keydown", e => {
+  if (e.key === "Escape") { e.preventDefault(); closeBatchMove(); }
+  if (e.key === "Tab") {
+    const buttons = [...$("batchMoveOverlay").querySelectorAll("button:not(:disabled)")];
+    if (!buttons.length) { e.preventDefault(); return; }
+    const first = buttons[0], last = buttons[buttons.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+});
+function applyBatchCategoryChanges(items) {
+  const byId = new Map(DB.prompts.map(p => [p.id,p]));
+  const pending = new Map(categoryPending), updated = now();
+  for (const item of items) pending.set(item.id, {project:item.project, updated, revision:++categoryRevision});
+  // 先暂存，失败时整批不改；保存失败后也可刷新恢复或撤销。
+  try { storeCategoryJournal(pending); }
+  catch (e) { toast(@@u96dbed2ea888@@); return false; }
+  categoryPending = pending;
+  for (const item of items) {
+    const p = byId.get(item.id);
+    if (item.project && !DB.projects.includes(item.project)) DB.projects.push(item.project);
+    p.project = item.project; p.updated = updated;
+  }
+  orgPlan = null; orgDelPlan = null;
+  categoryStatus(@@u9fcd5fa9d539@@);
+  return true;
+}
+$("batchMoveConfirm").onclick = async () => {
+  if (!batchMovePlan || batchMoveBusy || categoryDataBusy) return;
+  const plan = batchMovePlan, target = $("selMoveTo").value;
+  const picked = DB.prompts.filter(p => selIds.has(p.id));
+  const byId = new Map(picked.map(p => [p.id,p]));
+  if (target !== plan.target || picked.length !== plan.items.length || plan.items.some(item => {
+    const p = byId.get(item.id);
+    return !p || (p.project || "") !== item.project || (p.title || @@u5d337c32c69b@@) !== item.title;
+  })) {
+    if (!picked.length || target === PICK) { closeBatchMove(); toast(@@u11036d78b187@@); return; }
+    renderBatchMovePlan(target, picked);
+    $("batchMoveStatus").textContent = @@u157311504005@@;
+    return;
+  }
+  const changed = plan.items.filter(item => item.project !== target);
+  if (!changed.length) return;
+  if (!applyBatchCategoryChanges(changed.map(item => ({id:item.id, project:target})))) return;
+  batchMoveUndo = {target, items:changed};
+  batchMoveBusy = true; categoryDataBusy = true; syncBatchMoveUndo();
+  $("batchMoveConfirm").disabled = true; $("batchMoveCancel").disabled = true;
+  $("batchMoveStatus").textContent = @@u4d5f260970c1@@;
+  try {
+    const saved = await persist();
+    selIds.clear();
+    renderSide(); renderCards(); fillProjSelects();
+    $("selMoveTo").value = PICK;   // 移完打回占位项，下一次必须重新选，避免顺手又点一下
+    updSelInfo();
+    toast(saved ? `@@u5f8567240b5c@@${changed.length}@@u3c0a157bdf22@@${target || @@u881b630609fc@@}@@u5b0e2c229f28@@`
+      : @@u82e00bbdf076@@);
+  } finally {
+    batchMoveBusy = false; categoryDataBusy = false;
+    $("batchMoveCancel").disabled = false; syncBatchMoveUndo(); closeBatchMove();
+    $("selMoveUndo").focus();
+  }
+};
+$("selMoveUndo").onclick = async () => {
+  if (!batchMoveUndo || batchMoveBusy || categoryDataBusy) return;
+  const record = batchMoveUndo, byId = new Map(DB.prompts.map(p => [p.id,p]));
+  // 遇到后续分类/删除/合并，整批拒绝，避免覆盖用户之后的分类决定。
+  if (record.items.some(item => !byId.has(item.id) || (byId.get(item.id).project || "") !== record.target)) {
+    toast(@@u17ebf00082a5@@); return;
+  }
+  if (!applyBatchCategoryChanges(record.items)) return;
+  batchMoveUndo = null; batchMoveBusy = true; categoryDataBusy = true; syncBatchMoveUndo();
+  try {
+    const saved = await persist();
+    renderSide(); renderCards(); fillProjSelects(); updSelInfo();
+    toast(saved ? `@@u4ac8f63a1fec@@${record.items.length}@@u5e46f9a5164e@@`
+      : @@ud06f28c8e703@@);
+  } finally { batchMoveBusy = false; categoryDataBusy = false; syncBatchMoveUndo(); }
+};
+syncBatchMoveUndo();
+$("selDel").onclick = async () => {
+  const picked = DB.prompts.filter(p => selIds.has(p.id));
+  if (!picked.length) return;
+  const vers = picked.reduce((n, p) => n + p.versions.length, 0);
+  if (!confirm(`@@uafbce369a7ef@@${picked.length}@@u1ff7a5b3f2a3@@${vers}@@ua2c1cbb0fcfc@@`)) return;
+  DB.prompts = DB.prompts.filter(p => !selIds.has(p.id));
+  const n = picked.length;
+  selIds.clear();
+  await persist();
+  renderSide(); renderCards();
+  toast(`@@u197a9fe19efc@@${n}@@ucf11dc176a9b@@`);
+};
+// 也转义引号：备忘录标题/文件夹名会被塞进 value="…" 属性里
+function esc(s){ return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
+$("search").oninput = renderCards;
+
+/* ---------- 编辑器 ---------- */
+function fillProjSelects() {
+  refreshCardCategories();
+  for (const sel of [$("edProj"), $("impProj")]) {
+    const v = sel.value;
+    sel.innerHTML = `@@ud70284f4e911@@` +
+      DB.projects.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join("");
+    sel.value = v && (DB.projects.includes(v)) ? v : "";
+  }
+  // 移动目标多一个占位项：停在这一项时「移动」是灰的，手滑连点也不会误移
+  const mv = $("selMoveTo"), mvv = mv.value, hadOptions = mv.options.length > 0;
+  mv.innerHTML = `<option value="${PICK}@@u5f9e14e1bfb3@@` +
+    DB.projects.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join("");
+  // 第一次填充时 mv.value 本来就是空串，不能当成"用户选了未分类"，否则一进批量模式
+  // 目标就默认停在未分类上——那正是最容易误移的位置
+  mv.value = (hadOptions && (mvv === "" || DB.projects.includes(mvv))) ? mvv : PICK;
+}
+// 字数：中文按字算（不数空格换行），另给行数。
+// 选中一段时改成显示选中的字数——按字数算钱的时候要的就是这个。
+function updEdCount() {
+  const t = $("edBody");
+  const n = str => str.replace(/\s/g, "").length;
+  const sel = t.value.slice(t.selectionStart, t.selectionEnd);
+  $("edCount").textContent = sel
+    ? `@@ufac082993277@@${n(sel).toLocaleString()}@@u40288a0a876c@@`
+    : `${n(t.value).toLocaleString()}@@uc3415068e028@@${t.value ? t.value.split("\n").length : 0}@@u3538c13147b5@@`;
+}
+for (const ev of ["input", "select", "keyup", "mouseup"])
+  $("edBody").addEventListener(ev, updEdCount);
+
+function openEditor(p) {
+  curPrompt = p; curVer = p.active; dirty = false;
+  $("edTitle").value = p.title; $("edProj").value = p.project || "";
+  renderVers(); loadVer(); updEdCount();
+  $("edOverlay").classList.add("show");
+}
+function renderVers() {
+  const row = $("verRow"); row.innerHTML = "";
+  for (const v of curPrompt.versions) {
+    const c = document.createElement("span");
+    c.className = "vchip" + (v.v === curVer ? " cur" : "");
+    c.innerHTML = `v${esc(v.v)}${v.v === curPrompt.active ? @@u99d46864324a@@ : ""}`;
+    c.onclick = () => { if (guardDirty()) { curVer = v.v; renderVers(); loadVer(); updEdCount(); } };
+    row.appendChild(c);
+  }
+  const info = document.createElement("span"); info.id = "verInfo";
+  const cv = curPrompt.versions.find(v => v.v === curVer);
+  info.textContent = (cv ? `@@u2c86d2099678@@${cv.time}` : "") +
+    (curPrompt.pushedAt ? `@@ucef95e0062f6@@${curPrompt.pushedAt}` : "");
+  row.appendChild(info);
+  $("btnSetActive").style.display = curVer === curPrompt.active ? "none" : "";
+  $("btnSaveVer").textContent = @@uf30fcf536c4f@@.replace("{version}", String(curVer));
+  $("btnNewVer").textContent = @@u6e26d33da069@@.replace("{version}", String(Math.max(...curPrompt.versions.map(v => v.v)) + 1));
+}
+function loadVer() {
+  const v = curPrompt.versions.find(x => x.v === curVer);
+  $("edBody").value = v ? v.content : "";
+  setDirty(false);
+}
+function setDirty(d) { dirty = d; $("dirtyHint").style.display = d ? "" : "none"; }
+function guardDirty() {
+  if (!dirty) return true;
+  return confirm(@@u1d20187d62d5@@);
+}
+$("edBody").oninput = () => setDirty(true);
+$("edTitle").oninput = () => setDirty(true);
+$("edProj").onchange = () => setDirty(true);
+
+function saveMeta() {
+  curPrompt.title = $("edTitle").value.trim() || @@u2717a3c82c36@@;
+  curPrompt.project = $("edProj").value;
+  if (curPrompt.project && !DB.projects.includes(curPrompt.project)) DB.projects.push(curPrompt.project);
+}
+$("btnSaveVer").onclick = () => {
+  saveMeta();
+  const v = curPrompt.versions.find(x => x.v === curVer);
+  v.content = $("edBody").value; v.time = now();
+  curPrompt.updated = now();
+  setDirty(false); persist(); renderVers(); renderSide(); renderCards();
+  toast(`@@u0d48bb741280@@${curVer}`);
+};
+$("btnNewVer").onclick = () => {
+  saveMeta();
+  const nv = Math.max(...curPrompt.versions.map(v => v.v)) + 1;
+  curPrompt.versions.push({ v: nv, content: $("edBody").value, time: now() });
+  curPrompt.active = nv; curVer = nv; curPrompt.updated = now();
+  setDirty(false); persist(); renderVers(); renderSide(); renderCards();
+  toast(`@@ufa37512bc0ff@@${nv}@@u008f62e736fb@@`);
+};
+$("btnSetActive").onclick = () => {
+  curPrompt.active = curVer; curPrompt.updated = now();
+  persist(); renderVers(); renderCards();
+  toast(`v${curVer}@@udd0ce1b5beea@@`);
+};
+// 在访达里定位这一版对应的 txt：直接拿现成文件去用，
+// 免得复制粘贴又攒出一份新的副本
+$("btnShowTxt").onclick = async () => {
+  if (!curPrompt) return;
+  if (dirty) { toast(@@u2789fb78b5b8@@); return; }
+  try {
+    const r = await api("/api/mirror/reveal", { id: curPrompt.id, v: curVer });
+    toast(@@uf233f8ff13c6@@ + r.path.split("/").pop());
+  } catch (e) { toast("⚠️ " + e.message); }
+};
+$("btnCopy").onclick = async () => {
+  const text = $("edBody").value;
+  try { await navigator.clipboard.writeText(text); }
+  catch {
+    const ta = document.createElement("textarea"); ta.value = text;
+    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove();
+  }
+  toast(@@u6117eb199a89@@);
+};
+let deleteConfirmResolve = null, deleteConfirmReturnFocus = null;
+function closeDeleteConfirm(accepted) {
+  $("deleteConfirmOverlay").classList.remove("show");
+  const resolve = deleteConfirmResolve; deleteConfirmResolve = null;
+  deleteConfirmReturnFocus?.focus();
+  resolve?.(accepted);
+}
+function confirmEditorDelete(whole) {
+  const p = curPrompt, version = p?.versions.find(v => v.v === curVer);
+  if (!p || !version) return Promise.resolve(false);
+  const name = p.title || @@u5d337c32c69b@@;
+  $("deleteConfirmTitle").textContent = whole ? @@u457b9f209d11@@ : @@u8457eb0a93c4@@;
+  $("deleteConfirmDetail").textContent = whole
+    ? `${name}\n${p.versions.length}@@u241a2c83381a@@\n@@u257f54a09e19@@`
+    : `${name} · v${curVer} · ${p.versions.length}@@u241a2c83381a@@\n@@u41d936e100dc@@`;
+  $("deleteConfirmPreview").textContent = (version.content || "").slice(0,80) || @@u3e28e5ea82b2@@;
+  $("deleteConfirmTypeWrap").hidden = !whole;
+  $("deleteConfirmType").value = "";
+  $("deleteConfirmGo").disabled = whole;
+  deleteConfirmReturnFocus = document.activeElement;
+  $("deleteConfirmOverlay").classList.add("show");
+  $("deleteConfirmCancel").focus();
+  return new Promise(resolve => { deleteConfirmResolve = resolve; });
+}
+$("deleteConfirmType").oninput = () => { $("deleteConfirmGo").disabled = $("deleteConfirmType").value !== @@u75516ef4499b@@; };
+$("deleteConfirmCancel").onclick = () => closeDeleteConfirm(false);
+$("deleteConfirmGo").onclick = () => closeDeleteConfirm(true);
+$("deleteConfirmOverlay").addEventListener("keydown", e => { if (e.key === "Escape") { e.preventDefault(); closeDeleteConfirm(false); } });
+$("btnDelVer").onclick = async () => {
+  if (curPrompt.versions.length === 1) { toast(@@u04d8eb6adad2@@); return; }
+  if (!await confirmEditorDelete(false)) return;
+  curPrompt.versions = curPrompt.versions.filter(v => v.v !== curVer);
+  if (curPrompt.active === curVer) curPrompt.active = curPrompt.versions[curPrompt.versions.length-1].v;
+  curVer = curPrompt.active; curPrompt.updated = now();
+  persist(); renderVers(); loadVer(); renderCards();
+};
+$("btnDelPrompt").onclick = async () => {
+  if (!await confirmEditorDelete(true)) return;
+  DB.prompts = DB.prompts.filter(p => p !== curPrompt);
+  persist(); closeEditor(true); renderSide(); renderCards();
+};
+function closeEditor(force) {
+  if (!force && !guardDirty()) return;
+  $("edOverlay").classList.remove("show"); curPrompt = null;
+}
+document.addEventListener("keydown", e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === "s" && curPrompt) {
+    e.preventDefault(); $("btnSaveVer").click();
+  }
+});
+
+/* 关掉这个窗口 = 结束程序。
+   每 3 秒给服务器报一次平安，断了它就自己退出，后台不会留孤儿进程。
+   刷新页面的间隔远小于服务器那边的容忍时间，所以刷新不会被误杀；
+   开着两个窗口时，活着的那个照样在报，关掉另一个也不影响。 */
+setInterval(() => { fetch("/api/ping").catch(() => {}); }, 3000);
+fetch("/api/ping").catch(() => {});
+$("btnNew").onclick = () => {
+  const p = {
+    id: "p" + Date.now(), title: @@u614249310040@@,
+    project: DB.projects.includes(curProj) ? curProj : "",
+    active: 1, versions: [{ v: 1, content: "", time: now() }], updated: now()
+  };
+  DB.prompts.push(p); openEditor(p);
+};
+
+/* ---------- 按分类整理备忘录（移动，不复制） ---------- */
+// 只动"来源笔记"：把它从现在的文件夹移进跟整理器分类同名的文件夹。
+// 不新建笔记、不删笔记、不改正文。整理器里的版本记录原样留着，
+// 手机上万一误改了备忘录，电脑这边还有原样可查。
+const DEL_FOLDER = "To delete";        // 第二步的收容文件夹。挪进去，但绝不真删。
+let orgPlan = null, orgDef = "Notes", orgDelPlan = null;
+let orgMode = "move", orgBusy = false;
+let orgRestoreInfo = null, orgRestoreLoading = true, orgRestoreRequest = 0;
+let orgRestoreError = "";
+
+let orgNotesContext = {};
+function orgNoteIsDefault(note) {
+  return !!(note && ((orgNotesContext.defaultFolderId && note.folderId === orgNotesContext.defaultFolderId) || (orgNotesContext.defaultFolder && note.folder === orgNotesContext.defaultFolder)));
+}
+let orgPreviewNotes = [], orgAlignStack = [], orgAlignBusy = false, orgAlignSession = 0;
+let orgPickStack = [], orgPickBusy = false;
+function orgPickButton(row) {
+  const tip=`@@u007be36a8333@@${row.from}@@uf3b9713119ef@@`;
+  return `<button type="button" class="org-align org-pick" data-note-id="${esc(row.noteId)}" data-tip="${esc(tip)}" aria-label="${esc(tip)}">↩️</button>`;
+}
+function redrawOrgPick() {
+  const top=$("orgDelList").scrollTop;
+  hideSideOpTooltip();renderOrgPreview();$("orgDelList").scrollTop=top;
+  renderSide();renderCards();updateOrgSyncNotice();
+  if($("impOverlay").classList.contains("show"))renderImpList();
+}
+async function pickOrgRow(button) {
+  if(orgBusy || orgPickBusy || orgAlignBusy || categoryDataBusy || !dataLoaded)return;
+  const note=orgPreviewNotes.find(n=>n.id===button.dataset.noteId);
+  if(!note || !(orgDelPlan||[]).some(x=>x.noteId===note.id))return;
+  orgPickBusy=true;syncOrgAlignControls();
+  try {
+    const result=await api("/api/notes/body",{ids:[note.id]});
+    if(!Array.isArray(result.results) || result.results.length!==1 || !result.results[0].ok || result.results[0].id!==note.id || !result.results[0].body?.trim())throw new Error(result.results?.[0]?.error || @@ufbc789ff0260@@);
+    if(DB.prompts.some(p=>p.srcNoteId===note.id))throw new Error(@@u34e2a0ed7028@@);
+    const project=orgNoteIsDefault(note) ? "" : note.folder;
+    if(project && !DB.projects.includes(project) && await addProject(project,{deferSave:true})===null)throw new Error(@@u0751a7301928@@);
+    if(DB.prompts.some(p=>p.srcNoteId===note.id))throw new Error(@@u34e2a0ed7028@@);
+    const stamp=now(),item={id:"p"+crypto.randomUUID(),title:note.name,project,
+      active:1,versions:[{v:1,content:noteImportBody(note,result.results[0].body),time:stamp}],
+      updated:stamp,source:"备忘录/"+note.folder,srcNoteId:note.id,noteDate:note.date};
+    // 在变更内存前同步写入本机日志，防抖期间刷新也能安全回放。
+    appendCategoryOps([{kind:"pick",item:JSON.parse(JSON.stringify(item))}]);
+    DB.prompts.push(item);
+    if(!DB.importedNoteIds.includes(note.id))DB.importedNoteIds.push(note.id);
+    impSel.delete(note.id);
+    categoryBaseline=categorySnapshot();
+    orgPickStack.push(JSON.parse(JSON.stringify(item)));
+    categoryStatus(@@u6489f4366d95@@);scheduleCategorySave();
+    $("orgPickStatus").textContent=`@@uf4b338cd8385@@${item.title || @@u5d337c32c69b@@} → ${project || @@u881b630609fc@@}@@u5c95664788a6@@`;
+  } catch(e) {$("orgPickStatus").textContent="⚠️ "+e.message;toast(e.message)}
+  finally {orgPickBusy=false;redrawOrgPick()}
+}
+$("orgPickUndo").onclick=()=>{
+  if(orgBusy || orgPickBusy || orgAlignBusy || categoryDataBusy || !dataLoaded || !orgPickStack.length)return;
+  const item=orgPickStack[orgPickStack.length-1],current=DB.prompts.find(p=>p.id===item.id);
+  if(!current || JSON.stringify(current)!==JSON.stringify(item)){
+    $("orgPickStatus").textContent=@@ue4c766f04441@@;return;
+  }
+  try {appendCategoryOps([{kind:"unpick",item}])}
+  catch(e) {$("orgPickStatus").textContent=@@uf49ecb522129@@;return}
+  DB.prompts=DB.prompts.filter(p=>p.id!==item.id);
+  categoryBaseline=categorySnapshot();orgPickStack.pop();
+  categoryStatus(@@u6489f4366d95@@);scheduleCategorySave();
+  $("orgPickStatus").textContent=`@@ub02ab9853950@@${item.title || @@u5d337c32c69b@@}@@u5938bc0836b0@@`;
+  redrawOrgPick();
+};
+$("orgDelList").addEventListener("click",e=>{const b=e.target.closest(".org-pick");if(b){e.stopPropagation();pickOrgRow(b)}});
+$("orgDelList").addEventListener("pointerover",e=>{const b=e.target.closest(".org-pick");if(b)showSideOpTooltip(b)});
+$("orgDelList").addEventListener("pointerout",e=>{if(e.target.closest(".org-pick")&&!e.relatedTarget?.closest(".org-pick"))hideSideOpTooltip()});
+$("orgDelList").addEventListener("focusin",e=>{const b=e.target.closest(".org-pick");if(b)showSideOpTooltip(b)});
+$("orgDelList").addEventListener("focusout",hideSideOpTooltip);
+$("orgDelList").addEventListener("keydown",e=>{if(e.key==="Escape")hideSideOpTooltip()});
+function orgAlignButton(row) {
+  const target=row.from===orgDef ? @@u881b630609fc@@ : row.from;
+  const tip=`@@u90aba50d1612@@${target}@@ub05ce80ffe2d@@${row.from || @@u5f96eb71650a@@}@@u8ee68e0cf937@@`;
+  return `<button type="button" class="org-align" data-id="${esc(row.id)}" data-note-id="${esc(row.noteId)}" data-from="${esc(row.from)}" data-kind="${esc(row.kind)}" data-tip="${esc(tip)}" aria-label="${esc(tip)}">↩️</button>`;
+}
+function syncOrgAlignControls() {
+  const blocked=orgBusy || orgAlignBusy || orgPickBusy || categoryDataBusy || !dataLoaded;
+  $("orgPickUndo").disabled=blocked || !orgPickStack.length;
+  $("orgDelList").querySelectorAll(".org-pick").forEach(b=>b.disabled=blocked);
+  $("orgDelGo").disabled=blocked || !(orgDelPlan||[]).length;
+  $("orgAlignUndo").disabled=blocked || !orgAlignStack.length;
+  $("orgList").querySelectorAll(".org-align").forEach(b=>b.disabled=blocked);
+}
+function redrawOrgAlignment() {
+  const top=$("orgList").scrollTop;
+  hideSideOpTooltip();renderOrgPreview();$("orgList").scrollTop=top;
+}
+async function alignOrgRow(button) {
+  if(orgBusy || orgAlignBusy || categoryDataBusy || !dataLoaded)return;
+  const id=button.dataset.id, source=button.dataset.noteId, from=button.dataset.from;
+  const p=DB.prompts.find(p=>p.id===id), n=orgPreviewNotes.find(n=>n.id===source);
+  const tell=text=>{$("orgAlignStatus").textContent=text;toast(text)};
+  if(!p || p.srcNoteId!==source || !n || !from || n.folder!==from){tell(@@u8609400829b0@@);return}
+  if(DB.prompts.filter(p=>p.srcNoteId===source).length!==1){tell(@@u9b72bc3643e3@@);return}
+  if(button.dataset.kind==="out" && from===orgDef){tell(@@u236c0c831abb@@);return}
+  const target=from===orgDef ? "" : from, before=p.project || "", session=orgAlignSession;
+  const undoProject=DB.projects.includes(before) ? before : "";
+  if(before===target){redrawOrgAlignment();return}
+  orgAlignBusy=true;syncOrgAlignControls();$("orgGo").disabled=true;
+  try {
+    const added=target && !DB.projects.includes(target);
+    if(added && await addProject(target,{deferSave:true})===null)return;
+    if(session!==orgAlignSession || p.srcNoteId!==source || (p.project||"")!==before)return;
+    if(!changeCardCategories([id],target)){
+      tell(added ? @@uaaba41a5fef2@@ : @@u0fa89efb54db@@);return;
+    }
+    orgAlignStack.push({id,source,before:undoProject,after:target});
+    $("orgAlignStatus").textContent=`@@u86f3dcbf023d@@${p.title || @@u5d337c32c69b@@} → ${target || @@u881b630609fc@@}@@u5938bc0836b0@@`;
+  } finally {
+    orgAlignBusy=false;
+    if(session===orgAlignSession)redrawOrgAlignment();else syncOrgAlignControls();
+  }
+}
+$("orgAlignUndo").onclick=async()=>{
+  if(orgBusy || orgAlignBusy || categoryDataBusy || !dataLoaded || !orgAlignStack.length)return;
+  const item=orgAlignStack[orgAlignStack.length-1],p=DB.prompts.find(p=>p.id===item.id);
+  if(!p || p.srcNoteId!==item.source || (p.project||"")!==item.after || (item.before&&!DB.projects.includes(item.before))){
+    $("orgAlignStatus").textContent=@@u06ef8a562fb1@@;return;
+  }
+  if(!changeCardCategories([item.id],item.before))return;
+  orgAlignStack.pop();$("orgAlignStatus").textContent=`@@u2f257a774ded@@${p.title || @@u5d337c32c69b@@}@@u5938bc0836b0@@`;
+  redrawOrgAlignment();
+};
+$("orgList").addEventListener("click",e=>{const b=e.target.closest(".org-align");if(b){e.stopPropagation();alignOrgRow(b)}});
+$("orgList").addEventListener("pointerover",e=>{const b=e.target.closest(".org-align");if(b)showSideOpTooltip(b)});
+$("orgList").addEventListener("pointerout",e=>{if(e.target.closest(".org-align")&&!e.relatedTarget?.closest(".org-align"))hideSideOpTooltip()});
+$("orgList").addEventListener("focusin",e=>{const b=e.target.closest(".org-align");if(b)showSideOpTooltip(b)});
+$("orgList").addEventListener("focusout",hideSideOpTooltip);
+$("orgList").addEventListener("keydown",e=>{if(e.key==="Escape")hideSideOpTooltip()});
+
+
+let orgHistoryRequest = 0, orgHistoryReturnFocus = null, orgHistoryData = null, orgHistoryMode = "log";
+let sessionMoveRecord = null, sessionMoveNote = null, sessionMoveFolders = [];
+const SESSION_GROUP_LABELS = {
+  created:@@ue501b02199c0@@, body:@@u4c720a7fc741@@, category:@@u275a6cd35ac3@@,
+  deleted:@@u21a663823e70@@, moved:@@u4eaeb0c1a77e@@
+};
+function restoreBatchSummary(info) {
+  const label = info["说明"] || @@uc7e4d38cc569@@;
+  const batches = Number(info["同时间批数"]);
+  const remaining = Number(info["撤销后同时间剩余批数"]);
+  const rest = Number.isInteger(batches) && batches > 0 && Number.isInteger(remaining) && remaining >= 0
+    ? `@@u09865f9baddd@@${batches}@@u7555b4147527@@${remaining}@@uc19519a96207@@`
+    : @@u697bb7f665c1@@;
+  return `@@u4fd49bd89441@@${info["时间"]} · ${label} · ${info["条数"]}@@u6455897ee54c@@${rest}`;
+}
+async function refreshOrgHistory() {
+  const request = ++orgHistoryRequest;
+  $("orgHistoryStatus").textContent = @@u579cd7bd2ec0@@;
+  $("orgHistoryList").replaceChildren();
+  $("orgHistoryRefresh").disabled = true;
+  try {
+    const result = await api("/api/session/report");
+    if (request !== orgHistoryRequest) return;
+    if (!result.groups) throw new Error(@@u0a2207828879@@);
+    orgHistoryData = result;
+    renderOrgHistory();
+    $("sessionLogPath").textContent = result.path || @@u49591daf82ec@@;
+  } catch (e) {
+    if (request === orgHistoryRequest) $("orgHistoryStatus").textContent = "⚠️ " + e.message;
+  } finally {
+    if (request === orgHistoryRequest) $("orgHistoryRefresh").disabled = false;
+  }
+}
+function renderOrgHistory() {
+  if (!orgHistoryData) return;
+  const query = $("orgHistorySearch").value.trim().toLocaleLowerCase();
+  let shown = 0;
+  const sections = [];
+  for (const [key, label] of Object.entries(SESSION_GROUP_LABELS)) {
+    const rows = Array.isArray(orgHistoryData.groups[key]) ? orgHistoryData.groups[key] : [];
+    const matches = rows.map((row,index)=>({row,index})).filter(({row}) =>
+      [row.title,row.from,row.to].some(value => String(value||"").toLocaleLowerCase().includes(query)));
+    if (!matches.length) continue;
+    shown += matches.length;
+    sections.push(`<section class="move-history-group"><div class="move-history-heading"><strong>${esc(label)} · ${matches.length}</strong></div>` +
+      matches.map(({row,index}) => `<div class="session-row"><span><strong>${esc(row.title || @@u5d337c32c69b@@)}</strong>` +
+        (row.from || row.to ? ` · ${esc(row.from || @@u881b630609fc@@)} → ${esc(row.to || @@u881b630609fc@@)}` : "") +
+        ` · ${esc(String(row.time||"").replace("T"," "))}</span>` +
+        (key === "moved" ? `<button type="button" class="session-move" data-index="${index}">@@u07f08c915be2@@</button>` : "") + `</div>`).join("") + `</section>`);
+  }
+  $("orgHistoryList").innerHTML = sections.join("");
+  $("orgHistoryStatus").textContent = shown ? `@@u9f1b90c7e235@@${shown}@@u7b09185e5e81@@` : @@u3f282e54b234@@;
+}
+$("orgHistorySearch").oninput = renderOrgHistory;
+async function checkSessionSync() {
+  $("sessionSyncStatus").textContent = @@u8897303d6132@@;
+  $("sessionUnsyncedList").replaceChildren();
+  $("sessionFinishHint").hidden = true;
+  try {
+    await refreshOrgSyncNotes();
+    if (!orgSyncFresh || orgSyncNotes === null) throw new Error(orgSyncError || @@ub2ccfcfa1e76@@);
+    const plan = classifiedMovePlan(orgSyncNotes);
+    $("sessionSyncStatus").textContent = plan.inCount
+      ? `@@u01a9e345de89@@${plan.inCount}@@u16f9260336a2@@` : @@u6f044662732e@@;
+    $("sessionSyncNow").disabled = !plan.inCount;
+    $("sessionUnsyncedList").innerHTML = plan.rowsIn.map(row =>
+      `<li>${esc(row.title)} · ${esc(row.from)} → ${esc(row.to)}</li>`).join("");
+    $("sessionSkipSync").hidden = !plan.inCount;
+    $("sessionFinishHint").hidden = !!plan.inCount;
+  } catch (e) {
+    $("sessionSyncStatus").textContent = "⚠️ " + e.message;
+    $("sessionSyncNow").disabled = true;
+    $("sessionSkipSync").hidden = false;
+  }
+}
+async function openOrgHistory(mode="log") {
+  orgHistoryMode = mode;
+  orgHistoryReturnFocus = document.activeElement;
+  $("orgHistorySearch").value = "";
+  $("sessionFinish").hidden = mode !== "finish";
+  $("orgHistoryOverlay").classList.add("show");
+  $("orgHistoryClose").focus();
+  await refreshOrgHistory();
+  if (mode === "finish") await checkSessionSync();
+}
+function closeOrgHistory() {
+  ++orgHistoryRequest;
+  $("orgHistoryOverlay").classList.remove("show");
+  orgHistoryReturnFocus?.focus();
+}
+$("btnOrgHistory").onclick = () => openOrgHistory("log");
+$("btnFinishSession").onclick = () => openOrgHistory("finish");
+$("orgHistoryClose").onclick = closeOrgHistory;
+$("orgHistoryRefresh").onclick = refreshOrgHistory;
+$("orgHistoryOverlay").addEventListener("keydown", e => {
+  if (e.key === "Escape") { e.stopPropagation(); closeOrgHistory(); }
+});
+$("orgHistoryReveal").onclick = async () => {
+  try { await api("/api/moves/reveal", {}); }
+  catch (e) { $("orgHistoryStatus").textContent = "⚠️ " + e.message; }
+};
+$("sessionSyncNow").onclick = () => { skippedSyncSignature = null; closeOrgHistory(); $("btnOrgMove").click(); };
+$("sessionSkipSync").onclick = () => { skippedSyncSignature = currentSyncSignature(); $("sessionFinishHint").hidden = false; $("sessionSkipSync").hidden = true; };
+$("sessionLogReveal").onclick = async () => {
+  try { await api("/api/session/reveal", {}); }
+  catch (e) { $("sessionSyncStatus").textContent = "⚠️ " + e.message; }
+};
+$("orgHistoryList").addEventListener("click", e => {
+  const button = e.target.closest(".session-move");
+  if (button) openSessionMove(Number(button.dataset.index));
+});
+function closeSessionMove() {
+  $("sessionMoveOverlay").classList.remove("show");
+  sessionMoveRecord = sessionMoveNote = null; sessionMoveFolders = [];
+  $("orgHistorySearch").focus();
+}
+function updateSessionMoveDetail() {
+  const target = sessionMoveFolders.find(f => f.id === $("sessionMoveTarget").value);
+  $("sessionMoveConfirm").disabled = !target;
+  $("sessionMoveDetail").textContent = target && sessionMoveNote
+    ? `@@u113063b9df98@@${sessionMoveNote.name}@@u8a2a76a9a2a6@@${sessionMoveNote.folder} → ${target.name}@@u48c6b589f0ce@@`
+    : @@ua031ae5fc743@@;
+}
+async function openSessionMove(index) {
+  const row = orgHistoryData?.groups?.moved?.[index];
+  if (!row?.noteId || !row.accountId) return;
+  sessionMoveRecord = sessionMoveNote = null; sessionMoveFolders = [];
+  $("sessionMoveConfirm").disabled = true;
+  $("sessionMoveTarget").replaceChildren();
+  $("sessionMoveError").textContent = "";
+  $("sessionMoveDetail").textContent = @@u579cd7bd2ec0@@;
+  $("sessionMoveOverlay").classList.add("show");
+  $("sessionMoveCancel").focus();
+  try {
+    const [notes, folders] = await Promise.all([api("/api/notes/list"), api("/api/notes/folder-details")]);
+    const note = notes.notes.find(n => n.id === row.noteId);
+    if (!note || note.accountId !== row.accountId) throw new Error(@@ub2ccfcfa1e76@@);
+    sessionMoveRecord = row; sessionMoveNote = note;
+    sessionMoveFolders = folders.folders.filter(f => f.accountId === note.accountId && f.id !== note.folderId);
+    const select = $("sessionMoveTarget");
+    select.innerHTML = `<option value="">@@u0e218103153d@@</option>` + sessionMoveFolders.map(f =>
+      `<option value="${esc(f.id)}">${esc(f.name)}</option>`).join("");
+    updateSessionMoveDetail();
+  } catch (e) { $("sessionMoveError").textContent = "⚠️ " + e.message; }
+}
+$("sessionMoveTarget").onchange = updateSessionMoveDetail;
+$("sessionMoveCancel").onclick = closeSessionMove;
+$("sessionMoveOverlay").addEventListener("keydown",e=>{if(e.key==="Escape")closeSessionMove()});
+$("sessionMoveConfirm").onclick = async () => {
+  const target = sessionMoveFolders.find(f => f.id === $("sessionMoveTarget").value);
+  if (!target || !sessionMoveNote) return;
+  $("sessionMoveConfirm").disabled = true;
+  $("sessionMoveError").textContent = "";
+  try {
+    const result = await api("/api/notes/move", {moves:[{noteId:sessionMoveNote.id, folder:target.name,
+      folderId:target.id, accountId:sessionMoveNote.accountId}], label:@@u9b3e801e4a28@@});
+    if (result.failed || result.moved !== 1) throw new Error(result.failures?.[0]?.reason || @@u222e1bc021aa@@);
+    closeSessionMove();
+    await refreshOrgHistory();
+  } catch (e) { $("sessionMoveError").textContent = "⚠️ " + e.message; $("sessionMoveConfirm").disabled = false; }
+};
+function closeSettings() {
+  $("settingsMenu").hidden = true;
+  $("btnSettings").setAttribute("aria-expanded", "false");
+}
+$("btnSettings").onclick = () => {
+  const opening = !$("settingsMenu").hidden;
+  $("settingsMenu").hidden = opening;
+  $("btnSettings").setAttribute("aria-expanded", String(!opening));
+  if (!opening) $("settingsOpenMoveLogs").focus();
+};
+document.addEventListener("click", e => { if (!e.target.closest(".toolbar-tail")) closeSettings(); });
+$("settingsMenu").addEventListener("keydown", e => {
+  if (e.key === "Escape") { closeSettings(); $("btnSettings").focus(); }
+});
+$("settingsOpenMoveLogs").onclick = async () => {
+  closeSettings();
+  try { await api("/api/moves/reveal", {}); }
+  catch (e) { toast("⚠️ " + e.message); }
+};
+
+function syncOrgUndo() {
+  const available = !!orgRestoreInfo?.["有记录"];
+  const title = orgRestoreLoading ? @@ud0b7988c0b83@@
+    : orgRestoreError ? @@uea62c19dcc73@@ + orgRestoreError
+    : available ? restoreBatchSummary(orgRestoreInfo)
+    : @@u5503fa001495@@;
+  for (const id of ["btnOrgUndo", "orgUndo", "orgRestoreRetry"]) {
+    $(id).disabled = orgBusy || orgRestoreLoading || !available;
+    if (id === "btnOrgUndo") $(id).dataset.tip = title;
+    else $(id).title = title;
+  }
+  $("orgUndo").style.display = available ? "" : "none";
+  $("orgRestoreClose").disabled = orgBusy;
+  syncOrgAlignControls();
+}
+async function refreshOrgUndo() {
+  const request = ++orgRestoreRequest;
+  orgRestoreLoading = true; orgRestoreError = ""; syncOrgUndo();
+  if ($("orgHistoryOverlay").classList.contains("show")) {
+    ++orgHistoryRequest;
+    $("orgHistoryStatus").textContent = @@ub97c7a76e10c@@;
+    $("orgHistoryList").replaceChildren();
+    $("orgHistoryRefresh").disabled = true;
+  }
+  try {
+    const info = await api("/api/notes/restore/info");
+    if (request !== orgRestoreRequest) return null;
+    orgRestoreInfo = info;
+    return info;
+  } catch (e) {
+    if (request === orgRestoreRequest) { orgRestoreInfo = null; orgRestoreError = e.message; }
+    return null;
+  } finally {
+    if (request === orgRestoreRequest) {
+      orgRestoreLoading = false; syncOrgUndo();
+      if ($("orgHistoryOverlay").classList.contains("show")) await refreshOrgHistory();
+    }
+  }
+}
+
+async function openOrg(mode = orgMode) {
+  if (orgBusy) return;
+  const session=++orgAlignSession;
+  orgMode = mode;
+  orgPlan = null; orgDelPlan = null;
+  $("orgTitle").textContent = mode === "delete" ? @@u5153e049e3cb@@ : @@u79423b4f87d1@@;
+  $("orgMoveSection").hidden = mode === "delete";
+  $("orgDeleteSection").hidden = mode !== "delete";
+  $("orgGo").hidden = mode === "delete";
+  $("orgDelGo").hidden = mode !== "delete";
+  $("orgRename").innerHTML = ""; $("orgHint").textContent = "";
+  $("orgOverlay").classList.add("show");
+  $("orgMeta").textContent = @@u7fb289c91bde@@;
+  $("orgList").innerHTML = ""; $("orgStatus").textContent = "";
+  $("orgDelMeta").textContent = @@u7fb289c91bde@@; $("orgDelList").innerHTML = "";
+  $("orgGo").disabled = true; $("orgDelGo").disabled = true;
+  try {
+    const j = await api("/api/notes/list");
+    if(session!==orgAlignSession)return;
+    allNotes = j.notes;
+    orgNotesContext = await api("/api/notes/folders");
+    if(session!==orgAlignSession)return;
+    await refreshOrgUndo();
+  } catch (e) {
+    $("orgMeta").textContent = $("orgDelMeta").textContent = "⚠️ " + e.message; return;
+  }
+  if(session!==orgAlignSession)return;
+  orgPreviewNotes=allNotes.map(n=>({...n}));
+  renderOrgPreview();
+}
+function renderOrgPreview() {
+  const notes=orgPreviewNotes;
+  const byId = Object.fromEntries(notes.map(n => [n.id, n]));
+  const folders = new Set([...(orgNotesContext.folders || []), ...notes.map(n => n.folder)]);
+  // 未分类对应的落脚点＝备忘录的默认文件夹。AppleScript 给的名字是英文 Notes。
+  const DEF = orgNotesContext.defaultFolder || "";
+  // 这几个不是分类文件夹，里头的东西一律不动。
+  const KEEP = new Set([DEF, "Recently Deleted", "最近删除", "整理器推送",
+                        "备忘录整理器", "存档", "需删除", "備忘錄", "最近刪除", "Notes Organizer", "Organizer exports", "Archive", DEL_FOLDER]);
+  orgDef = DEF;
+  const rowsOut = [];
+  // 常驻提示和预览的「搬进去」严格复用同一个计划函数。
+  const {groups, rowsIn, problems, inCount} = classifiedMovePlan(notes);
+  const bySrc = {};
+  for (const p of DB.prompts) if (p.srcNoteId) bySrc[p.srcNoteId] ||= p;
+
+  // 疑似在备忘录里改了文件夹名：整理器里这个分类还在，备忘录里却没有同名文件夹了，
+  // 而它的笔记整整齐齐待在另一个文件夹里。
+  // 不提醒的话，下面那份清单会计划把它们"搬回"旧名字，还顺手新建一个旧文件夹——
+  // 等于把你的改名撤销掉。
+  const renames = [];
+  for (const proj of DB.projects) {
+    if (folders.has(proj)) continue;
+    const mine = DB.prompts.filter(p => p.project === proj && p.srcNoteId && byId[p.srcNoteId]);
+    if (mine.length < 2) continue;
+    const tally = {};
+    for (const p of mine) {
+      const f = byId[p.srcNoteId].folder;
+      tally[f] = (tally[f] || 0) + 1;
+    }
+    const [where, n] = Object.entries(tally).sort((a, b) => b[1] - a[1])[0];
+    if (KEEP.has(where) || DB.projects.includes(where)) continue;
+    if (n / mine.length >= 0.8) renames.push({ from: proj, to: where, n, total: mine.length });
+  }
+  $("orgRename").innerHTML = renames.map(r =>
+    `@@u18d3731a8259@@${esc(r.from)}@@u9e8d37baab10@@${r.total}@@udedb9a0409b3@@${r.n}@@ue2aff699508b@@${esc(r.to)}@@u9d5df4081893@@${esc(r.from)}@@u4e5343e84e41@@${esc(r.from)}" data-to="${esc(r.to)}@@u58cf6d85a0be@@${esc(r.to)}@@ud90223456aeb@@`).join("");
+  $("orgRename").querySelectorAll(".orgRenameGo").forEach(b => b.onclick = async () => {
+    const from = b.dataset.from, to = b.dataset.to;
+    if (!confirm(`@@ueab20d69c7e9@@${from}@@ucf461930db56@@${to}@@u1d73ab3924c4@@`)) return;
+    DB.projects[DB.projects.indexOf(from)] = to;
+    for (const p of DB.prompts) if (p.project === from) p.project = to;
+    if (curProj === from) curProj = to;
+    await persist(); renderSide(); renderCards(); fillProjSelects();
+    toast(`@@uf050c6a9eaaa@@${to}@@ue856c3c4be5b@@`);
+    await openOrg();
+  });
+
+  //  搬出来：笔记待在某个分类文件夹里，整理器却说它是未分类。
+  //    只管整理器导过的笔记；没导过的是你自己放的，一律不碰。
+  const out = {};
+  for (const n of notes) {
+    if (!DEF || KEEP.has(n.folder) || orgNoteIsDefault(n) || !DB.projects.includes(n.folder)) continue;
+    const p = bySrc[n.id];
+    if (!p) continue;
+    if (p.project && DB.projects.includes(p.project)) continue;   // 已经管了
+    (out[n.folder] ||= []).push(orgMoveTarget(n, DEF));
+    (groups[DEF] ||= []).push(orgMoveTarget(n, DEF));
+    rowsOut.push({ id:p.id, noteId:n.id, kind:"out", title: n.name, from: n.folder, to: DEF, ...orgAccountMeta(n) });
+  }
+  const outCount = Object.values(out).reduce((s, v) => s + v.length, 0);
+
+  orgPlan = groups;
+  const total = inCount + outCount;
+  const newFolders = Object.keys(groups).filter(k => !folders.has(k));
+  $("orgMeta").innerHTML = total
+    ? `@@uba5be16beb97@@${total}@@u7de2b1c171d3@@${inCount}@@u6d5551ba4380@@${outCount}@@u8cc2ced17263@@${newFolders.length ? `@@u4c8d4423c8f0@@${newFolders.map(esc).join(@@uae78306c6b52@@)}@@u422e9d243fef@@` : ""}@@uc56d06de83be@@`
+    : @@ub4745a16ed03@@;
+  $("orgList").innerHTML =
+    listBlock(`@@u8f64508b5207@@`, rowsIn, true) +
+    listBlock(`@@ud09eb1ad492a@@${esc(DEF)}@@ue00d84a22b18@@`, rowsOut, true);
+  //  第二步：整理器里删掉了、备忘录里却还在的。挪进「需删除」等你亲自处置。
+  const imported = new Set(DB.importedNoteIds || []);
+  const alive = new Set(Object.keys(bySrc));
+  const delRows = [], delMoves = [];
+  for (const n of notes) {
+    if (!imported.has(n.id) || alive.has(n.id)) continue;
+    if (n.folder === DEL_FOLDER || n.folder === "需删除" || n.folder === "Recently Deleted"
+        || n.folder === "最近删除") continue;
+    delMoves.push(orgMoveTarget(n, DEL_FOLDER));
+    delRows.push({ noteId:n.id, title: n.name, from: n.folder, to: DEL_FOLDER, ...orgAccountMeta(n) });
+  }
+  orgDelPlan = delMoves;
+  $("orgDelMeta").innerHTML = delMoves.length
+    ? `@@u909238fe63f2@@${delMoves.length}@@u3c446b6648e6@@${DEL_FOLDER}@@u9cd2fe4c9c0f@@`
+    : `@@uef4c330f036e@@`;
+  $("orgDelList").innerHTML = listBlock(`@@ud5c8eebbe9ae@@${DEL_FOLDER}@@uc56152bbed3d@@`, delRows, "pick");
+  $("orgDelGo").disabled = delMoves.length === 0;
+
+  const skip = [];
+  if (problems.已就位) skip.push(`${problems.已就位}@@ufdebb4af4360@@`);
+  if (problems.没来源) skip.push(`${problems.没来源}@@u714654273592@@`);
+  if (problems.找不到笔记) skip.push(`${problems.找不到笔记}@@ud38c06b3d1de@@`);
+  $("orgHint").innerHTML =
+    (skip.length ? `@@u582e69f8c663@@${skip.join(@@u8769e31ffed5@@)}@@u4e61c13af650@@` : "") +
+    @@uec6fd577136b@@ +
+    @@u4b0e35de8f0f@@ +
+    @@uea3f1de5d239@@ +
+    @@u9aee56f2df4e@@;
+  $("orgGo").disabled = total === 0 || orgBusy || orgAlignBusy;
+  $("orgAlignSaveState").textContent=$("categorySaveStatus").textContent;
+  syncOrgAlignControls();
+}
+function orgAccountLabel(row) {
+  if (!row.accountId) return @@uf24eda5e3e72@@;
+  const ids = [...new Set(orgPreviewNotes.map(n=>String(n.accountId || "")).filter(Boolean))].sort();
+  if (row.accountCount <= 1 && ids.length <= 1) return "";
+  const name = row.accountName || @@u97d707740f91@@;
+  const sameName = ids.filter(id=>orgPreviewNotes.some(n=>String(n.accountId || "")===id && String(n.accountName || "")===row.accountName));
+  // 同名账户编号按完整 ID 排序生成，同一份预览里不会撞号。
+  return `@@u625f6677a709@@${name}` + (sameName.length > 1 ? `@@u3a9092b16f45@@${ids.indexOf(row.accountId)+1} · ${row.accountId}@@ue00d84a22b18@@` : "") + @@ud1919dd8903a@@;
+}
+// 逐条贴出来：标题 + 从哪到哪。太长了只画前 400 条，完整的看 md。
+function listBlock(head, rows, align = false) {
+  if (!rows.length) return "";
+  const shown = rows.slice(0, 400);
+  return `<div class="ohead">${head}　${rows.length}@@ub1d272e9cb2c@@` +
+    shown.map(r => {
+      const account = orgAccountLabel(r);
+      return `<div class="orow${account ? " with-account" : ""}"><span class="of">${esc(r.title) || @@u5d337c32c69b@@}</span>
+        <span class="oc">${esc(r.from)} → ${esc(r.to)}${account ? `<span class="org-account">${esc(account)}</span>` : ""}</span>${align==="pick" ? orgPickButton(r) : align ? orgAlignButton(r) : ""}</div>`;
+    }).join("") +
+    (rows.length > shown.length
+      ? `@@u8845dc9c5dfa@@${rows.length - shown.length}@@uaeccff704ee1@@` : "");
+}
+
+/* ---------- 智能整理：Jev 猜分类（只出建议，移动需另开预览确认） ---------- */
+const JEV_VERDICTS = {auto:@@ua6af0fbef01c@@,confirm:@@u719b1b96518d@@,unfiled:@@u557d9d5d9f5e@@,error:@@ub480644880df@@,skipped:@@u822804d19560@@,"no-key":@@uec435c86ad34@@};
+let jevRows = [], jevNotesReady = false, jevSettingsDirty = false, jevSettingsSaving = false, jevSettingsVersion = 0;
+
+function jevPending() {
+  // 待猜的 = 整理器里有、但还没归类的笔记
+  return DB.prompts.filter(p => p.srcNoteId && !(p.project && DB.projects.includes(p.project)));
+}
+
+async function jevRefresh() {
+  const n = jevPending().length;
+  let cfg = null;
+  try { cfg = await api("/api/jev/config"); } catch (e) {}
+  const noKey = !cfg || !cfg.hasKey;
+  // 敏感/暂存类文件夹本来就不靠描述判断，别拿它们凑数报警
+  const skipDesc = (cfg && cfg.skipDescription) || [];
+  const missing = DB.projects.filter(
+    c => !(cfg && cfg.descriptions && cfg.descriptions[c]) && !skipDesc.includes(c));
+  $("jevMeta").innerHTML =
+    `@@uaca6ed656145@@${n}@@u9cdd36bdd9b5@@` +
+    (noKey ? @@u45dfd66e321f@@ : "") +
+    (missing.length
+      ? ` ⚠️ <b>${esc(missing.join(@@uae78306c6b52@@))}@@u35904448b1c1@@` : "");
+  $("jevRun").disabled = n === 0 || !jevNotesReady || jevSettingsDirty || jevSettingsSaving;
+}
+
+$("jevN").addEventListener("keydown", e => {
+  if (e.key !== "Enter" || e.isComposing) return;
+  e.preventDefault();
+  if (!e.repeat && !$("jevRun").disabled) $("jevRun").click();
+});
+$("jevRun").onclick = async () => {
+  if ($("jevRun").disabled || !jevNotesReady || jevSettingsDirty || jevSettingsSaving) return;
+  const entered = parseInt($("jevN").value, 10);
+  // 空值/非数字回落到 50；0 与负数按下限 1 处理。
+  const lim = Math.max(1, Math.min(200, Number.isNaN(entered) ? 50 : entered));
+  const pend = jevPending().slice(0, lim);
+  if (!pend.length) { toast(@@uab6484b674d3@@); return; }
+  $("jevRun").disabled = true;
+  $("jevStatus").textContent = `@@u232b14448e5c@@${pend.length}@@ua4e018f0bba1@@`;
+  const byId = Object.fromEntries((allNotes || []).map(n => [n.id, n]));
+  try {
+    const j = await api("/api/jev/classify", {
+      items: pend.map(p => ({ id: p.srcNoteId,
+                              name: (byId[p.srcNoteId] || {}).name || p.title || "",
+                              folder: (byId[p.srcNoteId] || {}).folder || "" })),
+      projects: DB.projects
+    });
+    jevRows = j.rows || [];
+    jevOpen.clear();
+    try { jevCfg = await api("/api/jev/config"); } catch (e) {}
+    jevRender();
+    const auto = jevRows.filter(r => r.verdict === "auto").length;
+    const ask  = jevRows.filter(r => r.verdict === "confirm").length;
+    const none = jevRows.filter(r => r.verdict === "unfiled").length;
+    const bad  = jevRows.filter(r => r.verdict === "error").length;
+    // 这两个数才是"准不准"的前提：正文空 = Jev 只看到标题；分数没拿全 = 接口对不上。
+    // 不先把它们清零，调阈值和改说明都是白费。
+    const empty = jevRows.filter(r => r.bodyLength === 0).length;
+    const part  = jevRows.filter(r => r.asked && r.answered < r.asked).length;
+    $("jevStatus").innerHTML =
+      `@@u429982166227@@${auto}@@u0e6eac29336e@@${ask}@@u2a9b63e896fd@@${none}` + (bad ? `@@u7fb38b584b34@@${bad}` : "") +
+      (empty ? ` · <span style="color:var(--red)">${empty}@@u533f647f7852@@` : "") +
+      (part ? ` · <span style="color:var(--red)">${part}@@u244c85e17b13@@` : "");
+    $("jevApply").disabled = auto === 0;
+  } catch (e) {
+    $("jevStatus").textContent = "⚠️ " + e.message;
+  }
+  await jevRefresh();
+};
+
+let jevOpen = new Set();      // 展开了哪几条
+let jevCfg = null;            // 缓存一份设置，展开时要拿分类说明对照
+
+/* 一条的明细：正文 + 全部分数 + 它凭什么这么判。
+   看不到正文就没法判断准不准，只能盯着一个分数干瞪眼——这块就是补这个的。 */
+function jevDetail(r) {
+  const 说明 = (jevCfg && jevCfg.descriptions) || {};
+  const all = r.scores || {};
+  const names = Object.keys(all);
+
+  // 分数条：一眼看出是"第一名遥遥领先"还是"几类咬在一起"
+  const bars = names.length ? names.slice(0, 8).map(c => {
+    const v = Number(all[c]), pct = Number.isFinite(v) ? Math.max(0, Math.min(100, Math.round(v * 100))) : 0;
+    const hot = c === r.project;
+    return `<div style="display:flex;align-items:center;gap:6px;margin:2px 0">
+      <span style="min-width:96px;font-size:12px;${hot ? "font-weight:700" : ""}">${esc(c)}</span>
+      <span style="flex:1;height:8px;background:var(--track);border-radius:4px;overflow:hidden">
+        <span style="display:block;height:100%;width:${pct}%;background:${hot ? "var(--green)" : "var(--aqua)"}"></span>
+      </span>
+      <span style="min-width:34px;font-size:12px;color:var(--sub);text-align:right">${esc(all[c])}</span>
+    </div>`;
+  }).join("") + (names.length > 8
+      ? `@@u9607647fbf8e@@${names.length - 8}@@u51e10d7dda49@@` : "")
+    : `@@u5c1367d1e030@@${r.basis ? "（" + esc(r.basis) + "）" : ""}@@u0a0308ec84b7@@`;
+
+  // 问了 N 类只答回 M 类 = 接口对不上，分数会无缘无故地低。这不是"判得不准"。
+  const cover = (r.asked && r.answered !== undefined && r.answered < r.asked)
+    ? `@@ufe5fbc6b3ff4@@${esc(r.asked)}@@u72ec280285ec@@${esc(r.answered)}@@u39f4a8ad6736@@` : "";
+
+  const len = r.bodyLength;
+  const bodyHead = len === 0
+    ? `@@u4595fe3f4ebd@@`
+    : `@@u789bc81128d8@@${esc(len)}@@u40288a0a876c@@${
+         r.bodyTruncated ? @@u90f2cf4692a0@@ : ""}${
+         len > 4000 ? @@ue4831dcae2ca@@ : ""}</div>`;
+
+  const body = (r.body || "").trim();
+  const desc = 说明[r.project];
+
+  return `<div style="margin:4px 0 10px 84px;padding:10px 12px;border-left:2px solid var(--fine-line);
+                      background:var(--detail);border-radius:0 6px 6px 0">
+    ${cover}
+    <div style="font-weight:600;font-size:13px;margin-bottom:4px">${esc(r.title || @@ubf14b7f74307@@)}</div>
+    ${bodyHead}
+    ${body ? `<pre style="white-space:pre-wrap;word-break:break-word;font-size:12px;line-height:1.55;
+                          max-height:260px;overflow:auto;margin:6px 0 10px;
+                          font-family:inherit">${esc(body)}</pre>` : "<div style='height:6px'></div>"}@@u13c32d329ffe@@${bars}
+    ${desc ? `@@u9ca93fdca045@@${esc(r.project)}@@uef82c3bda932@@${esc(desc)}@@u8f044e8cd514@@` : ""}
+  </div>`;
+}
+
+function jevRender() {
+  const color = v => v === "auto" ? "var(--green)" : v === "confirm" ? "var(--ink)"
+                  : v === "unfiled" ? "var(--sub)" : v === "skipped" ? "var(--sub)"
+                  : v === "no-key" ? "var(--sub)" : "var(--red)";
+  $("jevRows").innerHTML = jevRows.map((r, i) => {
+    const opts = [@@u5ecc79b5e298@@]
+      .concat(DB.projects.map(c =>
+        `<option value="${esc(c)}"${c === r.project ? " selected" : ""}>${esc(c)}</option>`)).join("");
+    const bad = r.asked && r.answered !== undefined && r.answered < r.asked;
+    const extra = r.error ? ` <span style="color:var(--red)">${esc(r.error)}</span>`
+      : ` <span style="color:var(--sub)">${esc(r.score)}` +
+        (r.runnerUp ? `@@u9e7341f855e2@@${esc(r.runnerUp)} ${esc(r.runnerUpScore)}` : "") + `</span>`;
+    const on = jevOpen.has(i);
+    // 正文空 / 分数没拿全，都在标题旁边挂个记号，不用一条条点开找
+    const flag = (r.bodyLength === 0 ? @@uded2b85e11df@@ : "")
+               + (bad ? @@ud9bdadbe139a@@ : "");
+    return `<div style="display:flex;gap:8px;align-items:center;padding:3px 0;font-size:13px">
+      <span style="color:${color(r.verdict)};min-width:76px">${esc(JEV_VERDICTS[r.verdict] || r.verdict)}</span>
+      <span class="jevOpen" data-i="${i}@@uf464fa30d2ee@@${on ? "▾" : "▸"} ${esc(r.title) || @@ubf14b7f74307@@}${flag}</span>
+      <select data-i="${i}" class="jevPick" style="max-width:150px">${opts}</select>
+      ${extra}</div>` + (on ? jevDetail(r) : "");
+  }).join("");
+  document.querySelectorAll(".jevPick").forEach(sel => {
+    sel.onchange = () => { jevRows[+sel.dataset.i].project = sel.value; };
+  });
+  document.querySelectorAll(".jevOpen").forEach(el => {
+    el.onclick = () => {
+      const i = +el.dataset.i;
+      jevOpen.has(i) ? jevOpen.delete(i) : jevOpen.add(i);
+      jevRender();
+    };
+  });
+}
+
+$("jevApply").onclick = async () => {
+  // 只写 project 字段，不碰备忘录本身。搬家还是下面「📱 反向同步手机备忘录」那一步干。
+  const bySrc = {};
+  for (const p of DB.prompts) if (p.srcNoteId) bySrc[p.srcNoteId] ||= p;
+  let n = 0;
+  for (const r of jevRows) {
+    if (r.verdict !== "auto" || !r.project) continue;
+    const p = bySrc[r.id];
+    if (p) { p.project = r.project; n++; }
+  }
+  if (!await persist()) { toast(@@ub9b76a10addf@@); return; }
+  toast(`@@uc9c399d23c99@@${n}@@u36ba40cd64a4@@`);
+  $("jevApply").disabled = true;
+  orgPlan = null; orgDelPlan = null;
+  renderSide(); renderCards(); fillProjSelects();
+  await jevRefresh();
+};
+
+async function loadJevSettings() {
+  const cfg = await api("/api/jev/config");
+  $("jvKey").value = "";
+  $("jvKey").placeholder = cfg.hasKey ? @@ud11559f886df@@ : @@ua8fbfdcef28b@@;
+  $("jvAuto").value = cfg.autoThreshold ?? 0.75;
+  $("jvLow").value  = cfg.doubtThreshold ?? 0.45;
+  $("jvGap").value  = cfg.minGap   ?? 0.15;
+  $("jvSendSecret").checked = !!cfg.sendSensitive;
+  $("jvBuiltin").checked = cfg.useBuiltinSecrets !== false;
+  $("jvBuiltinList").textContent = (cfg.builtinLabels || []).join(@@uae78306c6b52@@);
+  $("jvCustomSecret").value = (cfg.customSecrets || []).join("\n");
+  $("jvSecretFolders").value = (cfg.neverSend || []).join("\n");
+  const d = cfg.descriptions || {};
+  $("jvCats").innerHTML = DB.projects.map(c =>
+    `<div style="margin-bottom:8px">
+       <div style="font-size:13px;font-weight:600">${esc(c)}</div>
+       <input class="jvDesc" data-cat="${esc(c)}@@ua067ab366b6a@@${esc(d[c] || "")}">
+     </div>`).join("") || @@u5a17f6330422@@;
+  $("jvHint").textContent = "";
+}
+async function openSmart() {
+  jevNotesReady = false;
+  $("smartOverlay").classList.add("show");
+  $("smartOverlay").querySelector(".panel-body").scrollTop = 0;
+  $("jvSave").disabled = true; $("jevRun").disabled = true;
+  $("jvHint").textContent = @@uc5aee4b48608@@;
+  try {
+    await loadJevSettings();
+    jevSettingsDirty = false;
+    $("jvSave").disabled = false;
+    // 保留文件夹信息供本机敏感文件夹拦截，读取失败时不允许发起分类。
+    const j = await api("/api/notes/list");
+    allNotes = j.notes;
+    jevNotesReady = true;
+    await jevRefresh();
+  } catch (e) {
+    $("jvHint").textContent = "⚠️ " + e.message;
+    $("jevRun").disabled = true;
+  }
+}
+
+$("smartOverlay").addEventListener("input", e => {
+  if (e.target.id === "jevN" || !e.target.matches("input, textarea, select")) return;
+  jevSettingsDirty = true; jevSettingsVersion++;
+  $("jevRun").disabled = true;
+  $("jvHint").textContent = @@ue11915caf09d@@;
+});
+$("jvSave").onclick = async () => {
+  if (jevSettingsSaving) return;
+  jevSettingsSaving = true;
+  const savingVersion = jevSettingsVersion;
+  $("jvSave").disabled = true; $("jevRun").disabled = true;
+  const 说明 = {};
+  document.querySelectorAll(".jvDesc").forEach(i => { 说明[i.dataset.cat] = i.value.trim(); });
+  try {
+    const savedCfg = await api("/api/jev/config");
+    await api("/api/jev/config", {
+      apiKey: $("jvKey").value.trim(), descriptions: {...(savedCfg.descriptions || {}), ...说明},
+      autoThreshold: parseFloat($("jvAuto").value), doubtThreshold: parseFloat($("jvLow").value),
+      minGap: parseFloat($("jvGap").value),
+      sendSensitive: $("jvSendSecret").checked,
+      useBuiltinSecrets: $("jvBuiltin").checked,
+      customSecrets: $("jvCustomSecret").value.split("\n").map(x => x.trim()).filter(Boolean),
+      neverSend: $("jvSecretFolders").value.split("\n").map(x => x.trim()).filter(Boolean)
+    });
+    if (savingVersion === jevSettingsVersion) { $("jvKey").value = ""; jevSettingsDirty = false; }
+    $("jvKey").placeholder = @@u4d94a6c3663c@@;
+    $("jvHint").textContent = jevSettingsDirty ? @@u46fa0db1a4ea@@ : @@udfc4297d201e@@;
+    toast(@@u388fc27dde4d@@);
+    jevRefresh();
+  } catch (e) { $("jvHint").textContent = "⚠️ " + e.message; }
+  finally { jevSettingsSaving = false; $("jvSave").disabled = false; await jevRefresh(); }
+};
+
+function closeOrg() { ++orgAlignSession; hideSideOpTooltip(); $("orgOverlay").classList.remove("show"); }
+$("btnOrganize").onclick = openSmart;
+$("btnOrgMove").onclick = () => openOrg("move");
+$("btnOrgDelete").onclick = () => openOrg("delete");
+$("orgGo").onclick = async () => {
+  const names = Object.keys(orgPlan || {});
+  if (!names.length || orgBusy || orgMode !== "move") return;
+  const count = names.reduce((n, k) => n + orgPlan[k].length, 0);
+  if (!confirm(`@@uce489240fb23@@${count}@@ua128d0750f67@@`)) return;
+  orgBusy = true; syncOrgUndo();
+  $("orgGo").disabled = true; $("orgUndo").disabled = true;
+  let moved = 0, failed = 0, done = 0, log = null;
+  const failures = [];
+  const total = names.reduce((s,k) => s + orgPlan[k].length, 0);
+  const key = logKey();                 // 一次整理分好几批发，清单还是一份 md
+  try {
+    for (const k of names) {            // 一个分类一批，进度看得见
+      $("orgStatus").textContent = `@@u4108f920cc40@@${done}/${total}…（${k}@@ue00d84a22b18@@`;
+      const label = k === orgDef ? @@ub6193796a79d@@
+                                 : `@@u8cf00a8dc9fd@@${k}`;
+      const r = await api("/api/notes/move", { moves: orgPlan[k], label, logKey: key });
+      moved += r.moved; failed += r.failed; done += orgPlan[k].length;
+      if (Array.isArray(r.failures)) failures.push(...r.failures);
+      if (r.log) log = r.log;
+    }
+    const resultText = `@@ue38e5ec5d820@@${moved}@@ucf11dc176a9b@@`
+      + (failed ? `@@uc126fc5f03ac@@${failed}@@ucf11dc176a9b@@` : "")
+      + (log ? `@@u7bff9b522cb8@@${log.split("/").pop()}` : "");
+    toast(`@@ucf69c7962d1c@@${moved}@@ucf11dc176a9b@@`);
+    orgBusy = false;
+    await openOrg();                    // 重新核对，移动计划应归零
+    showOrgMoveResult(resultText, failures);
+  } catch (e) {
+    $("orgStatus").textContent = "⚠️ " + e.message;
+    await refreshOrgSyncNotes();
+  } finally { orgBusy = false; $("orgGo").disabled = !Object.values(orgPlan || {}).some(rows => rows.length); await refreshOrgUndo(); }
+};
+function showOrgMoveResult(summary, failures) {
+  const details = (Array.isArray(failures) ? failures : []).map(item =>
+    `${item.title || @@u5d337c32c69b@@}（${item.id || @@u1b8647777c7e@@}@@ue7880a2c6f2d@@${item.reason || @@u962a4864c896@@}`);
+  $("orgStatus").textContent = summary + (details.length ? @@u2ddb79fe5ceb@@ + details.join("\n") : "");
+}
+function logKey() {
+  const d = new Date(), p = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+}
+$("orgDelGo").onclick = async () => {
+  const moves = orgDelPlan || [];
+  if (!moves.length || orgBusy || orgPickBusy || orgMode !== "delete") return;
+  if (!confirm(`@@uf5f733c4d1e9@@${moves.length}@@u67ed8f6e9889@@${DEL_FOLDER}@@ufeaf7183cbc7@@` +
+               `@@u3e28dd0376a0@@` +
+               `@@uc068f4742e35@@`)) return;
+  orgBusy = true; syncOrgUndo();
+  $("orgDelGo").disabled = true; $("orgUndo").disabled = true;
+  $("orgStatus").textContent = `@@u42640895dcc7@@${moves.length}@@ua4e018f0bba1@@`;
+  try {
+    const r = await api("/api/notes/move", {
+      moves, logKey: logKey(),
+      label: `@@u2d39905c9bd0@@${DEL_FOLDER}@@uecaaf7879135@@`
+    });
+    const resultText = `@@uf041655d9bf9@@${DEL_FOLDER}@@ue856c3c4be5b@@${r.moved}@@ucf11dc176a9b@@`
+      + (r.failed ? `@@uc126fc5f03ac@@${r.failed}@@ucf11dc176a9b@@` : "")
+      + `@@ua9295656281d@@` + (r.log ? `@@ucb38cc111297@@${r.log.split("/").pop()}` : "");
+    toast(`@@u8ab9a32cf889@@${DEL_FOLDER}@@ue856c3c4be5b@@${r.moved}@@ucf11dc176a9b@@`);
+    orgBusy = false;
+    await openOrg();
+    showOrgMoveResult(resultText, r.failures);
+  } catch (e) {
+    $("orgStatus").textContent = "⚠️ " + e.message;
+    await refreshOrgSyncNotes();
+  } finally { orgBusy = false; $("orgDelGo").disabled = !(orgDelPlan || []).length; await refreshOrgUndo(); }
+};
+$("orgLog").onclick = openOrgHistory;
+function showRestoreResult(result, error = "") {
+  const moved = Number(result?.restored) || 0, failed = Number(result?.failed) || 0;
+  const summary = moved > 0
+    ? `@@u9bbdb81ed900@@${moved}@@u50b38e823497@@${failed}@@uad31772da092@@`
+    : @@u537bac04529a@@ + (failed ? `@@u50786ef34bc9@@${failed}@@u7a4c267d5d87@@` : "");
+  $("orgRestoreSummary").textContent = summary;
+  $("orgRestoreDetail").textContent = [error, result?.warning,
+    result?.recordRetained ? @@u69b60bb0142c@@ : @@u225e145aa282@@].filter(Boolean).join("\n");
+  $("orgRestoreFailures").innerHTML = (result?.failures || []).map(item =>
+    `<div class="restore-failure"><strong>${esc(item.title || @@u5d337c32c69b@@)}@@uf63e498509f8@@${esc(item.id || @@u8280b7a7ae75@@)}</div><div>${esc(item.reason || @@ue1e2a92675c2@@)}</div></div>`).join("");
+  $("orgRestoreResultOverlay").classList.add("show");
+  $("orgRestoreClose").focus();
+  $("orgStatus").textContent = summary;
+  toast(summary);
+}
+async function requestNotesRestore() {
+  invalidateOrgSyncNotes();
+  try {
+  // 此路径保留错误响应中的逐条结果；其他 API 的既有处理不变。
+  const response = await fetch("/api/notes/restore", {method:"POST", headers:{"Content-Type":"application/json","X-UI-Language":document.documentElement.lang.startsWith("zh")?"zh":"en","X-Session-Token":await getSessionToken()}, body:"{}"});
+  const result = await response.json();
+  if (!response.ok || result.error) {
+    const e = new Error(result.error || `@@ubad5584b9ab6@@${response.status}@@ue00d84a22b18@@`);
+    e.restoreResult = result; throw e;
+  }
+  return result;
+  } finally { invalidateOrgSyncNotes(); }
+}
+$("orgRestoreClose").onclick = () => { if (!orgBusy) $("orgRestoreResultOverlay").classList.remove("show"); };
+$("orgRestoreRetry").onclick = () => $("orgUndo").click();
+$("btnOrgUndo").onclick = () => $("orgUndo").click();
+$("orgUndo").onclick = async () => {
+  if (orgBusy || orgRestoreLoading || !orgRestoreInfo?.["有记录"]) return;
+  orgBusy = true; syncOrgUndo();
+  let outcome = null, outcomeError = "", attempted = false;
+  try {
+    const info = await refreshOrgUndo();
+    if (!info?.["有记录"]) { toast(info ? @@u5503fa001495@@ : @@ub1fb42563699@@); return; }
+    if (!confirm(restoreBatchSummary(info) + @@u0898ab363e40@@)) return;
+    attempted = true;
+    $("orgStatus").textContent = @@u96a1ceb11e14@@;
+    outcome = await requestNotesRestore();
+  } catch (e) {
+    outcome = e.restoreResult || null; outcomeError = e.message;
+  } finally {
+    orgBusy = false;
+    await refreshOrgUndo();
+    if (attempted && !outcomeError && outcome && $("orgOverlay").classList.contains("show")) await openOrg();
+    else if (attempted) await refreshOrgSyncNotes();
+    if (outcomeError || (outcome && (Number(outcome.failed) > 0 || Number(outcome.restored) === 0))) {
+      showRestoreResult(outcome, outcomeError);
+    } else if (outcome) {
+      $("orgRestoreResultOverlay").classList.remove("show");
+      $("orgStatus").textContent = `@@u9bbdb81ed900@@${outcome.restored}@@u2ba12c8e8baf@@${outcome["时间"]}@@ucdc3dda0d1ed@@`;
+      toast(`@@u9bbdb81ed900@@${outcome.restored}@@ucf11dc176a9b@@`);
+    }
+    syncOrgUndo();
+  }
+};
+
+/* ---------- 项目诊断包 ---------- */
+let diagData = null;
+async function copyText(text, msg) {
+  try { await navigator.clipboard.writeText(text); }
+  catch {
+    const ta = document.createElement("textarea"); ta.value = text;
+    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove();
+  }
+  toast(msg);
+}
+
+// 项目的 txt 文件夹：在访达里打开，或者把路径复制走。
+// 这两件事各自一个图标直接点，不再套一层面板。
+async function projectFolder(proj) {
+  return await api("/api/diag?project=" + encodeURIComponent(proj));
+}
+async function revealProject(proj) {
+  try {
+    await api("/api/diag/reveal", { project: proj });
+  } catch (e) { toast("⚠️ " + e.message); }
+}
+async function copyProjectPath(proj) {
+  try {
+    const info = await projectFolder(proj);
+    copyText(info.folder, @@udf058348072d@@);
+  } catch (e) { toast("⚠️ " + e.message); }
+}
+
+/* ---------- 推送回备忘录 ---------- */
+let noteFolders = [];
+const DEF_PUSH_FOLDER = "Notes Organizer";
+
+// 老数据没记来源 id：标题在备忘录里唯一命中时，才认它是来源
+function guessSrc(p) {
+  if (p.srcNoteId) return { id: p.srcNoteId, note: allNotes.find(n => n.id === p.srcNoteId) || null };
+  const hit = allNotes.filter(n => n.name.trim() === (p.title || "").trim());
+  return hit.length === 1 ? { id: hit[0].id, note: hit[0], guessed: true } : null;
+}
+async function ensureNotesMeta() {
+  if (!allNotes.length) {
+    const j = await api("/api/notes/list");
+    allNotes = j.notes;
+  }
+  if (!noteFolders.length) {
+    const j = await api("/api/notes/folders");
+    noteFolders = j.folders;
+  }
+}
+$("btnPush").onclick = async () => {
+  const p = curPrompt;
+  $("pushStatus").textContent = @@u92b79bee4426@@;
+  $("pushOverlay").classList.add("show");
+  $("pushGo").disabled = true;
+  try { await ensureNotesMeta(); }
+  catch (e) { $("pushStatus").textContent = "⚠️ " + e.message; return; }
+  $("pushStatus").textContent = ""; $("pushGo").disabled = false;
+
+  $("pushTitle").value = $("edTitle").value.trim() || p.title;
+  const src = guessSrc(p);
+  const modes = [];
+  modes.push({ v: "new", t: @@u57bd425ead16@@, s: @@u6e73ae0f3812@@ });
+  if (p.pushNoteId)
+    modes.push({ v: "update", t: @@u49443fe4454c@@, s: `@@ud38b9656801a@@${p.pushedAt || "—"}` });
+  if (src)
+    modes.push({ v: "src", t: @@u7ac1a9a64888@@, s:
+      (src.guessed ? @@u6c411fb15482@@ : @@u95954201fc41@@) + (src.note ? `${src.note.folder} / ${src.note.name}` : @@u5c93c2be9a37@@) + @@u5320a7887249@@ });
+  $("pushModes").innerHTML = modes.map((m, i) =>
+    `<label><input type="radio" name="pmode" value="${m.v}"${i === 0 ? " checked" : ""}>
+      <span>${esc(m.t)}<span class="sub"> · ${esc(m.s)}</span></span></label>`).join("");
+  $("pushModes").querySelectorAll("input").forEach(r => r.onchange = updPushUI);
+
+  // 默认推到这条自己分类的同名文件夹；备忘录里还没有就把它列进来，
+  // 推的时候服务器会自动建（没分类的才落到 DEF_PUSH_FOLDER）
+  const want = p.project || DEF_PUSH_FOLDER;
+  const fs = [...noteFolders];
+  for (const f of [want, DEF_PUSH_FOLDER]) if (!fs.includes(f)) fs.unshift(f);
+  $("pushFolder").innerHTML = fs.map(f =>
+    `<option value="${esc(f)}">${esc(f)}${noteFolders.includes(f) ? "" : @@u738524090733@@}</option>`).join("");
+  $("pushFolder").value = want;
+  updPushUI();
+};
+function pushMode() {
+  const r = $("pushModes").querySelector("input:checked");
+  return r ? r.value : "new";
+}
+function updPushUI() {
+  const isNew = pushMode() === "new";
+  $("pushFolderRow").style.display = isNew ? "" : "none";
+  $("pushHint").textContent = isNew
+    ? @@udd508869c300@@
+    : @@u62ca06f45b2e@@;
+}
+function closePush() { $("pushOverlay").classList.remove("show"); }
+$("pushNewFolder").onclick = () => {
+  const n = prompt(@@u5c6c3cfde6cb@@); if (!n || !n.trim()) return;
+  const nn = n.trim();
+  if (![...$("pushFolder").options].some(o => o.value === nn))
+    $("pushFolder").insertAdjacentHTML("afterbegin", `<option value="${esc(nn)}">${esc(nn)}</option>`);
+  $("pushFolder").value = nn;
+};
+$("pushGo").onclick = async () => {
+  const p = curPrompt, mode = pushMode();
+  const title = $("pushTitle").value.trim() || p.title;
+  const content = $("edBody").value;
+  let noteId = "";
+  if (mode === "update") noteId = p.pushNoteId;
+  if (mode === "src") {
+    const src = guessSrc(p);
+    if (!src) { toast(@@u9c5560a0be1b@@); return; }
+    if (!confirm(`@@ud1238b1e4096@@${src.note ? src.note.name : p.title}@@ufe613bd4f7c9@@`)) return;
+    noteId = src.id;
+  }
+  $("pushGo").disabled = true; $("pushStatus").textContent = @@uf1914f2bb9a2@@;
+  try {
+    const j = await api("/api/notes/push", {
+      noteId, folder: $("pushFolder").value || DEF_PUSH_FOLDER, title, content
+    });
+    if (mode === "new") {
+      p.pushNoteId = j.id;
+      DB.pushFolder = $("pushFolder").value;
+      allNotes = []; noteFolders = [];   // 新建了笔记，缓存作废
+    } else if (mode === "update") {
+      p.pushNoteId = j.id;
+    } else {
+      p.srcNoteId = j.id;
+    }
+    p.pushedAt = now();
+    await persist();
+    closePush();
+    toast(mode === "new" ? @@ud4a186f1af01@@ : @@u30cbdd367164@@);
+  } catch (e) {
+    $("pushStatus").textContent = "⚠️ " + e.message;
+  } finally {
+    $("pushGo").disabled = false;
+  }
+};
+
+/* ---------- 备忘录导入 ---------- */
+$("btnImport").onclick = async () => {
+  $("impOverlay").classList.add("show");
+  $("impFailures").hidden = true;
+  fillProjSelects();
+  if (!allNotes.length) {
+    $("impList").innerHTML = `@@u14b486778ce0@@`;
+    try {
+      const j = await api("/api/notes/list");
+      allNotes = j.notes;
+      const folders = [...new Set(allNotes.map(n => n.folder))];
+      $("impFolder").innerHTML = `@@u5f85f73160b8@@` +
+        folders.map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join("");
+    } catch (e) {
+      $("impList").innerHTML = `<div style="padding:20px;color:var(--red);font-size:13px">${esc(e.message)}</div>`;
+      return;
+    }
+  }
+  renderImpList();
+};
+function closeImport() { $("impOverlay").classList.remove("show"); }
+function filteredNotes() {
+  const q = $("impSearch").value.trim().toLowerCase();
+  const fd = $("impFolder").value;
+  const hide = $("impHideDone").checked;
+  return allNotes.filter(n => {
+    if (fd && n.folder !== fd) return false;
+    if (hide && DB.importedNoteIds.includes(n.id)) return false;
+    if (q && !n.name.toLowerCase().includes(q)) return false;
+    return true;
+  }).sort((a,b) => (b.date||"").localeCompare(a.date||""));  // 日期已补零，字符串比就是时间比
+}
+/* 选中状态存在 impSel 里，不依赖 DOM：
+   列表只按需渲染一屏一屏（CHUNK 条），但全选/导入永远针对完整的筛选结果。 */
+const CHUNK = 150;
+let impShown = [];   // 当前筛选结果（完整，不截断）
+let impDrawn = 0;    // 已经画出来多少行
+
+function renderImpList() {
+  impShown = filteredNotes();
+  impDrawn = 0;
+  const box = $("impList");
+  box.innerHTML = "";
+  box.scrollTop = 0;
+  if (!impShown.length) {
+    box.innerHTML = `@@u20b1d189baca@@`;
+    updImpStatus(); return;
+  }
+  drawMore();
+  updImpStatus();
+}
+function drawMore() {
+  const box = $("impList");
+  const old = $("impMore"); if (old) old.remove();
+  const frag = document.createDocumentFragment();
+  const end = Math.min(impDrawn + CHUNK, impShown.length);
+  for (let i = impDrawn; i < end; i++) {
+    const n = impShown[i];
+    const row = document.createElement("label"); row.className = "nrow";
+    const done = DB.importedNoteIds.includes(n.id);
+    row.innerHTML = `<input type="checkbox" data-id="${esc(n.id)}"${impSel.has(n.id) ? " checked" : ""}>
+      <span class="nm">${esc(n.name)}</span>
+      ${done ? @@u82e58c4a5106@@ : ""}
+      <span class="fd">${esc(n.folder)} · ${esc(n.date)}</span>`;
+    row.querySelector("input").onchange = e => {
+      if (e.target.checked) impSel.add(n.id); else impSel.delete(n.id);
+      updImpStatus();
+    };
+    frag.appendChild(row);
+  }
+  box.appendChild(frag);
+  impDrawn = end;
+  if (impDrawn < impShown.length) {
+    const more = document.createElement("div");
+    more.id = "impMore";
+    more.textContent = `@@u0611471d3f5d@@${impShown.length - impDrawn}@@u53d4dc9e6f78@@`;
+    box.appendChild(more);
+  }
+}
+$("impList").onscroll = () => {
+  const box = $("impList");
+  if (impDrawn < impShown.length && box.scrollTop + box.clientHeight >= box.scrollHeight - 60) drawMore();
+};
+function syncImpChecks() {
+  for (const b of $("impList").querySelectorAll("input")) b.checked = impSel.has(b.dataset.id);
+}
+function checkedIds() { return [...impSel]; }
+function updImpStatus() {
+  $("impStatus").textContent = impSel.size ? `@@u9abfd8981a52@@${impSel.size}@@ucf11dc176a9b@@` : "";
+  $("impCount").textContent =
+    `@@u1671f3906499@@${impShown.length}@@u0819094c5d17@@${allNotes.length}@@ucf11dc176a9b@@` +
+    (impSel.size ? `@@u58729e1855f2@@${impSel.size}@@ucf11dc176a9b@@` : "");
+}
+let impSearchTimer = null;
+$("impSearch").oninput = () => { clearTimeout(impSearchTimer); impSearchTimer = setTimeout(renderImpList, 150); };
+$("impFolder").onchange = renderImpList;
+$("impHideDone").onchange = renderImpList;
+$("impSelAll").onclick = () => {
+  const allOn = impShown.length > 0 && impShown.every(n => impSel.has(n.id));
+  for (const n of impShown) { if (allOn) impSel.delete(n.id); else impSel.add(n.id); }
+  syncImpChecks(); updImpStatus();
+  toast(allOn ? @@u375fa5f4661e@@ : `@@u4231f1b1ac12@@${impShown.length}@@ucf11dc176a9b@@`);
+};
+$("impSelNone").onclick = () => { impSel.clear(); syncImpChecks(); updImpStatus(); };
+$("impNewProj").onclick = async () => {
+  const n = prompt(@@u39759d145c86@@); if (!n || !n.trim()) return;
+  if (await addProject(n.trim())) $("impProj").value = n.trim();
+};
+// 勾上「沿用备忘录的文件夹」之后，下面那个"导入到"就不起作用了，
+// 灰掉免得以为两个都生效。
+$("impUseFolder").onchange = () => {
+  const on = $("impUseFolder").checked;
+  $("impProj").disabled = on;
+  $("impNewProj").disabled = on;
+  $("impGo").textContent = on ? @@u0f13cb122df6@@ : @@u0a1e52ae00f0@@;
+};
+function noteImportBody(note, raw) {
+  let body=raw.replace(/\r/g,"");
+  const lines=body.split("\n");
+  if(lines[0] && lines[0].trim()===note.name.trim()) {
+    const rest=lines.slice(1).join("\n").replace(/^\n+/,"");
+    if(rest.trim())body=rest;
+  }
+  return body;
+}
+function showImportFailures(failures) {
+  const list = $("impFailureList");
+  list.replaceChildren();
+  for (const failure of failures) {
+    const row = document.createElement("li");
+    row.textContent = `${failure.title}: ${failure.error}`;
+    list.appendChild(row);
+  }
+  $("impFailures").hidden = !failures.length;
+}
+$("impRetryFailed").onclick = () => $("impGo").onclick();
+$("impGo").onclick = async () => {
+  const ids = checkedIds();
+  if (!ids.length) { toast(@@u62ea968f56a7@@); return; }
+  // 勾了「沿用备忘录的文件夹」就一条一条按它自己所在的文件夹归类，
+  // 否则整批都进下拉框选的那个分类。
+  const useFolder = $("impUseFolder").checked;
+  const proj = $("impProj").value;
+  const byId = Object.fromEntries(allNotes.map(n => [n.id, n]));
+  // 这几个不是用户分的类，落进来的按未分类处理。
+  const NOT_A_PROJECT = new Set(["Notes", "备忘录", "備忘錄", "Recently Deleted", "最近删除", "最近刪除", "整理器推送", "备忘录整理器", "需删除", "Notes Organizer", "Organizer exports", DEL_FOLDER, DEF_PUSH_FOLDER]);
+  $("impGo").disabled = true;
+  $("impFailures").hidden = true;
+  let done = 0, failures = [];
+  try {
+    const folderInfo = useFolder ? await api("/api/notes/folders") : {};
+    if (folderInfo.defaultFolder) NOT_A_PROJECT.add(folderInfo.defaultFolder);
+    for (let i = 0; i < ids.length; i += 25) {
+      const batch = ids.slice(i, i + 25);
+      $("impStatus").textContent = `@@u21b1b4cded87@@${done}/${ids.length}…`;
+      const j = await api("/api/notes/body", { ids: batch });
+      if (!Array.isArray(j.results) || j.results.length !== batch.length ||
+          j.results.some((row, k) => row.id !== batch[k] || typeof row.ok !== "boolean"))
+        throw new Error(@@u4cae18dbf072@@);
+      batch.forEach((id, k) => {
+        const note = byId[id];
+        const result = j.results[k];
+        if (!result.ok) { failures.push({title:note.name, error:result.error || @@u4cae18dbf072@@}); return; }
+        if (typeof result.body !== "string") { failures.push({title:note.name, error:@@u4cae18dbf072@@}); return; }
+        if(DB.prompts.some(p=>p.srcNoteId===id)){impSel.delete(id);return;}
+        const body=noteImportBody(note,result.body);
+        let target = proj;
+        if (useFolder) {
+          target = (NOT_A_PROJECT.has(note.folder) || (folderInfo.defaultFolderId && note.folderId === folderInfo.defaultFolderId)) ? "" : note.folder;
+          if (target && !DB.projects.includes(target)) DB.projects.push(target);
+        }
+        DB.prompts.push({
+          id: "p" + Date.now() + "_" + (i + k), title: note.name, project: target,
+          active: 1, versions: [{ v: 1, content: body, time: now() }],
+          updated: now(), source: "备忘录/" + note.folder, srcNoteId: id, noteDate: note.date
+        });
+        if (!DB.importedNoteIds.includes(id)) DB.importedNoteIds.push(id);
+        impSel.delete(id);
+        done++;
+      });
+    }
+    if (done) await persist();
+    toast(`@@ue0c1b3996c1f@@${done}@@ucf11dc176a9b@@`);
+    renderSide(); renderCards();
+    if (failures.length) { showImportFailures(failures); renderImpList(); }
+    else closeImport();
+  } catch (e) {
+    toast("⚠️ " + e.message);
+    showImportFailures([{title:@@u4cae18dbf072@@, error:e.message}]);
+    if (done) { await persist(); renderSide(); renderCards(); }
+  } finally {
+    $("impGo").disabled = false; updImpStatus();
+  }
+};
+
+/* ---------- 启动 ---------- */
+refreshOrgUndo();
+(async () => {
+  try { DB = await api("/api/data"); }
+  catch (e) { categoryStatus(@@u28122be203ec@@); toast(@@u1b96781d7dab@@); return; }
+  DB.projects ||= []; DB.prompts ||= []; DB.importedNoteIds ||= [];
+  try { await initCategoryJournal(); restoreCategoryJournal(); }
+  catch (e) { categoryStatus(@@u70d544983e34@@); toast("⚠️ " + e.message); return; }
+  dataLoaded = true;
+  serverRevisionReady = Number.isSafeInteger(DB.rev);
+  if(!serverRevisionReady)showSaveNotice(@@ub56687efb6d9@@);
+  // 批量选择靠 id 认人，所以先保证 id 唯一（老数据里理论上可能有重号）
+  const seen = new Set(); let fixed = 0;
+  for (const p of DB.prompts) {
+    if (!p.id || seen.has(p.id)) { p.id = "p" + Date.now() + "_" + (fixed++) + "_" + Math.random().toString(36).slice(2,7); }
+    seen.add(p.id);
+  }
+  if (fixed) { await persist(); }
+  let saved = "grid";
+  try {
+    saved = localStorage.getItem("整理器视图") || "grid";
+    sortBy = localStorage.getItem("整理器排序") || "note_desc";
+  } catch {}
+  $("sortBy").value = sortBy;
+  renderSide(); setView(saved); fillProjSelects();
+  maybeOpenWizard();
+  // 首屏先渲染；慢速 AppleScript 核对不阻塞浏览和分类。
+  refreshOrgSyncNotes();
+})();
+
+
+/* ── 首次引导 ─────────────────────────────────────────────
+   第一次打开（库是空的）时自动弹一次。全部跳过也能用：
+   导入、整理、导出、归位都不需要任何配置。                  */
+
+// 预置分类。每条都配一句具体的描述——AI 猜分类时只看得到这句，
+// 只给个名字（"素材""杂项"）它猜不出里面装的是什么，这是准确率的大头。
+const WZ_PRESETS = [
+  [@@ue72182ea8a6c@@,   @@u02d76e262ddb@@],
+  [@@u9ebbe6056794@@,   @@u81cea740149b@@],
+  [@@uccd62a007794@@,   @@u24473bdb37f6@@],
+  [@@u67115afa8df4@@,   @@ud9044f07ef76@@],
+  [@@u23b7aec08845@@, @@u12a65b283b24@@],
+  [@@ufc2fee32e2fe@@,   @@u329c47d5ebb6@@],
+  [@@u4d762bb8eb7f@@,   @@ube23ecd70e2a@@],
+  [@@uab1e5c798b86@@,   @@uf4a1411b64fe@@],
+  [@@u378d4dc2baa1@@,   @@u0a91d691df52@@],
+  [@@ufd681073ad2a@@,   @@u1434d00aec8c@@],
+];
+
+// 让 AI 帮忙写描述的那段话。分两种情况，因为很多人是先导入再来配这个的。
+function wzAIPrompt() {
+  const existing = DB.projects.length ? `@@u19cf93f40eeb@@${DB.projects.join(@@uae78306c6b52@@)}@@u1335fe173958@@` : "";
+  return existing + (DB.prompts.length
+    ? @@ub53064c8ea66@@
+    : @@u09ba8f542884@@);
+}
+function wzRender() {
+  $("wzCats").innerHTML = WZ_PRESETS.map(([name, desc], i) => `
+    <div style="display:flex;gap:8px;align-items:flex-start;margin:6px 0">
+      <input type="checkbox" class="wzPick" data-i="${i}" style="margin-top:8px">
+      <input class="wzName" data-i="${i}" value="${esc(name)}@@uf9251390791d@@${i}@@u46e70c09d5ee@@${esc(desc)}</textarea>
+    </div>`).join("");
+  $("wzCats").querySelectorAll(".wzName,.wzDesc").forEach(input => input.oninput = () => {
+    $("wzCats").querySelector(`.wzPick[data-i="${input.dataset.i}"]`).checked = true;
+  });
+}
+function openWizard() {
+  wzRender(); $("wzOwn").value = ""; $("wzKey").value = "";
+  $("wzHint").textContent = ""; $("wzAskHint").textContent = "";
+  $("wzSecretFolder").checked = true;
+  $("wzOverlay").classList.add("show");
+}
+$("btnWelcomeGuide").onclick = () => {
+  $("welcomeOverlay").classList.add("show");
+  $("welcomeOverlay").querySelector(".panel-body").scrollTop = 0;
+};
+$("welcomeStart").onclick = () => {
+  $("welcomeOverlay").classList.remove("show");
+  openWizard();
+};
+function skipWizard() {
+  $("wzOverlay").classList.remove("show");
+  try { localStorage.setItem("notesOrganizerWizardDone", "1"); } catch {}
+}
+$("wzSkip").onclick = skipWizard;
+$("wzAskAI").onclick = () => {
+  copyText(wzAIPrompt(), @@u8eb98aee048b@@);
+  $("wzAskHint").textContent = @@u665f372b1e5e@@;
+};
+$("wzDone").onclick = async () => {
+  $("wzDone").disabled = true; $("wzSkip").disabled = true;
+  $("wzHint").textContent = "";
+  try {
+    const picked = new Map();
+    $("wzCats").querySelectorAll(".wzPick").forEach(box => {
+      if (!box.checked) return;
+      const i = box.dataset.i;
+      const name = $("wzCats").querySelector(`.wzName[data-i="${i}"]`).value.trim();
+      const desc = $("wzCats").querySelector(`.wzDesc[data-i="${i}"]`).value.trim();
+      if (name) picked.set(name, desc);
+    });
+    for (const line of $("wzOwn").value.split("\n")) {
+      const match = line.match(/^\s*([^：:]+)[：:]\s*(.*)$/);
+      if (match && match[1].trim()) picked.set(match[1].trim(), match[2].trim());
+      else if (line.trim()) picked.set(line.trim(), "");
+    }
+    const secretName = @@ua65c6358beb3@@;
+    if ($("wzSecretFolder").checked && !picked.has(secretName)) picked.set(secretName, @@u080e1d529e84@@);
+    const cfg = await api("/api/jev/config");
+    const body = { descriptions: { ...(cfg.descriptions || {}) } };
+    for (const [name, desc] of picked) {
+      if (!DB.projects.includes(name)) DB.projects.push(name);
+      if (desc) body.descriptions[name] = desc;
+    }
+    const key = $("wzKey").value.trim();
+    if (key) body.apiKey = key;
+    if ($("wzSecretFolder").checked) body.neverSend = [...new Set([...(cfg.neverSend || []), secretName])];
+    if (!await persist()) throw new Error(@@ub9b76a10addf@@);
+    await api("/api/jev/config", body);
+    skipWizard(); renderSide(); renderCards(); fillProjSelects();
+    toast(`@@u23d1e33a34ca@@${picked.size}@@uaaca4fcddce5@@`);
+  } catch (e) { $("wzHint").textContent = "⚠️ " + e.message; }
+  finally { $("wzDone").disabled = false; $("wzSkip").disabled = false; }
+};
+function maybeOpenWizard() {
+  let done = false;
+  try { done = localStorage.getItem("notesOrganizerWizardDone") === "1"; } catch {}
+  if (done || DB.prompts.length || DB.projects.length) return;
+  setTimeout(() => {
+    if (!DB.prompts.length && !DB.projects.length) $("welcomeOverlay").classList.add("show");
+  }, 400);
+}
+
+/* ── 相似条目归组 ───────────────────────────────────────────────
+   扫描出「内容几乎一样」的几条，归成同一条的 v1/v2/v3。
+   扫描和合并是两个动作，中间隔着你逐组过目：合错了是把两份不同的东西
+   焊成一条，退回来虽然有撤销，但不该靠撤销兜底。                */
+let simHasScanned = false;
+let SIM = { groups: [], picked: new Map(), busy: false, scanning: false, lastMerge: null };
+
+function simSelected() {
+  const out = [];
+  SIM.groups.forEach((g, gi) => {
+    if (!SIM.picked.has(gi)) return;
+    const dropped = SIM.picked.get(gi);
+    const ids = g.members.filter((_, mi) => !dropped.has(mi)).map(m => m.id);
+    if (ids.length > 1) out.push(ids);
+  });
+  return out;
+}
+
+function simSyncFoot() {
+  const sel = simSelected();
+  const notes = sel.reduce((n, ids) => n + ids.length, 0);
+  $("simGo").disabled = SIM.busy || SIM.scanning || !sel.length;
+  $("simUndo").disabled = SIM.busy || SIM.scanning || !SIM.lastMerge;
+  $("simAll").disabled = SIM.busy || SIM.scanning;
+  $("simNone").disabled = SIM.busy || SIM.scanning;
+  $("simList").querySelectorAll("input").forEach(el => el.disabled = SIM.busy || SIM.scanning);
+  $("simGo").textContent = sel.length
+    ? `@@u6886df41984d@@${sel.length}@@u19421ec6c1ae@@${notes}@@ueddc8cb9feae@@${sel.length}@@u590fb034660e@@`
+    : @@u8a6a25611d12@@;
+}
+
+
+// Bounded line LCS: avoid allocating a huge matrix for long notes.
+function simDiff(oldText, newText) {
+  const a = (oldText || "").split("\n"), b = (newText || "").split("\n");
+  const n = a.length, m = b.length;
+  if (n * m > 400000) return null;
+  const dp = Array.from({ length: n + 1 }, () => new Uint32Array(m + 1));
+  for (let i = n - 1; i >= 0; i--)
+    for (let j = m - 1; j >= 0; j--)
+      dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+  const rows = [];
+  let i = 0, j = 0;
+  while (i < n && j < m) {
+    if (a[i] === b[j]) { rows.push(["=", a[i]]); i++; j++; }
+    else if (dp[i + 1][j] >= dp[i][j + 1]) { rows.push(["-", a[i]]); i++; }
+    else { rows.push(["+", b[j]]); j++; }
+  }
+  while (i < n) rows.push(["-", a[i++]]);
+  while (j < m) rows.push(["+", b[j++]]);
+  return rows;
+}
+
+function simDiffHtml(oldText, newText) {
+  const rows = simDiff(oldText, newText);
+  if (!rows) return `@@u2fddb7b80bbb@@`;
+  const changed = rows.filter(r => r[0] !== "=").length;
+  if (!changed) return `@@u7170e3b5c017@@`;
+
+  const keep = new Set();
+  rows.forEach((r, k) => { if (r[0] !== "=") { for (let d = -1; d <= 1; d++) keep.add(k + d); } });
+  const out = [];
+  let skipped = 0;
+  rows.forEach((r, k) => {
+    if (!keep.has(k)) { skipped++; return; }
+    if (skipped) { out.push(`@@ufce7050ed462@@${skipped}@@u721f01a2d73b@@`); skipped = 0; }
+    const color = r[0] === "+" ? "background:var(--blue)" : r[0] === "-" ? "background:var(--pink);text-decoration:line-through" : "";
+    const sign = r[0] === "=" ? "  " : r[0] + " ";
+    out.push(`<div style="${color};padding:1px 4px;white-space:pre-wrap;word-break:break-word">${esc(sign + r[1])}</div>`);
+  });
+  if (skipped) out.push(`@@uc9a17599c5b7@@${skipped}@@u721f01a2d73b@@`);
+  return `<div style="font:12px/1.5 ui-monospace,Menlo,monospace;max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:6px;padding:6px;margin-top:6px">${out.join("")}</div>`;
+}
+
+function simRender() {
+  const box = $("simList");
+  if (!SIM.groups.length) {
+    box.innerHTML = `@@u14020d5059f7@@`;
+    simSyncFoot();
+    return;
+  }
+  box.innerHTML = SIM.groups.map((g, gi) => {
+    const dropped = SIM.picked.get(gi) || new Set();
+    const on = SIM.picked.has(gi);
+    const activeIndex = g.members.reduce((last, _, index) => dropped.has(index) ? last : index, -1);
+    const why = g.reason === "title"
+      ? `@@u1c7c02432a5a@@`
+      : `@@u0327f6f6bede@@`;
+    const scores = (g.scores || []).slice(0, 4)
+      .map(s => `v${esc(Number(s.a) + 1)}↔v${esc(Number(s.b) + 1)} ${esc(Math.round(Number(s.score) * 100))}%`).join("　");
+    const rows = g.members.map((m, mi) => {
+      const off = dropped.has(mi);
+      const prev = mi > 0 ? g.members[mi - 1] : null;
+      return `<div style="display:flex;gap:8px;align-items:flex-start;padding:3px 0;${off ? "opacity:.4" : ""}">
+        <input type="checkbox" data-g="${gi}" data-m="${mi}" class="simMember" ${off ? "" : "checked"} style="margin-top:4px">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px">
+            <b>v${mi + 1}</b>
+            <span style="color:var(--sub)">${esc((m.date || "").slice(0, 16))}　${esc(m.length)}@@u60f8e4375019@@${esc(m.project || @@u881b630609fc@@)}</span>
+            ${mi === activeIndex ? @@uce92bed3bb47@@ : ""}
+          </div>
+          <div style="font-size:13px;word-break:break-word" dir="auto">${esc(m.title || @@u5d337c32c69b@@)}</div>
+          <div style="font-size:12px;color:var(--sub)">
+            <a href="#" class="simPeek" data-g="${gi}" data-m="${mi}@@u5ab98182e607@@${prev ? `　<a href="#" class="simDiff" data-g="${gi}" data-m="${mi}@@uf91cbdddf325@@${mi}@@ubf7875af68b4@@` : ""}
+          </div>
+          <div id="simDetail-${gi}-${mi}"></div>
+        </div>
+      </div>`;
+    }).join("");
+    return `<div class="card" style="padding:10px 12px;margin-bottom:10px">
+      <label style="display:flex;gap:8px;align-items:center;font-size:13px;font-weight:600;cursor:pointer">
+        <input type="checkbox" class="simGroup" data-g="${gi}" ${on ? "checked" : ""}@@uac62adc16800@@${g.members.length}@@u36e5d909fd07@@${why}　${scores}</span>
+      </label>
+      <div style="margin-top:6px">${rows}</div>
+    </div>`;
+  }).join("");
+
+  box.querySelectorAll(".simGroup").forEach(c => c.onchange = () => {
+    const gi = +c.dataset.g;
+    if (c.checked) SIM.picked.set(gi, SIM.picked.get(gi) || new Set());
+    else SIM.picked.delete(gi);
+    simRender();
+  });
+  box.querySelectorAll(".simMember").forEach(c => c.onchange = () => {
+    const gi = +c.dataset.g, mi = +c.dataset.m;
+    const dropped = SIM.picked.get(gi) || new Set();
+    if (c.checked) dropped.delete(mi); else dropped.add(mi);
+    if (!SIM.picked.has(gi)) { SIM.picked.set(gi, dropped); $(`simList`).querySelector(`.simGroup[data-g="${gi}"]`).checked = true; }
+    else SIM.picked.set(gi, dropped);
+    simRender();
+  });
+  box.querySelectorAll(".simPeek").forEach(a => a.onclick = e => {
+    e.preventDefault();
+    const gi = +a.dataset.g, mi = +a.dataset.m, d = $(`simDetail-${gi}-${mi}`);
+    if (d.dataset.mode === "peek") { d.innerHTML = ""; d.dataset.mode = ""; return; }
+    d.dataset.mode = "peek";
+    d.innerHTML = `<div style="font:12px/1.6 ui-monospace,Menlo,monospace;max-height:300px;overflow:auto;border:1px solid var(--line);border-radius:6px;padding:6px;margin-top:6px;white-space:pre-wrap;word-break:break-word" dir="auto">${esc(SIM.groups[gi].members[mi].body || "")}</div>`;
+  });
+  box.querySelectorAll(".simDiff").forEach(a => a.onclick = e => {
+    e.preventDefault();
+    const gi = +a.dataset.g, mi = +a.dataset.m, d = $(`simDetail-${gi}-${mi}`);
+    if (d.dataset.mode === "diff") { d.innerHTML = ""; d.dataset.mode = ""; return; }
+    d.dataset.mode = "diff";
+    const ms = SIM.groups[gi].members;
+    d.innerHTML = simDiffHtml(ms[mi - 1].body, ms[mi].body);
+  });
+  simSyncFoot();
+}
+
+async function simScan() {
+  if (SIM.scanning) return;
+  SIM.scanning = true;
+  SIM.groups = []; SIM.picked = new Map(); simSyncFoot();
+  $("simHint").textContent = "";
+  $("simScan").disabled = true;
+  $("simMeta").textContent = @@uc2d3fca7c4c3@@;
+  $("simList").innerHTML = "";
+  try {
+    const r = await api("/api/similar/scan", {
+      threshold: Math.max(0, Math.min(1, Number($("simTh").value) / 100)),
+      maxRatio: +$("simRatio").value || 1.5,
+      minLength: Math.max(0, Number($("simMin").value)),
+    });
+    SIM.groups = r.groups || [];
+    simHasScanned = true;
+    SIM.lastMerge = r.lastMerge || null;
+    SIM.picked = new Map();
+    const notes = SIM.groups.reduce((n, g) => n + g.members.length, 0);
+    $("simMeta").textContent =
+      `${SIM.groups.length}@@u63f488bdb102@@${notes}@@u0373937a757c@@${r.compared}@@u3ea5868f440e@@${r.tooShort}@@u590fb034660e@@`;
+    simRender();
+  } catch (e) {
+    $("simMeta").textContent = "";
+    $("simHint").textContent = "⚠️ " + e.message;
+  } finally { SIM.scanning = false; $("simScan").disabled = SIM.busy; $("simScan").textContent = simHasScanned ? @@u67122f875fa2@@ : @@u933ebdd7076f@@; simSyncFoot(); }
+}
+
+if ($("btnSimilar")) $("btnSimilar").onclick = () => {
+  $("simOverlay").classList.add("show");
+  $("simHint").textContent = "";
+  $("simStatus").textContent = "";
+  if (!SIM.scanning) $("simHint").textContent = simHasScanned ? @@u55444431f3ca@@ : @@u5aa94b38ae05@@;
+  simSyncFoot();
+};
+if ($("simScan")) $("simScan").onclick = simScan;
+if ($("simAll")) $("simAll").onclick = () => {
+  SIM.groups.forEach((_, gi) => SIM.picked.set(gi, SIM.picked.get(gi) || new Set()));
+  simRender();
+};
+if ($("simNone")) $("simNone").onclick = () => { SIM.picked = new Map(); simRender(); };
+
+if ($("simGo")) $("simGo").onclick = async () => {
+  if (SIM.busy || SIM.scanning || categoryDataBusy) return;
+  const groups = simSelected();
+  if (!groups.length) return;
+  const notes = groups.reduce((n, ids) => n + ids.length, 0);
+  if (!confirm(`@@u386b6023b155@@${groups.length}@@u1548f0d18026@@${notes}@@u3d75e1dec259@@${groups.length}@@ucd8faa689990@@`
+    + `@@u39590196541f@@`
+    + `@@ua73e54d97276@@`)) return;
+  categoryDataBusy = true; SIM.busy = true; $("simUndo").disabled = true; $("simScan").disabled = true;
+  $("simGo").disabled = true;
+  $("simStatus").textContent = @@u3e60db914162@@;
+  try {
+    if (!await persist()) throw new Error(@@u2f240aa02612@@);
+    const r = await api("/api/similar/merge", { groups, rev:DB.rev });
+    SIM.lastMerge = { groups: r.groups, notes };
+    DB = await api("/api/data"); categoryBaseline=categorySnapshot();
+    $("simStatus").textContent = `@@u4144db026b73@@${r.groups}@@u9254a480fef4@@${r.removed}@@u1e0b5261f478@@`;
+    toast(`@@uec644c09b2d2@@${r.groups}@@uaa4ac22a14a8@@`);
+    await simScan();
+    renderSide(); renderCards(); fillProjSelects();
+  } catch (e) {
+    $("simStatus").textContent = "";
+    $("simHint").textContent = "⚠️ " + e.message;
+  }
+  categoryDataBusy = false; SIM.busy = false; $("simUndo").disabled = false; $("simScan").disabled = false;
+  simSyncFoot();
+};
+
+if ($("simUndo")) $("simUndo").onclick = async () => {
+  if (SIM.busy || SIM.scanning || categoryDataBusy) return;
+  if (!confirm((SIM.lastMerge ? `@@u1bfb5134fc8c@@${SIM.lastMerge.groups}@@u4976ad3d3868@@${SIM.lastMerge.notes}@@u5cdf15d80c40@@` : "") + @@ucc2760fccc99@@)) return;
+  categoryDataBusy = true; SIM.busy = true; $("simUndo").disabled = true; $("simScan").disabled = true; simSyncFoot();
+  try {
+    if (!await persist()) throw new Error(@@uc2217187b574@@);
+    const r = await api("/api/similar/undo", {rev:DB.rev});
+    SIM.lastMerge = null;
+    DB = await api("/api/data"); categoryBaseline=categorySnapshot();
+    $("simStatus").textContent = `@@ua9127f28175c@@${r.groups}@@uebf81859eabb@@${r.restored}@@ucf11dc176a9b@@`;
+    toast(@@ub4728a10e2e6@@);
+    await simScan();
+    renderSide(); renderCards(); fillProjSelects();
+  } catch (e) { $("simHint").textContent = "⚠️ " + e.message; }
+  finally { categoryDataBusy = false; SIM.busy = false; $("simUndo").disabled = false; $("simScan").disabled = false; simSyncFoot(); }
+};
+
+</script>
+<script src="language.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Notes Organizer</title>
+<style>body{font:16px system-ui,sans-serif;max-width:600px;margin:15vh auto;padding:24px;color:#40333a;background:#ffefe3}a{margin-right:24px;color:#70405a}p{line-height:1.6}</style></head>
+<body><h1>Notes Organizer</h1><p id="status">Opening your library…</p><p><a href="app.en.html">English</a><a href="app.zh-CN.html">中文</a></p>
+<script>
+(async () => {
+  const key = "notesOrganizerLanguage";
+  let preference = "system";
+  try { preference = localStorage.getItem(key) || "system"; } catch {}
+  let language = (navigator.language || "en").toLowerCase().startsWith("zh") ? "zh" : "en";
+  if (language === "zh") { document.documentElement.lang = "zh-CN"; document.getElementById("status").textContent = "正在打开笔记库…"; }
+  if (preference === "en" || preference === "zh") language = preference;
+  else {
+    try {
+      const response = await fetch("/api/locale", {signal: AbortSignal.timeout(3000)});
+      if (response.ok) {
+        const info = await response.json();
+        if (info.language === "en" || info.language === "zh") language = info.language;
+      }
+    } catch {}
+  }
+  location.replace(language === "zh" ? "app.zh-CN.html" : "app.en.html");
+})();
+</script></body></html>

@@ -1,0 +1,6 @@
+# Personal notes, API keys and everything derived from them. Never commit these.
+Notes Library/
+
+.DS_Store
+*.pyc
+__pycache__/
